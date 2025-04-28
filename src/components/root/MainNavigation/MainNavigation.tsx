@@ -52,7 +52,7 @@ export const MainNavigation = () => {
 							Log In
 						</Button>
 					</Link>
-					<Link to="/signUp">
+					<Link to="/signup">
 						<Button
 							size="sm"
 							className="h-9 px-4 rounded-md text-base cursor-pointer"

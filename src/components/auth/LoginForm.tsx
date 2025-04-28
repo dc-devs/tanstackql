@@ -1,17 +1,46 @@
 import { useState } from 'react';
-import { Separator } from '~/components/ui/separator';
 import { Link } from '@tanstack/react-router';
+import { gql, request } from 'graphql-request';
 import { Button } from '~/components/ui/button';
+import { Separator } from '~/components/ui/separator';
 import {
+	EmailField,
 	useAuthForm,
+	PasswordField,
 	emailValidator,
 	passwordValidator,
-	EmailField,
-	PasswordField,
 } from './AuthFormContext';
+import { useMutation } from '@tanstack/react-query';
+
+const endpoint = 'https://local.nestql.com/graphql';
+
+const useLogin = () => {
+	return useMutation({
+		mutationFn: async (credentials: {
+			email: string;
+			password: string;
+		}) => {
+			const response = await request(
+				endpoint,
+				gql`
+					mutation Login($email: String!, $password: String!) {
+						login(email: $email, password: $password) {
+							success
+							message
+						}
+					}
+				`,
+				{ email: credentials.email, password: credentials.password },
+			);
+			// @ts-expect-error not typed
+			return response.login;
+		},
+	});
+};
 
 export const LogInForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
+	const loginMutation = useLogin();
 
 	const form = useAuthForm({
 		defaultValues: {
@@ -23,13 +52,9 @@ export const LogInForm = () => {
 			setSubmissionError(null);
 
 			try {
-				// Here you would typically make an API call to authenticate the user
-				console.log('Login form submitted:', value);
-				// Simulate API call success
-				await new Promise((resolve) => setTimeout(resolve, 1000));
-
-				// Optional: redirect the user after successful login
-				// navigate('/dashboard');
+				await loginMutation.mutateAsync(value);
+				// The server will handle setting the session cookie
+				// You can add navigation or success handling here
 			} catch (error) {
 				console.error('Error submitting form:', error);
 				setSubmissionError(
@@ -88,9 +113,15 @@ export const LogInForm = () => {
 						<Button
 							type="submit"
 							className="w-full mt-6 cursor-pointer"
-							disabled={!canSubmit || isSubmitting}
+							disabled={
+								!canSubmit ||
+								isSubmitting ||
+								loginMutation.isPending
+							}
 						>
-							{isSubmitting ? 'Logging in...' : 'Log In'}
+							{isSubmitting || loginMutation.isPending
+								? 'Logging in...'
+								: 'Log In'}
 						</Button>
 					)}
 				</form.Subscribe>
@@ -144,7 +175,7 @@ export const LogInForm = () => {
 			<div className="mt-6 text-center text-sm">
 				Don't have an account?{' '}
 				<Link
-					to="/signUp"
+					to="/signup"
 					className="font-medium text-primary hover:underline"
 				>
 					Sign up

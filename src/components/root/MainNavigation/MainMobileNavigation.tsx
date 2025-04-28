@@ -98,7 +98,7 @@ export const MainMobileNavigation = () => {
 								Log In
 							</Button>
 						</Link>
-						<Link to="/signUp">
+						<Link to="/signup">
 							<Button
 								className="w-full justify-center text-base font-medium h-9 px-6 cursor-pointer"
 								onClick={() => setIsOpen(false)}

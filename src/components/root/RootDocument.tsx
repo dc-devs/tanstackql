@@ -1,7 +1,7 @@
 import { Scripts } from '@tanstack/react-start';
 import { HeadContent } from '@tanstack/react-router';
-// import { MainNavigation } from '~/components/root/MainNavigation';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export const RootDocument = ({ children }: { children: React.ReactNode }) => {
 	return (
@@ -12,6 +12,7 @@ export const RootDocument = ({ children }: { children: React.ReactNode }) => {
 			<body>
 				{children}
 				<TanStackRouterDevtools position="bottom-right" />
+				{/* <ReactQueryDevtools initialIsOpen={true} /> */}
 				<Scripts />
 			</body>
 		</html>
