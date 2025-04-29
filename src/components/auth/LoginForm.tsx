@@ -23,17 +23,28 @@ const useLogin = () => {
 			const response = await request(
 				endpoint,
 				gql`
-					mutation Login($email: String!, $password: String!) {
-						login(email: $email, password: $password) {
-							success
-							message
+					mutation SignIn($sessionInput: SessionInput!) {
+						signIn(sessionInput: $sessionInput) {
+							isAuthenticated
+							user {
+								id
+								role
+								email
+								createdAt
+								updatedAt
+							}
 						}
 					}
 				`,
-				{ email: credentials.email, password: credentials.password },
+				{
+					sessionInput: {
+						email: credentials.email,
+						password: credentials.password,
+					},
+				},
 			);
 			// @ts-expect-error not typed
-			return response.login;
+			return response.signIn;
 		},
 	});
 };
