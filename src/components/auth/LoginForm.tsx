@@ -11,8 +11,24 @@ import {
 	passwordValidator,
 } from './AuthFormContext';
 import { useMutation } from '@tanstack/react-query';
+import { useAuth } from '~/components/auth/AuthProvider';
 
 const endpoint = 'https://local.nestql.com/graphql';
+
+interface User {
+	id: string;
+	role: string;
+	email: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+interface SignInResponse {
+	signIn: {
+		isAuthenticated: boolean;
+		user: User;
+	};
+}
 
 const useLogin = () => {
 	return useMutation({
@@ -20,7 +36,7 @@ const useLogin = () => {
 			email: string;
 			password: string;
 		}) => {
-			const response = await request(
+			const response = await request<SignInResponse>(
 				endpoint,
 				gql`
 					mutation SignIn($sessionInput: SessionInput!) {
@@ -43,7 +59,7 @@ const useLogin = () => {
 					},
 				},
 			);
-			// @ts-expect-error not typed
+			console.log('Login response:', response);
 			return response.signIn;
 		},
 	});
@@ -52,6 +68,7 @@ const useLogin = () => {
 export const LogInForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const loginMutation = useLogin();
+	const { fetchCurrentUser } = useAuth();
 
 	const form = useAuthForm({
 		defaultValues: {
@@ -63,9 +80,10 @@ export const LogInForm = () => {
 			setSubmissionError(null);
 
 			try {
-				await loginMutation.mutateAsync(value);
-				// The server will handle setting the session cookie
-				// You can add navigation or success handling here
+				const result = await loginMutation.mutateAsync(value);
+				console.log('Login successful:', result);
+				// Refetch the user data to update the auth context
+				await fetchCurrentUser();
 			} catch (error) {
 				console.error('Error submitting form:', error);
 				setSubmissionError(
