@@ -1,7 +1,7 @@
 import { Outlet } from '@tanstack/react-router';
 import { queryClient } from '~/lib/query-client';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from '~/components/auth/AuthProvider';
+import { AuthProvider } from '~/features/auth/contexts/AuthProvider';
 import { RootDocument } from '~/components/root/RootDocument';
 import { MainNavigation } from '~/components/root/MainNavigation/MainNavigation';
 

@@ -8,7 +8,7 @@ import {
 	passwordValidator,
 	EmailField,
 	PasswordField,
-} from './AuthFormContext';
+} from '../contexts/AuthFormContext';
 
 export const SignUpForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);

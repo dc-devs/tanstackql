@@ -1,4 +1,6 @@
 import { gql, request } from 'graphql-request';
+import { getBackendEndpoint } from '~/common/utils';
+import type { AuthState, AuthContextType } from '~/common/interfaces';
 import {
 	JSX,
 	useState,
@@ -8,48 +10,20 @@ import {
 	type ReactNode,
 } from 'react';
 
-/** GraphQL endpoint for authentication and user data */
-const endpoint = 'https://local.nestql.com/graphql';
-
 /**
- * Represents a user in the system
- * @interface User
- * @property {string} id - Unique identifier for the user
- * @property {string} role - User's role in the system
- * @property {string} email - User's email address
- * @property {string} createdAt - Timestamp when the user was created
- * @property {string} updatedAt - Timestamp when the user was last updated
+ * Custom hook to access authentication context
+ * @function useAuth
+ * @throws {Error} If used outside of AuthProvider
+ * @returns {AuthContextType} Authentication context including state and functions
  */
-interface User {
-	id: string;
-	role: string;
-	email: string;
-	createdAt: string;
-	updatedAt: string;
-}
+export const useAuth = () => {
+	const context = useContext(AuthContext);
 
-/**
- * Represents the current authentication state
- * @interface AuthState
- * @property {boolean} isAuthenticated - Whether the user is currently authenticated
- * @property {User | null} user - The current user object or null if not authenticated
- * @property {boolean} isLoading - Whether the authentication state is being loaded
- */
-interface AuthState {
-	isAuthenticated: boolean;
-	user: User | null;
-	isLoading: boolean;
-}
-
-/**
- * Extends AuthState with authentication-related functions
- * @interface AuthContextType
- * @extends {AuthState}
- * @property {() => Promise<void>} fetchCurrentUser - Function to fetch the current user's data
- */
-interface AuthContextType extends AuthState {
-	fetchCurrentUser: () => Promise<void>;
-}
+	if (context === undefined) {
+		throw new Error('useAuth must be used within an AuthProvider');
+	}
+	return context;
+};
 
 /** React context for authentication state and functions */
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -90,6 +64,8 @@ export const AuthProvider = ({
 		user: null,
 		isLoading: true,
 	});
+
+	const endpoint = getBackendEndpoint();
 
 	/**
 	 * Fetches the current user's data from the GraphQL endpoint
@@ -137,18 +113,3 @@ export const AuthProvider = ({
 		</AuthContext.Provider>
 	);
 };
-
-/**
- * Custom hook to access authentication context
- * @function useAuth
- * @throws {Error} If used outside of AuthProvider
- * @returns {AuthContextType} Authentication context including state and functions
- */
-export function useAuth() {
-	const context = useContext(AuthContext);
-
-	if (context === undefined) {
-		throw new Error('useAuth must be used within an AuthProvider');
-	}
-	return context;
-}

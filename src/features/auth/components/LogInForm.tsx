@@ -9,9 +9,9 @@ import {
 	PasswordField,
 	emailValidator,
 	passwordValidator,
-} from './AuthFormContext';
+} from '../contexts/AuthFormContext';
 import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '~/components/auth/AuthProvider';
+import { useAuth } from '~/features/auth/contexts/AuthProvider';
 
 const endpoint = 'https://local.nestql.com/graphql';
 
