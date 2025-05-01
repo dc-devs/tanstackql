@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '~/components/ui/button';
 import { Separator } from '~/components/ui/separator';
-import { useSignIn } from '~/features/auth/hooks/useSignIn';
+import { useSignIn, useAuthForm } from '~/features/auth/hooks';
 import { useAuth } from '~/features/auth/contexts/AuthProvider';
-import {
-	EmailField,
-	useAuthForm,
-	PasswordField,
-	emailValidator,
-	passwordValidator,
-} from '~/features/auth/contexts/AuthFormContext';
+import { EmailField, PasswordField } from '~/features/auth/components';
+import { emailValidator, passwordValidator } from '~/features/auth/validators';
 
+/**
+ * Sign-in form component for user authentication
+ * @returns {React.ReactNode} Sign-in form component
+ */
 export const SignInForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signInMutation = useSignIn();
