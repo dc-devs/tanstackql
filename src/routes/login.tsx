@@ -1,4 +1,4 @@
-import { LogInForm } from '~/features/auth/components';
+import { SignInForm } from '~/features/auth/components';
 import { createFileRoute } from '@tanstack/react-router';
 
 const LoginPage = () => {
@@ -14,7 +14,7 @@ const LoginPage = () => {
 					</p>
 				</div>
 
-				<LogInForm />
+				<SignInForm />
 			</div>
 		</div>
 	);

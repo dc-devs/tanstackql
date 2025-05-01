@@ -1,73 +1,20 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { gql, request } from 'graphql-request';
 import { Button } from '~/components/ui/button';
 import { Separator } from '~/components/ui/separator';
+import { useSignIn } from '~/features/auth/hooks/useSignIn';
+import { useAuth } from '~/features/auth/contexts/AuthProvider';
 import {
 	EmailField,
 	useAuthForm,
 	PasswordField,
 	emailValidator,
 	passwordValidator,
-} from '../contexts/AuthFormContext';
-import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '~/features/auth/contexts/AuthProvider';
+} from '~/features/auth/contexts/AuthFormContext';
 
-const endpoint = 'https://local.nestql.com/graphql';
-
-interface User {
-	id: string;
-	role: string;
-	email: string;
-	createdAt: string;
-	updatedAt: string;
-}
-
-interface SignInResponse {
-	signIn: {
-		isAuthenticated: boolean;
-		user: User;
-	};
-}
-
-const useLogin = () => {
-	return useMutation({
-		mutationFn: async (credentials: {
-			email: string;
-			password: string;
-		}) => {
-			const response = await request<SignInResponse>(
-				endpoint,
-				gql`
-					mutation SignIn($sessionInput: SessionInput!) {
-						signIn(sessionInput: $sessionInput) {
-							isAuthenticated
-							user {
-								id
-								role
-								email
-								createdAt
-								updatedAt
-							}
-						}
-					}
-				`,
-				{
-					sessionInput: {
-						email: credentials.email,
-						password: credentials.password,
-					},
-				},
-			);
-			console.log('Login response:', response);
-			return response.signIn;
-		},
-	});
-};
-
-export const LogInForm = () => {
+export const SignInForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
-	const loginMutation = useLogin();
+	const signInMutation = useSignIn();
 	const { fetchCurrentUser } = useAuth();
 
 	const form = useAuthForm({
@@ -80,7 +27,7 @@ export const LogInForm = () => {
 			setSubmissionError(null);
 
 			try {
-				const result = await loginMutation.mutateAsync(value);
+				const result = await signInMutation.mutateAsync(value);
 				console.log('Login successful:', result);
 				// Refetch the user data to update the auth context
 				await fetchCurrentUser();
@@ -145,10 +92,10 @@ export const LogInForm = () => {
 							disabled={
 								!canSubmit ||
 								isSubmitting ||
-								loginMutation.isPending
+								signInMutation.isPending
 							}
 						>
-							{isSubmitting || loginMutation.isPending
+							{isSubmitting || signInMutation.isPending
 								? 'Logging in...'
 								: 'Log In'}
 						</Button>
