@@ -43,7 +43,7 @@ export const MainNavigation = () => {
 
 				{/* Auth Buttons - Desktop */}
 				<div className="hidden md:flex items-center gap-3">
-					<Link to="/login">
+					<Link to="/signin">
 						<Button
 							size="sm"
 							variant="outline"

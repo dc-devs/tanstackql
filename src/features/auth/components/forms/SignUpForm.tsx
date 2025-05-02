@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { Separator } from '~/components/ui/separator';
 import { Link } from '@tanstack/react-router';
 import { Button } from '~/components/ui/button';
-import {
-	useAuthForm,
-	emailValidator,
-	passwordValidator,
-	EmailField,
-	PasswordField,
-} from '../contexts/AuthFormContext';
+import { useAuthForm } from '~/features/auth/hooks';
+// import { useAuth } from '~/features/auth/contexts/AuthProvider';
+import { EmailField, PasswordField } from '~/features/auth/components/fields';
+import { emailValidator, passwordValidator } from '~/features/auth/validators';
 
+/**
+ * Sign-up form component for user authentication
+ * @returns {React.ReactNode} Sign-up form component
+ */
 export const SignUpForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 
@@ -146,7 +147,7 @@ export const SignUpForm = () => {
 			<div className="mt-6 text-center text-sm">
 				Already have an account?{' '}
 				<Link
-					to="/login"
+					to="/signin"
 					className="font-medium text-primary hover:underline"
 				>
 					Log in

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '~/components/ui/button';
+import { useAuth } from '~/features/auth/hooks';
 import { Separator } from '~/components/ui/separator';
 import { useSignIn, useAuthForm } from '~/features/auth/hooks';
-import { useAuth } from '~/features/auth/contexts/AuthProvider';
-import { EmailField, PasswordField } from '~/features/auth/components';
+import { EmailField, PasswordField } from '~/features/auth/components/fields';
 import { emailValidator, passwordValidator } from '~/features/auth/validators';
 
 /**

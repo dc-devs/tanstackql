@@ -1,17 +1,17 @@
 import { Input } from '~/components/ui/input';
 import type { FieldProps } from '~/features/auth/interfaces';
-import { FieldError } from '~/features/auth/components/FieldError';
+import { FieldError } from '~/features/auth/components/fields/FieldError';
 
 /**
- * Email field component for authentication forms
+ * Password field component for authentication forms
  * @param {Object} props - Component props
  * @param {FieldProps} props.field - Field properties
  * @param {string} [props.label] - Label text for the field
- * @returns {React.ReactNode} Email field component
+ * @returns {React.ReactNode} Password field component
  */
-export const EmailField = ({
+export const PasswordField = ({
 	field,
-	label = 'Email',
+	label = 'Password',
 }: {
 	field: FieldProps;
 	label?: string;
@@ -26,8 +26,8 @@ export const EmailField = ({
 		<Input
 			id={field.name}
 			name={field.name}
-			type="email"
-			placeholder="john.doe@example.com"
+			type="password"
+			placeholder="••••••••"
 			value={field.state.value}
 			onChange={(e) => field.handleChange(e.target.value)}
 			onBlur={field.handleBlur}
