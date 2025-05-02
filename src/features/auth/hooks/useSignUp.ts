@@ -1,19 +1,19 @@
 import { request } from 'graphql-request';
 import { useMutation } from '@tanstack/react-query';
 import { getBackendEndpoint } from '~/common/utils';
-import { SignInMutation } from '~/features/auth/queries';
-import type { SignInResponse } from '~/features/auth/interfaces';
+import { SignUpMutation } from '~/features/auth/queries';
+import type { SignUpResponse } from '~/features/auth/interfaces';
 
 /**
- * Hook for handling user sign-in mutations
+ * Hook for handling user sign-up mutations
  * @returns {UseMutationResult} Mutation result object containing state and handlers
- * @property {Function} mutate - Function to trigger the sign-in mutation
+ * @property {Function} mutate - Function to trigger the sign-up mutation
  * @property {boolean} isPending - Whether the mutation is in progress
  * @property {boolean} isError - Whether the mutation resulted in an error
  * @property {boolean} isSuccess - Whether the mutation was successful
- * @property {SignInResponse} data - Response data from successful mutation
+ * @property {SignUpResponse} data - Response data from successful mutation
  */
-export const useSignIn = () => {
+export const useSignUp = () => {
 	const endpoint = getBackendEndpoint();
 
 	return useMutation({
@@ -21,18 +21,19 @@ export const useSignIn = () => {
 			email: string;
 			password: string;
 		}) => {
-			const response = await request<SignInResponse>(
+			const response = await request<SignUpResponse>(
 				endpoint,
-				SignInMutation,
+				SignUpMutation,
 				{
-					sessionInput: {
+					data: {
 						email: credentials.email,
 						password: credentials.password,
 					},
 				},
 			);
-			console.log('Login response:', response);
-			return response.signIn;
+			console.log('Sign up response:', response);
+
+			return response.signUp;
 		},
 	});
 };

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Separator } from '~/components/ui/separator';
 import { Link } from '@tanstack/react-router';
+import { useAuth } from '~/features/auth/hooks';
 import { Button } from '~/components/ui/button';
-import { useAuthForm } from '~/features/auth/hooks';
-// import { useAuth } from '~/features/auth/contexts/AuthProvider';
+import { Separator } from '~/components/ui/separator';
+import { useSignUp, useAuthForm } from '~/features/auth/hooks';
 import { EmailField, PasswordField } from '~/features/auth/components/fields';
 import { emailValidator, passwordValidator } from '~/features/auth/validators';
 
@@ -13,6 +13,8 @@ import { emailValidator, passwordValidator } from '~/features/auth/validators';
  */
 export const SignUpForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
+	const signUpMutation = useSignUp();
+	const { fetchCurrentUser } = useAuth();
 
 	const form = useAuthForm({
 		defaultValues: {
@@ -24,10 +26,10 @@ export const SignUpForm = () => {
 			setSubmissionError(null);
 
 			try {
-				// Here you would typically make an API call to register the user
-				console.log('Form submitted successfully:', value);
-				// Simulate API call success
-				await new Promise((resolve) => setTimeout(resolve, 1000));
+				const result = await signUpMutation.mutateAsync(value);
+				console.log('Sign up successful:', result);
+				// Refetch the user data to update the auth context
+				await fetchCurrentUser();
 
 				// Optional: redirect the user after successful signup
 				// navigate('/welcome');

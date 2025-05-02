@@ -1,7 +1,7 @@
 import { User } from '~/common/interfaces';
 
-export interface SignInResponse {
-	signIn: {
+export interface SignUpResponse {
+	signUp: {
 		user: User;
 		isAuthenticated: boolean;
 	};
