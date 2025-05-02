@@ -34,7 +34,6 @@ export const AuthProvider = ({
 	const fetchCurrentUser = async () => {
 		try {
 			const response = await request(endpoint, CurrentUserQuery);
-			console.log('Current user response:', response);
 			const { currentUser } = response as { currentUser: AuthState };
 
 			setState({
