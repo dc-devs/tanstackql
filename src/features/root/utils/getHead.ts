@@ -1,5 +1,5 @@
 import appCss from '~/styles/app.css?url';
-import { seo } from '~/components/root/utils/seo';
+import { seo } from '~/features/root/utils/seo';
 
 export const getHead = () => ({
 	meta: [

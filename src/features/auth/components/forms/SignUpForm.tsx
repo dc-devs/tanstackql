@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useAuth } from '~/features/auth/hooks';
-import { Button } from '~/components/ui/button';
+import { Button } from '~/common/components/ui/button';
 import { useSignUp, useAuthForm } from '~/features/auth/hooks';
 import { GoogleSignInButton } from '~/features/auth/components/buttons';
 import { SocialButtonSeparator } from '~/features/auth/components/separators';

@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
 import { XIcon } from 'lucide-react';
-import { Button } from '~/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet';
+import { Link } from '@tanstack/react-router';
+import { Button } from '~/common/components/ui/button';
+import {
+	Sheet,
+	SheetContent,
+	SheetTrigger,
+} from '~/common/components/ui/sheet';
 
 export const MainMobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState(false);

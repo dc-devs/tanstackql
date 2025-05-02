@@ -1,4 +1,4 @@
-import { Input } from '~/components/ui/input';
+import { Input } from '~/common/components/ui/input';
 import type { FieldProps } from '~/features/auth/interfaces';
 import { FieldError } from '~/features/auth/components/fields/FieldError';
 
