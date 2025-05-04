@@ -10,7 +10,7 @@ export default {
 				md: '768px',
 				lg: '1024px',
 				xl: '1280px',
-				'2xl': '1400px', // Set the max width for the container
+				'2xl': '1536px',
 			},
 		},
 		extend: {},

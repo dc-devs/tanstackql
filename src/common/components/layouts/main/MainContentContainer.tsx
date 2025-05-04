@@ -3,5 +3,9 @@ export const MainContentContainer = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	return <div className="min-h-[calc(100vh-65px)]">{children}</div>;
+	return (
+		<div className="min-w-full min-h-[calc(100vh-65px)] flex flex-col items-center">
+			<div className="container">{children}</div>
+		</div>
+	);
 };
