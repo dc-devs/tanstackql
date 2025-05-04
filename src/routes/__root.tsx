@@ -1,8 +1,8 @@
-import { getHead } from '~/components/root/utils';
-import { NotFound } from '~/components/root/NotFound';
+import { getHead } from '~/features/root/utils';
+import { NotFound } from '~/features/root/components/NotFound';
 import { createRootRoute } from '@tanstack/react-router';
-import { RootDocument, RootComponent } from '~/components/root';
-import { DefaultCatchBoundary } from '~/components/root/DefaultCatchBoundary';
+import { RootDocument, RootComponent } from '~/features/root/components';
+import { DefaultCatchBoundary } from '~/features/root/components/DefaultCatchBoundary';
 
 export const Route = createRootRoute({
 	head: getHead,

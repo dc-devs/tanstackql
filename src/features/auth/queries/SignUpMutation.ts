@@ -1,0 +1,20 @@
+import { gql } from 'graphql-request';
+
+/**
+ * GraphQL mutation to sign up a user
+ * @constant {DocumentNode} SignUpMutation
+ */
+export const SignUpMutation = gql`
+	mutation SignUp($data: UserCreateInput!) {
+		signUp(data: $data) {
+			isAuthenticated
+			user {
+				id
+				role
+				email
+				createdAt
+				updatedAt
+			}
+		}
+	}
+`;

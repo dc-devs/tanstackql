@@ -1,4 +1,5 @@
-import { Button } from '~/components/ui/button';
+import { Link } from '@tanstack/react-router';
+import { Button } from '~/common/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 
 const Home = () => {
@@ -18,9 +19,11 @@ const Home = () => {
 						this starter template.
 					</p>
 					<div className="pt-4">
-						<Button size="lg" className="px-8 cursor-pointer">
-							Get started
-						</Button>
+						<Link to="/signup">
+							<Button size="lg" className="px-8 cursor-pointer">
+								Get Started
+							</Button>
+						</Link>
 					</div>
 				</div>
 

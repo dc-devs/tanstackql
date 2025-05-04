@@ -1,7 +1,7 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
-import { DefaultCatchBoundary } from './components/root/DefaultCatchBoundary';
-import { NotFound } from './components/root/NotFound';
+import { DefaultCatchBoundary } from './features/root/components/DefaultCatchBoundary';
+import { NotFound } from './features/root/components/NotFound';
 
 export function createRouter() {
 	const router = createTanStackRouter({
