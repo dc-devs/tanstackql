@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useAuth } from '~/features/auth/hooks';
+import { useNavigate } from '@tanstack/react-router';
 import { Button } from '~/common/components/ui/button';
 import { useSignUp, useAuthForm } from '~/features/auth/hooks';
 import { GoogleSignInButton } from '~/features/auth/components/buttons';
@@ -16,6 +17,7 @@ export const SignUpForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signUpMutation = useSignUp();
 	const { fetchCurrentUser } = useAuth();
+	const navigate = useNavigate();
 
 	const form = useAuthForm({
 		defaultValues: {
@@ -30,8 +32,7 @@ export const SignUpForm = () => {
 			// Refetch the user data to update the auth context
 			await fetchCurrentUser();
 
-			// Optional: redirect the user after successful signup
-			// navigate('/welcome');
+			navigate({ to: '/' });
 		},
 	});
 

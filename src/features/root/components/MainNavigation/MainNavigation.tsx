@@ -35,7 +35,7 @@ export const MainNavigation = () => {
 	return (
 		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 			<div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-4">
-				<div className="flex items-center">
+				<div className="hidden md:flex items-center">
 					<Link to="/" className="flex items-center gap-2 mr-12">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

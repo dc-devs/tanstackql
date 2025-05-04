@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button } from '~/common/components/ui/button';
 import { useAuth } from '~/features/auth/hooks';
+import { useNavigate } from '@tanstack/react-router';
+import { Button } from '~/common/components/ui/button';
 import { useSignIn, useAuthForm } from '~/features/auth/hooks';
 import { GoogleSignInButton } from '~/features/auth/components/buttons';
 import { SocialButtonSeparator } from '~/features/auth/components/separators';
@@ -16,7 +17,7 @@ export const SignInForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signInMutation = useSignIn();
 	const { fetchCurrentUser } = useAuth();
-
+	const navigate = useNavigate();
 	const form = useAuthForm({
 		defaultValues: {
 			email: '',
@@ -30,8 +31,7 @@ export const SignInForm = () => {
 			// Refetch the user data to update the auth context
 			await fetchCurrentUser();
 
-			// Optional: redirect the user after successful signup
-			// navigate({ to: '/' });
+			navigate({ to: '/' });
 		},
 	});
 
