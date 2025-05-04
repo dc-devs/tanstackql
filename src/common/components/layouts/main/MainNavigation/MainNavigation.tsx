@@ -7,7 +7,7 @@ export const MainNavigation = () => {
 		<header className="hidden md:block sticky top-0 z-10 bg-background w-full border-b">
 			<div className="container mx-auto flex h-16 items-center justify-between px-4">
 				<div className="flex items-center">
-					<LogoLink />
+					<LogoLink className="mr-12" />
 					<NavigationLinks />
 				</div>
 
