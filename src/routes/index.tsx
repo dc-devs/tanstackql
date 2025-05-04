@@ -5,12 +5,9 @@ import { MainLayout } from '~/common/components/layouts/main';
 const Home = () => {
 	return (
 		<MainLayout>
-			{/* <div className="flex flex-col justify-center"> */}
-			<Hero />
-			<Hero />
-			<Hero />
-			<Hero />
-			{/* </div> */}
+			<div className="flex-1 flex flex-col items-center justify-center">
+				<Hero />
+			</div>
 		</MainLayout>
 	);
 };

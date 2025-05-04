@@ -31,25 +31,28 @@ export const SheetBody = ({ setIsOpen, isAuthenticated }: Props) => {
 				Demo
 			</Link>
 			{!isAuthenticated && (
-				<div className="flex flex-col gap-3 mt-4">
-					<Link to="/signin">
-						<Button
-							variant="outline"
-							className="w-full justify-center text-base font-medium h-9 px-6 text-primary border-primary cursor-pointer"
-							onClick={() => setIsOpen(false)}
-						>
-							Log In
-						</Button>
-					</Link>
-					<Link to="/signup">
-						<Button
-							className="w-full justify-center text-base font-medium h-9 px-6 cursor-pointer"
-							onClick={() => setIsOpen(false)}
-						>
-							Sign Up
-						</Button>
-					</Link>
-				</div>
+				<>
+					<div className="my-4 border-t border-muted" />
+					<div className="flex flex-col gap-2">
+						<Link to="/signup">
+							<Button
+								className="w-full justify-center text-base font-medium h-10 px-6 cursor-pointer"
+								onClick={() => setIsOpen(false)}
+							>
+								Sign Up
+							</Button>
+						</Link>
+						<Link to="/signin">
+							<Button
+								variant="outline"
+								className="w-full justify-center text-base font-medium h-10 px-6 text-primary border-primary cursor-pointer"
+								onClick={() => setIsOpen(false)}
+							>
+								Log In
+							</Button>
+						</Link>
+					</div>
+				</>
 			)}
 		</nav>
 	);

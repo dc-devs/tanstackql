@@ -1,4 +1,4 @@
-import { LogoLink } from '~/common/components/layouts/main/LogoLink';
+import { LogoLink } from '~/common/components/layouts/main/common';
 import { NavigationLinks } from '~/common/components/layouts/main/MainNavigation/NavigationLinks';
 import { SessionButtonsOrAvatar } from '~/common/components/layouts/main/MainNavigation/SessionButtonsOrAvatar';
 

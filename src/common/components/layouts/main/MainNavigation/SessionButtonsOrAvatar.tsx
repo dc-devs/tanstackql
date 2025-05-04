@@ -1,6 +1,6 @@
 import { useAuth } from '~/features/auth/hooks';
 import type { AuthContextType } from '~/features/auth/interfaces';
-import { UserAvatarMenu } from '~/common/components/layouts/main/UserAvatarMenu';
+import { UserAvatarMenu } from '~/common/components/layouts/main/common/UserAvatarMenu';
 import { UserSessionButtons } from '~/common/components/layouts/main/MainNavigation/UserSessionButtons';
 
 export const SessionButtonsOrAvatar = () => {

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '~/features/auth/hooks';
 import type { AuthContextType } from '~/features/auth/interfaces';
-import { LogoLink } from '~/common/components/layouts/main/LogoLink';
-import { UserAvatarMenu } from '~/common/components/layouts/main/UserAvatarMenu';
 import { MobileMenu } from '~/common/components/layouts/main/MainMobileNavigation/MobileMenu/MobileMenu';
+import {
+	LogoLink,
+	UserAvatarMenu,
+} from '~/common/components/layouts/main/common';
 
 export const MainMobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState(false);

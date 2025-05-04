@@ -26,7 +26,7 @@ export const Hero = () => {
 			</div>
 
 			{/* Right side - Card */}
-			<div className="flex items-center justify-center">
+			<div className="flex items-center justify-end">
 				<div className="w-full max-w-md bg-card/50 p-6 rounded-xl shadow-sm border relative">
 					<div className="bg-primary/10 p-6 rounded-xl mb-4">
 						<h2 className="text-2xl font-semibold mb-2">

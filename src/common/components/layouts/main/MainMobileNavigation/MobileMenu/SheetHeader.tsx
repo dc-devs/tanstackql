@@ -1,4 +1,4 @@
-import { LogoLink } from '~/common/components/layouts/main/LogoLink';
+import { LogoLink } from '~/common/components/layouts/main/common';
 import { CloseButton } from '~/common/components/layouts/main/MainMobileNavigation/CloseButton';
 
 interface Props {
