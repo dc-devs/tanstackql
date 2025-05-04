@@ -3,7 +3,7 @@ import { Button } from '~/common/components/ui/button';
 
 export const Hero = () => {
 	return (
-		<div className="border-1 border-blue-500 max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-8 px-4 py-8">
+		<div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-8 px-4 py-8">
 			{/* Left side - Hero */}
 			<div className="flex flex-col justify-start md:justify-center md:pt-0 pt-8 space-y-6">
 				<div className="inline-flex px-3 py-1 rounded-full bg-primary/10 text-primary text-sm w-fit">

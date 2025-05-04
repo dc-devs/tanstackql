@@ -5,11 +5,11 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 export const RootDocument = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html>
+		<html className="min-w-full min-h-full">
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="min-w-full min-h-full">
 				{children}
 				<TanStackRouterDevtools position="bottom-right" />
 				{/* <ReactQueryDevtools initialIsOpen={true} /> */}

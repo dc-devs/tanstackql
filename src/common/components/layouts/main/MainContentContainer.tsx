@@ -3,9 +3,5 @@ export const MainContentContainer = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	return (
-		<div className="border-1 border-green-500 min-h-[calc(100vh-65px)]">
-			{children}
-		</div>
-	);
+	return <div className="min-h-[calc(100vh-65px)]">{children}</div>;
 };

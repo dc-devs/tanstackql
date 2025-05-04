@@ -32,7 +32,7 @@ export const MainNavigation = () => {
 	};
 
 	return (
-		<header className="border-1 border-red-500 hidden md:block sticky top-0 z-10 bg-background w-full border-b">
+		<header className="hidden md:block sticky top-0 z-10 bg-background w-full border-b">
 			<div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-4">
 				<div className="flex items-center">
 					<Link to="/" className="flex items-center gap-2 mr-12">
