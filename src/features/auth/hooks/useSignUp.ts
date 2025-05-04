@@ -31,7 +31,6 @@ export const useSignUp = () => {
 					},
 				},
 			);
-			console.log('Sign up response:', response);
 
 			return response.signUp;
 		},

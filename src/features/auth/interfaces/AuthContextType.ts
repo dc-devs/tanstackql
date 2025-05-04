@@ -1,4 +1,4 @@
-import { AuthState } from '~/common/interfaces/AuthState';
+import { AuthState } from '~/features/auth/interfaces/AuthState';
 
 /**
  * Extends AuthState with authentication-related functions

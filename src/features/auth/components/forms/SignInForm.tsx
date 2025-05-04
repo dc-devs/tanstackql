@@ -31,7 +31,7 @@ export const SignInForm = () => {
 			await fetchCurrentUser();
 
 			// Optional: redirect the user after successful signup
-			// navigate('/welcome');
+			// navigate({ to: '/' });
 		},
 	});
 

@@ -31,7 +31,7 @@ export const useSignIn = () => {
 					},
 				},
 			);
-			console.log('Login response:', response);
+
 			return response.signIn;
 		},
 	});

@@ -1,4 +1,4 @@
-import { User } from '~/common/interfaces';
+import { User } from '~/features/user/interfaces/User';
 
 export interface SignUpResponse {
 	signUp: {

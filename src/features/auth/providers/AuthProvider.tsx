@@ -35,11 +35,12 @@ export const AuthProvider = ({
 		try {
 			const response = await request(endpoint, CurrentUserQuery);
 			const { currentUser } = response as { currentUser: AuthState };
+			console.log('currentUser', currentUser);
 
 			setState({
-				isAuthenticated: currentUser.isAuthenticated,
-				user: currentUser.user,
 				isLoading: false,
+				user: currentUser.user,
+				isAuthenticated: currentUser.isAuthenticated,
 			});
 		} catch (error) {
 			console.log('Error fetching current user:', error);

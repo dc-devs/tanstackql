@@ -1,4 +1,4 @@
-import { User } from '~/common/interfaces/User';
+import { User } from '~/features/user/interfaces/User';
 
 /**
  * Represents the current authentication state
