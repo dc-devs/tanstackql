@@ -1,7 +1,8 @@
 import { request } from 'graphql-request';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBackendEndpoint } from '~/common/utils';
 import { SignInMutation } from '~/features/auth/queries';
+import { currentUserQuery } from '~/features/auth/queries/authQueries';
 import type { SignInResponse } from '~/features/auth/interfaces';
 
 /**
@@ -15,6 +16,7 @@ import type { SignInResponse } from '~/features/auth/interfaces';
  */
 export const useSignIn = () => {
 	const endpoint = getBackendEndpoint();
+	const queryClient = useQueryClient();
 
 	return useMutation({
 		mutationFn: async (credentials: {
@@ -33,6 +35,10 @@ export const useSignIn = () => {
 			);
 
 			return response.signIn;
+		},
+		onSuccess: (data) => {
+			// Update the currentUser query cache with the sign in response
+			queryClient.setQueryData(currentUserQuery.queryKey, data);
 		},
 	});
 };

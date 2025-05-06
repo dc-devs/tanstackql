@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useAuth } from '~/features/auth/hooks';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from '~/common/components/ui/button';
 import { useSignIn, useAuthForm } from '~/features/auth/hooks';
@@ -16,7 +15,6 @@ import { emailValidator, passwordValidator } from '~/features/auth/validators';
 export const SignInForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signInMutation = useSignIn();
-	const { fetchCurrentUser } = useAuth();
 	const navigate = useNavigate();
 	const form = useAuthForm({
 		defaultValues: {
@@ -26,12 +24,14 @@ export const SignInForm = () => {
 		onSubmit: async ({ value }) => {
 			// Clear any previous errors
 			setSubmissionError(null);
-			// Sign in the user
-			await signInMutation.mutateAsync(value);
-			// Refetch the user data to update the auth context
-			await fetchCurrentUser();
-
-			navigate({ to: '/' });
+			try {
+				// Sign in the user - this will also update the auth context
+				await signInMutation.mutateAsync(value);
+				navigate({ to: '/' });
+			} catch (error) {
+				console.error('Sign in error:', error);
+				setSubmissionError('Failed to sign in. Please try again.');
+			}
 		},
 	});
 

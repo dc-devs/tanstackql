@@ -1,69 +1,64 @@
-import { request } from 'graphql-request';
-import { getBackendEndpoint } from '~/common/utils';
+import { type ReactNode } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '~/features/auth/contexts';
-import { CurrentUserQuery } from '~/features/auth/queries';
 import type { AuthState } from '~/features/auth/interfaces';
-import { JSX, useState, useEffect, type ReactNode } from 'react';
+import { currentUserQuery } from '../queries/authQueries';
 
 /**
  * Provider component that wraps the application and provides authentication context
  * @component
  * @param {Object} props - Component props
  * @param {ReactNode} props.children - Child components to be wrapped
+ * @param {AuthState} [props.initialData] - Initial authentication state from server
  * @returns {JSX.Element} Provider component with authentication context
  */
 export const AuthProvider = ({
 	children,
+	initialData,
 }: {
 	children: ReactNode;
-}): JSX.Element => {
-	const endpoint = getBackendEndpoint();
-	const [state, setState] = useState<AuthState>({
-		user: null,
-		isLoading: true,
-		isAuthenticated: false,
+	initialData?: Omit<AuthState, 'isLoading'>;
+}) => {
+	console.log('[Auth] AuthProvider rendering with initialData:', initialData);
+
+	const {
+		data: currentUser,
+		refetch: fetchCurrentUser,
+		isLoading,
+		isInitialLoading,
+	} = useQuery({
+		...currentUserQuery,
+		initialData: initialData ?? undefined,
+		// Don't refetch on mount if we have initial data
+		refetchOnMount: !initialData,
+		// Prevent unnecessary refetches
+		staleTime: Infinity,
+		// Disable retries to prevent unnecessary requests
+		retry: false,
+		// Disable background refetches
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
+		// Use initialData as placeholder during loading
+		placeholderData: initialData,
 	});
 
-	/**
-	 * Fetches the current user's data from the GraphQL endpoint
-	 * Updates the authentication state based on the response
-	 * @async
-	 * @function fetchCurrentUser
-	 * @returns {Promise<void>}
-	 */
-	const fetchCurrentUser = async () => {
-		try {
-			const response = await request(endpoint, CurrentUserQuery);
-			const { currentUser } = response as { currentUser: AuthState };
-			console.log('currentUser', currentUser);
+	console.log('[Auth] Query result:', {
+		currentUser,
+		isLoading,
+		isInitialLoading,
+		hasInitialData: !!initialData,
+	});
 
-			setState({
-				isLoading: false,
-				user: currentUser.user,
-				isAuthenticated: currentUser.isAuthenticated,
-			});
-		} catch (error) {
-			console.log('Error fetching current user:', error);
-			setState({
-				isAuthenticated: false,
-				user: null,
-				isLoading: false,
-			});
-		}
+	// Use initialData during the first render if available
+	const authState = {
+		isLoading: isInitialLoading && !initialData,
+		fetchCurrentUser,
+		user: currentUser?.user ?? null,
+		isAuthenticated: currentUser?.isAuthenticated ?? false,
 	};
 
-	// Fetch user data when component mounts
-	useEffect(() => {
-		fetchCurrentUser();
-	}, []);
-
 	return (
-		<AuthContext.Provider
-			value={{
-				...state,
-				fetchCurrentUser,
-			}}
-		>
+		<AuthContext.Provider value={authState}>
 			{children}
 		</AuthContext.Provider>
 	);

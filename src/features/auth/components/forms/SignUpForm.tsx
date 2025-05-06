@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useAuth } from '~/features/auth/hooks';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from '~/common/components/ui/button';
 import { useSignUp, useAuthForm } from '~/features/auth/hooks';
@@ -16,7 +15,6 @@ import { emailValidator, passwordValidator } from '~/features/auth/validators';
 export const SignUpForm = () => {
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signUpMutation = useSignUp();
-	const { fetchCurrentUser } = useAuth();
 	const navigate = useNavigate();
 
 	const form = useAuthForm({
@@ -27,12 +25,16 @@ export const SignUpForm = () => {
 		onSubmit: async ({ value }) => {
 			// Clear any previous errors
 			setSubmissionError(null);
-			// Sign up the user
-			await signUpMutation.mutateAsync(value);
-			// Refetch the user data to update the auth context
-			await fetchCurrentUser();
-
-			navigate({ to: '/' });
+			try {
+				// Sign up the user - this will also update the auth context
+				await signUpMutation.mutateAsync(value);
+				navigate({ to: '/' });
+			} catch (error) {
+				console.error('Sign up error:', error);
+				setSubmissionError(
+					'Failed to create account. Please try again.',
+				);
+			}
 		},
 	});
 
@@ -85,9 +87,13 @@ export const SignUpForm = () => {
 						<Button
 							type="submit"
 							className="w-full mt-6 cursor-pointer"
-							disabled={!canSubmit || isSubmitting}
+							disabled={
+								!canSubmit ||
+								isSubmitting ||
+								signUpMutation.isPending
+							}
 						>
-							{isSubmitting
+							{isSubmitting || signUpMutation.isPending
 								? 'Creating Account...'
 								: 'Create Account'}
 						</Button>
