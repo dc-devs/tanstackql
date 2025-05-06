@@ -14,36 +14,33 @@ export const UserAvatarMenu = () => {
 	const signOutMutation = useSignOut();
 	const auth = useAuth() as AuthContextType;
 	const user = auth ? auth.user : null;
-	const fetchCurrentUser = auth ? auth.fetchCurrentUser : null;
 
 	const handleLogout = async () => {
 		if (user?.id) {
-			await signOutMutation.mutateAsync({ userId: user.id });
-
-			// Refetch the user data to update the auth context
-			if (fetchCurrentUser) {
-				await fetchCurrentUser();
+			try {
+				await signOutMutation.mutateAsync({ userId: user.id });
+				navigate({ to: '/' });
+			} catch (error) {
+				console.error('Failed to sign out:', error);
 			}
-
-			navigate({ to: '/' });
 		}
 	};
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Avatar className="cursor-pointer">
+			<DropdownMenuTrigger>
+				<Avatar>
 					<AvatarFallback>
-						{user?.email?.[0]?.toUpperCase() || '?'}
+						{user?.email?.charAt(0).toUpperCase()}
 					</AvatarFallback>
 				</Avatar>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent>
 				<DropdownMenuItem
 					onClick={handleLogout}
-					className="cursor-pointer"
+					disabled={signOutMutation.isPending}
 				>
-					Log out
+					{signOutMutation.isPending ? 'Signing out...' : 'Sign out'}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
