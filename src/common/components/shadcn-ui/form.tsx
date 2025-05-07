@@ -12,8 +12,8 @@ import {
 	type FieldValues,
 } from 'react-hook-form';
 
-import { cn } from '~/common/lib/utils';
-import { Label } from '~/common/components/ui/label';
+import { cn } from '@/common/lib/cn';
+import { Label } from '@/common/components/shadcn-ui/label';
 
 const Form = FormProvider;
 

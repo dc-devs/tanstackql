@@ -1,8 +1,8 @@
 import { request } from 'graphql-request';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getBackendEndpoint } from '~/common/utils';
-import { SignOutMutation } from '~/features/auth/queries';
-import type { SignOutResponse } from '~/features/auth/interfaces';
+import { getBackendEndpoint } from '@/common/utils';
+import { SignOutMutation } from '@/features/auth/queries';
+import type { SignOutResponse } from '@/features/auth/interfaces';
 import { currentUserQuery } from '../queries/authQueries';
 
 /**

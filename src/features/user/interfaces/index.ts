@@ -1,1 +1,1 @@
-export type { User } from '~/features/user/interfaces/User';
+export type { User } from '@/features/user/interfaces/User';

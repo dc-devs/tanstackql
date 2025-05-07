@@ -1,9 +1,9 @@
 import { request } from 'graphql-request';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getBackendEndpoint } from '~/common/utils';
-import { SignInMutation } from '~/features/auth/queries';
-import { currentUserQuery } from '~/features/auth/queries/authQueries';
-import type { SignInResponse } from '~/features/auth/interfaces';
+import { getBackendEndpoint } from '@/common/utils';
+import { SignInMutation } from '@/features/auth/queries';
+import { currentUserQuery } from '@/features/auth/queries/authQueries';
+import type { SignInResponse } from '@/features/auth/interfaces';
 
 /**
  * Hook for handling user sign-in mutations

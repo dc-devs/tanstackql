@@ -1,9 +1,9 @@
 import { request } from 'graphql-request';
-import { getBackendEndpoint } from '~/common/utils';
+import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
-import { CurrentUserQuery } from '~/features/auth/queries';
+import { CurrentUserQuery } from '@/features/auth/queries';
 import { getWebRequest } from '@tanstack/react-start/server';
-import type { AuthState } from '~/features/auth/interfaces';
+import type { AuthState } from '@/features/auth/interfaces';
 
 export const fetchCurrentUser = createServerFn({ method: 'GET' }).handler(
 	async () => {

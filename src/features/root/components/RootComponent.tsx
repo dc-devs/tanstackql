@@ -1,10 +1,10 @@
-import { Outlet, useMatches } from '@tanstack/react-router';
 import { QueryClient } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { AuthProvider } from '~/features/auth/providers/AuthProvider';
-import { RootDocument } from '~/features/root/components/RootDocument';
-import type { AuthState } from '~/features/auth/interfaces';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { Outlet, useMatches } from '@tanstack/react-router';
+import type { AuthState } from '@/features/auth/interfaces';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { AuthProvider } from '@/features/auth/providers/AuthProvider';
+import { RootDocument } from '@/features/root/components/RootDocument';
+// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 type RootContext = {
 	currentUser: Omit<AuthState, 'isLoading'>;
@@ -24,8 +24,8 @@ export const RootComponent = () => {
 					<Outlet />
 				</RootDocument>
 			</AuthProvider>
-			<ReactQueryDevtools initialIsOpen={false} />
-			<TanStackRouterDevtools position="bottom-left" />
+			{/* <ReactQueryDevtools initialIsOpen={false} /> */}
+			{/* <TanStackRouterDevtools position="bottom-left" /> */}
 		</>
 	);
 };

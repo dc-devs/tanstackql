@@ -1,1 +1,1 @@
-export { Endpoint } from '~/common/enums/Endpoint';
+export { Endpoint } from '@/common/enums/Endpoint';

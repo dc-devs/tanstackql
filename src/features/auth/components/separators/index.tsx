@@ -1,1 +1,1 @@
-export { SocialButtonSeparator } from '~/features/auth/components/separators/SocialButtonSeparator';
+export { SocialButtonSeparator } from '@/features/auth/components/separators/SocialButtonSeparator';

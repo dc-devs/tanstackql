@@ -1,1 +1,1 @@
-export { getBackendEndpoint } from '~/common/utils/getBackendEndpoint';
+export { getBackendEndpoint } from '@/common/utils/getBackendEndpoint';

@@ -1,1 +1,1 @@
-export { MainMobileNavigation } from '~/common/components/layouts/main/MainMobileNavigation/MainMobileNavigation';
+export { MainMobileNavigation } from '@/common/components/layouts/main/MainMobileNavigation/MainMobileNavigation';

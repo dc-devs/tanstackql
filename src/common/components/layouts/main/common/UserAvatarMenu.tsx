@@ -1,14 +1,14 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useAuth, useSignOut } from '~/features/auth/hooks';
-import type { AuthContextType } from '~/features/auth/interfaces';
-import { Avatar, AvatarFallback } from '~/common/components/ui/avatar';
+import { useAuth, useSignOut } from '@/features/auth/hooks';
+import type { AuthContextType } from '@/features/auth/interfaces';
+import { Avatar, AvatarFallback } from '@/common/components/shadcn-ui/avatar';
 import { LogOut } from 'lucide-react';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
-} from '~/common/components/ui/dropdown-menu';
+} from '@/common/components/shadcn-ui/dropdown-menu';
 
 export const UserAvatarMenu = () => {
 	const navigate = useNavigate();

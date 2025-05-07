@@ -1,11 +1,11 @@
-import { SheetBody } from '~/common/components/layouts/main/MainMobileNavigation/MobileMenu/SheetBody';
-import { SheetHeader } from '~/common/components/layouts/main/MainMobileNavigation/MobileMenu/SheetHeader';
-import { SheetToggleButton } from '~/common/components/layouts/main/MainMobileNavigation/MobileMenu/SheetToggleButton';
+import { SheetBody } from '@/common/components/layouts/main/MainMobileNavigation/MobileMenu/SheetBody';
+import { SheetHeader } from '@/common/components/layouts/main/MainMobileNavigation/MobileMenu/SheetHeader';
+import { SheetToggleButton } from '@/common/components/layouts/main/MainMobileNavigation/MobileMenu/SheetToggleButton';
 import {
 	Sheet,
 	SheetContent,
 	SheetTrigger,
-} from '~/common/components/ui/sheet';
+} from '@/common/components/shadcn-ui/sheet';
 
 interface Props {
 	isOpen: boolean;
@@ -17,7 +17,7 @@ export const MobileMenu = ({ isOpen, setIsOpen, isAuthenticated }: Props) => {
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger asChild>
-			<SheetToggleButton />
+				<SheetToggleButton />
 			</SheetTrigger>
 
 			<SheetContent

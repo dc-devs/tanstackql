@@ -1,1 +1,1 @@
-export { PostErrorComponent } from '~/features/post/components/PostError';
+export { PostErrorComponent } from '@/features/post/components/PostError';

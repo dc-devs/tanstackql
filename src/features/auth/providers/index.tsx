@@ -1,1 +1,1 @@
-export { AuthProvider } from '~/features/auth/providers/AuthProvider';
+export { AuthProvider } from '@/features/auth/providers/AuthProvider';

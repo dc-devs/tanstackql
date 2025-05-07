@@ -1,5 +1,5 @@
-import { Endpoint } from '~/common/enums/Endpoint';
-import { isDevelopment } from '~/common/constants/environment';
+import { Endpoint } from '@/common/enums/Endpoint';
+import { isDevelopment } from '@/common/constants/environment';
 
 /**
  * Returns the appropriate backend endpoint based on the environment

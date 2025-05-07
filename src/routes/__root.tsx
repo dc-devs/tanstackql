@@ -1,12 +1,12 @@
-import { getHead } from '~/features/root/utils';
+import { getHead } from '@/features/root/utils';
 import { dehydrate } from '@tanstack/react-query';
 import { createRootRoute } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
 import { getWebRequest } from '@tanstack/react-start/server';
-import { NotFound } from '~/features/root/components/NotFound';
-import { currentUserQuery } from '~/features/auth/queries/authQueries';
-import { RootDocument, RootComponent } from '~/features/root/components';
-import { DefaultCatchBoundary } from '~/features/root/components/DefaultCatchBoundary';
+import { NotFound } from '@/features/root/components/NotFound';
+import { currentUserQuery } from '@/features/auth/queries/authQueries';
+import { RootDocument, RootComponent } from '@/features/root/components';
+import { DefaultCatchBoundary } from '@/features/root/components/DefaultCatchBoundary';
 
 export const Route = createRootRoute({
 	head: getHead,

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { SignInForm } from '~/features/auth/components/forms';
-import { MainLayout } from '~/common/components/layouts/main';
+import { SignInForm } from '@/features/auth/components/forms';
+import { MainLayout } from '@/common/components/layouts/main';
 
 const SignInPage = () => {
 	return (

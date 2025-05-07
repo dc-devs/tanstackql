@@ -1,6 +1,6 @@
-import { Hero } from '~/features/home/components/Hero';
+import { Hero } from '@/features/home/components/Hero';
 import { createFileRoute } from '@tanstack/react-router';
-import { MainLayout } from '~/common/components/layouts/main';
+import { MainLayout } from '@/common/components/layouts/main';
 
 const Home = () => {
 	return (

@@ -1,4 +1,4 @@
-import { Separator } from '~/common/components/ui/separator';
+import { Separator } from '@/common/components/shadcn-ui/separator';
 
 export const SocialButtonSeparator = () => {
 	return (

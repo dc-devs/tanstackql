@@ -1,5 +1,5 @@
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
-import { AuthState } from '~/features/auth/interfaces/AuthState';
+import { AuthState } from '@/features/auth/interfaces/AuthState';
 
 /**
  * Extends AuthState with authentication-related functions

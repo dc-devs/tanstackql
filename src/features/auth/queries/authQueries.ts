@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { request, type RequestDocument } from 'graphql-request';
-import { getBackendEndpoint } from '~/common/utils';
+import { getBackendEndpoint } from '@/common/utils';
 import { CurrentUserQuery } from './CurrentUserQuery';
 import type { AuthState } from '../interfaces';
 

@@ -1,4 +1,4 @@
-import { User } from '~/features/user/interfaces/User';
+import { User } from '@/features/user/interfaces/User';
 
 export interface SignInResponse {
 	signIn: {

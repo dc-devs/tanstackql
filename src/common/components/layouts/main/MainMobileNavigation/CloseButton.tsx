@@ -1,5 +1,5 @@
 import { XIcon } from 'lucide-react';
-import { Button } from '~/common/components/ui/button';
+import { Button } from '@/common/components/shadcn-ui/button';
 
 interface Props {
 	setIsOpen: (isOpen: boolean) => void;

@@ -1,6 +1,6 @@
-import { LogoLink } from '~/common/components/layouts/main/common';
-import { NavigationLinks } from '~/common/components/layouts/main/MainNavigation/NavigationLinks';
-import { SessionButtonsOrAvatar } from '~/common/components/layouts/main/MainNavigation/SessionButtonsOrAvatar';
+import { LogoLink } from '@/common/components/layouts/main/common';
+import { NavigationLinks } from '@/common/components/layouts/main/MainNavigation/NavigationLinks';
+import { SessionButtonsOrAvatar } from '@/common/components/layouts/main/MainNavigation/SessionButtonsOrAvatar';
 
 export const MainNavigation = () => {
 	return (

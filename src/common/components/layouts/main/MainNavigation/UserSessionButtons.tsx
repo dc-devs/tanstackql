@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Button } from '~/common/components/ui/button';
+import { Button } from '@/common/components/shadcn-ui/button';
 
 export const UserSessionButtons = () => {
 	return (

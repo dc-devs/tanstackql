@@ -1,1 +1,1 @@
-export { UserErrorComponent } from '~/features/user/components/UserError';
+export { UserErrorComponent } from '@/features/user/components/UserError';

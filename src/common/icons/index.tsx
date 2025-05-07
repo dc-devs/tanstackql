@@ -1,1 +1,1 @@
-export { Logo } from '~/common/icons/Logo';
+export { Logo } from '@/common/icons/Logo';

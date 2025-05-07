@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useNavigate } from '@tanstack/react-router';
-import { Button } from '~/common/components/ui/button';
-import { useSignUp, useAuthForm } from '~/features/auth/hooks';
-import { GoogleSignInButton } from '~/features/auth/components/buttons';
-import { SocialButtonSeparator } from '~/features/auth/components/separators';
-import { EmailField, PasswordField } from '~/features/auth/components/fields';
-import { emailValidator, passwordValidator } from '~/features/auth/validators';
+import { Button } from '@/common/components/shadcn-ui/button';
+import { useSignUp, useAuthForm } from '@/features/auth/hooks';
+import { GoogleSignInButton } from '@/features/auth/components/buttons';
+import { SocialButtonSeparator } from '@/features/auth/components/separators';
+import { EmailField, PasswordField } from '@/features/auth/components/fields';
+import { emailValidator, passwordValidator } from '@/features/auth/validators';
 
 /**
  * Sign-up form component for user authentication

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from 'lucide-react';
-import { Button } from '~/common/components/ui/button';
+import { Button } from '@/common/components/shadcn-ui/button';
 
 export const SheetToggleButton = React.forwardRef<
 	HTMLButtonElement,

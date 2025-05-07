@@ -1,6 +1,6 @@
-import { Input } from '~/common/components/ui/input';
-import type { FieldProps } from '~/features/auth/interfaces';
-import { FieldError } from '~/features/auth/components/fields/FieldError';
+import { Input } from '@/common/components/shadcn-ui/input';
+import type { FieldProps } from '@/features/auth/interfaces';
+import { FieldError } from '@/features/auth/components/fields/FieldError';
 
 /**
  * Password field component for authentication forms

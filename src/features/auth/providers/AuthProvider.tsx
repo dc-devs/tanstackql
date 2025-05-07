@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { AuthContext } from '~/features/auth/contexts';
-import type { AuthState } from '~/features/auth/interfaces';
+import { AuthContext } from '@/features/auth/contexts';
+import type { AuthState } from '@/features/auth/interfaces';
 import { currentUserQuery } from '../queries/authQueries';
 
 /**
