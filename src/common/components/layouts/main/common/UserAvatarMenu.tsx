@@ -2,6 +2,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useAuth, useSignOut } from '~/features/auth/hooks';
 import type { AuthContextType } from '~/features/auth/interfaces';
 import { Avatar, AvatarFallback } from '~/common/components/ui/avatar';
+import { LogOut } from 'lucide-react';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -17,30 +18,34 @@ export const UserAvatarMenu = () => {
 
 	const handleLogout = async () => {
 		if (user?.id) {
-			try {
-				await signOutMutation.mutateAsync({ userId: user.id });
-				navigate({ to: '/' });
-			} catch (error) {
-				console.error('Failed to sign out:', error);
-			}
+			await signOutMutation.mutateAsync({ userId: user.id });
+			navigate({ to: '/' });
 		}
 	};
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
-				<Avatar>
+			<DropdownMenuTrigger asChild>
+				<Avatar className="cursor-pointer">
 					<AvatarFallback>
-						{user?.email?.charAt(0).toUpperCase()}
+						{user?.email?.charAt(0).toUpperCase() || '?'}
 					</AvatarFallback>
 				</Avatar>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>
+			<DropdownMenuContent align="end">
 				<DropdownMenuItem
+					className="cursor-pointer flex items-center gap-2 px-3 py-2"
 					onClick={handleLogout}
 					disabled={signOutMutation.isPending}
 				>
-					{signOutMutation.isPending ? 'Signing out...' : 'Sign out'}
+					<div className="flex flex-row items-center content-center gap-2 w-full">
+						<LogOut className="h-4 w-4" />
+						<p className="text-sm">
+							{signOutMutation.isPending
+								? 'Logging out...'
+								: 'Log out'}
+						</p>
+					</div>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

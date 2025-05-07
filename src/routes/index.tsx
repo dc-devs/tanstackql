@@ -14,7 +14,4 @@ const Home = () => {
 
 export const Route = createFileRoute('/')({
 	component: Home,
-	beforeLoad: ({ context }) => {
-		console.log('context', context);
-	},
 });

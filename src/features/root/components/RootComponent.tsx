@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from '~/features/auth/providers/AuthProvider';
 import { RootDocument } from '~/features/root/components/RootDocument';
 import type { AuthState } from '~/features/auth/interfaces';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 type RootContext = {
 	currentUser: Omit<AuthState, 'isLoading'>;
@@ -12,15 +13,9 @@ type RootContext = {
 };
 
 export const RootComponent = () => {
-	console.log('[Client] RootComponent rendering');
-
 	const matches = useMatches();
 	const rootMatch = matches.find((match) => match.routeId === '/');
 	const { currentUser } = (rootMatch?.context ?? {}) as Partial<RootContext>;
-
-	console.log('[Client] Context values:', {
-		hasCurrentUser: !!currentUser,
-	});
 
 	return (
 		<>
@@ -30,6 +25,7 @@ export const RootComponent = () => {
 				</RootDocument>
 			</AuthProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
+			<TanStackRouterDevtools position="bottom-left" />
 		</>
 	);
 };

@@ -1,12 +1,12 @@
 import { getHead } from '~/features/root/utils';
+import { dehydrate } from '@tanstack/react-query';
 import { createRootRoute } from '@tanstack/react-router';
+import type { QueryClient } from '@tanstack/react-query';
+import { getWebRequest } from '@tanstack/react-start/server';
 import { NotFound } from '~/features/root/components/NotFound';
+import { currentUserQuery } from '~/features/auth/queries/authQueries';
 import { RootDocument, RootComponent } from '~/features/root/components';
 import { DefaultCatchBoundary } from '~/features/root/components/DefaultCatchBoundary';
-import { currentUserQuery } from '~/features/auth/queries/authQueries';
-import type { QueryClient } from '@tanstack/react-query';
-import { dehydrate } from '@tanstack/react-query';
-import { getWebRequest } from '@tanstack/react-start/server';
 
 export const Route = createRootRoute({
 	head: getHead,
@@ -17,8 +17,6 @@ export const Route = createRootRoute({
 	}: {
 		context: { queryClient: QueryClient };
 	}) => {
-		console.log('[SSR] beforeLoad starting');
-
 		// Configure the query client for SSR
 		context.queryClient.setDefaultOptions({
 			queries: {
@@ -39,36 +37,29 @@ export const Route = createRootRoute({
 				const cookie = request?.headers.get('cookie');
 				if (cookie) {
 					headers.cookie = cookie;
-					console.log('[SSR] Cookie header:', cookie);
 				}
-			} catch {
-				console.log('[SSR] No request context available');
-			}
-		} else {
-			console.log('[Client] Running in browser environment');
+			} catch {}
 		}
 
 		// Prefetch with server context
-		await context.queryClient.prefetchQuery({
-			...currentUserQuery,
-			meta: {
-				headers,
-			},
-		});
+		try {
+			await context.queryClient.prefetchQuery({
+				...currentUserQuery,
+				meta: {
+					headers,
+				},
+			});
+		} catch (error) {
+			console.error('[DEBUG] Error prefetching current user', error);
+		}
 
 		// Get the current user data
 		const currentUser = context.queryClient.getQueryData(
 			currentUserQuery.queryKey,
 		);
-		console.log('[SSR] currentUser from prefetch:', currentUser);
 
 		// Dehydrate the query client state
 		const dehydratedState = dehydrate(context.queryClient);
-		console.log('[SSR] dehydratedState:', dehydratedState);
-
-		if (!currentUser) {
-			console.log('[SSR] No current user data found after prefetch');
-		}
 
 		return {
 			currentUser,

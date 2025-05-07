@@ -34,6 +34,11 @@ export default [
 	),
 	includeIgnoreFile(gitignorePath),
 	{
+		rules: {
+			'no-empty': 'off',
+		},
+	},
+	{
 		files: ['**/*.ts'], // Only apply TypeScript rules to .ts files
 		plugins: {
 			'@typescript-eslint': typescriptEslint,
@@ -67,7 +72,7 @@ export default [
 			],
 
 			'@typescript-eslint/no-explicit-any': 'warn',
-			'no-empty': ['error', { allowEmptyCatch: true }],
+			'@typescript-eslint/no-empty': ['error', { allow: ['catch'] }],
 			'@typescript-eslint/ban-ts-comment': [
 				'warn',
 				{

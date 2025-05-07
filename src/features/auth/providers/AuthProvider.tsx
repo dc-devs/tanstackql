@@ -19,13 +19,10 @@ export const AuthProvider = ({
 	children: ReactNode;
 	initialData?: Omit<AuthState, 'isLoading'>;
 }) => {
-	console.log('[Auth] AuthProvider rendering with initialData:', initialData);
-
 	const {
+		isPending,
 		data: currentUser,
 		refetch: fetchCurrentUser,
-		isLoading,
-		isInitialLoading,
 	} = useQuery({
 		...currentUserQuery,
 		initialData: initialData ?? undefined,
@@ -42,16 +39,9 @@ export const AuthProvider = ({
 		placeholderData: initialData,
 	});
 
-	console.log('[Auth] Query result:', {
-		currentUser,
-		isLoading,
-		isInitialLoading,
-		hasInitialData: !!initialData,
-	});
-
 	// Use initialData during the first render if available
 	const authState = {
-		isLoading: isInitialLoading && !initialData,
+		isLoading: isPending && !initialData,
 		fetchCurrentUser,
 		user: currentUser?.user ?? null,
 		isAuthenticated: currentUser?.isAuthenticated ?? false,
