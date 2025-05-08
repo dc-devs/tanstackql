@@ -1,3 +1,6 @@
+import { useNavigate } from '@tanstack/react-router';
+import { useAuth, useSignOut } from '@/features/auth/hooks';
+import type { AuthContextType } from '@/features/auth/interfaces';
 import {
 	Bell,
 	LogOut,
@@ -8,7 +11,7 @@ import {
 } from 'lucide-react';
 import {
 	Avatar,
-	AvatarImage,
+	// AvatarImage,
 	AvatarFallback,
 } from '@/common/components/shadcn-ui/avatar';
 import {
@@ -27,16 +30,20 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
-export const NavUser = ({
-	user,
-}: {
-	user: {
-		name: string;
-		email: string;
-		avatar: string;
-	};
-}) => {
+export const NavUser = () => {
+	const navigate = useNavigate();
 	const { isMobile } = useSidebar();
+	const signOutMutation = useSignOut();
+	const { user } = useAuth() as AuthContextType;
+	const userEmailAbbreviation = user?.email?.charAt(0).toUpperCase() || '?';
+	const userEmailName = user?.email?.split('@')[0] || '?';
+
+	const handleLogout = async () => {
+		if (user?.id) {
+			await signOutMutation.mutateAsync({ userId: user.id });
+			navigate({ to: '/' });
+		}
+	};
 
 	return (
 		<SidebarMenu>
@@ -45,23 +52,23 @@ export const NavUser = ({
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+							className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
-								<AvatarImage
+								{/* <AvatarImage
 									src={user.avatar}
 									alt={user.name}
-								/>
+								/> */}
 								<AvatarFallback className="rounded-lg">
-									CN
+									{userEmailAbbreviation}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-semibold">
-									{user.name}
+									{userEmailName}
 								</span>
 								<span className="truncate text-xs">
-									{user.email}
+									{user?.email}
 								</span>
 							</div>
 							<ChevronsUpDown className="ml-auto size-4" />
@@ -76,48 +83,52 @@ export const NavUser = ({
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
-									<AvatarImage
+									{/* <AvatarImage
 										src={user.avatar}
 										alt={user.name}
-									/>
+									/> */}
 									<AvatarFallback className="rounded-lg">
-										CN
+										{userEmailAbbreviation}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
 									<span className="truncate font-semibold">
-										{user.name}
+										{userEmailName}
 									</span>
 									<span className="truncate text-xs">
-										{user.email}
+										{user?.email}
 									</span>
 								</div>
 							</div>
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer">
 								<Sparkles />
 								Upgrade to Pro
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer">
 								<BadgeCheck />
 								Account
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer">
 								<CreditCard />
 								Billing
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer">
 								<Bell />
 								Notifications
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
+						<DropdownMenuItem
+							className="cursor-pointer"
+							onClick={handleLogout}
+							disabled={signOutMutation.isPending}
+						>
 							<LogOut />
 							Log out
 						</DropdownMenuItem>
