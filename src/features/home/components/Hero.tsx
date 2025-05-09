@@ -7,14 +7,14 @@ export const Hero = () => {
 			{/* Left side - Hero */}
 			<div className="flex flex-col justify-start md:justify-center md:pt-0 pt-8 space-y-6">
 				<div className="inline-flex px-3 py-1 rounded-full bg-primary/10 text-primary text-sm w-fit">
-					AI Agent Starter Template
+					AI Agent Full Stack Starter Template
 				</div>
 				<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
-					Starter template for your AI Agents
+					The full-stack starter template for your AI Agents
 				</h1>
 				<p className="text-lg text-muted-foreground">
-					Streamline your full stack AI Agent development with this
-					starter template.
+					Streamline your full stack AI Agent development with Agent
+					Starter.
 				</p>
 				<div className="pt-4">
 					<Link to="/signup">
