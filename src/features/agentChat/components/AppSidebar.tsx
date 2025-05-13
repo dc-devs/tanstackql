@@ -10,28 +10,31 @@ import {
 	SidebarHeader,
 	SidebarContent,
 } from '@/common/components/shadcn-ui/sidebar';
+import { useQuery } from '@tanstack/react-query';
+import { getChatSessionsQuery } from '@/features/agentChat/queries/getChatSessionsQuery';
 
-// This is sample data.
-const data = {
-	chats: [
-		{
-			name: 'Design Engineering',
-			url: '#',
-		},
-		{
-			name: 'Sales & Marketing',
-			url: '#',
-		},
-		{
-			name: 'Travel',
-			url: '#',
-		},
-	],
-};
+// Define the type for a chat session based on the GraphQL query
+interface ChatSession {
+	id: string;
+	title: string;
+	userId: string;
+	createdAt: string;
+	updatedAt: string;
+}
 
 export const AppSidebar = ({
 	...props
 }: React.ComponentProps<typeof Sidebar>) => {
+	const { data, isPending, isError } = useQuery(getChatSessionsQuery);
+
+	let chats: { name: string; url: string }[] = [];
+	if (data) {
+		chats = (data as ChatSession[]).map((chat) => ({
+			name: chat.title || 'Untitled',
+			url: `/chat/${chat.id}`,
+		}));
+	}
+
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
@@ -39,7 +42,17 @@ export const AppSidebar = ({
 				<CreateNewChatButton />
 			</SidebarHeader>
 			<SidebarContent>
-				<NavChats chats={data.chats} />
+				{isPending ? (
+					<div className="p-4 text-muted-foreground">
+						Loading chats...
+					</div>
+				) : isError ? (
+					<div className="p-4 text-destructive">
+						Failed to load chats
+					</div>
+				) : (
+					<NavChats chats={chats} />
+				)}
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser />
