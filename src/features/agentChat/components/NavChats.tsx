@@ -11,8 +11,8 @@ export const NavChats = ({
 	chats,
 }: {
 	chats: {
-		name: string;
-		url: string;
+		id: string;
+		title: string;
 	}[];
 }) => {
 	return (
@@ -21,11 +21,11 @@ export const NavChats = ({
 			<div className="border-r-2 border-gray-200 h-full mx-2"></div>
 			<div className="border-b-2 border-gray-200 w-full my-2"></div>
 			<SidebarMenu>
-				{chats.map((chat) => (
-					<SidebarMenuItem key={chat.name}>
+				{chats.map((chat, index) => (
+					<SidebarMenuItem key={index}>
 						<SidebarMenuButton asChild>
-							<Link to={chat.url}>
-								<span>{chat.name}</span>
+							<Link to={chat.id}>
+								<span>{chat.title}</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
