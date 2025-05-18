@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Chat } from '@/features/agentChat/components/Chat';
-import { getMessages } from '@/features/agentChat/server/getMessages';
+import { getMessages } from '@/features/agentChat/serverFns/getMessages';
 
 export const Route = createFileRoute('/_authed/agent/chats/$id')({
 	loader: async ({ params, context }) => {

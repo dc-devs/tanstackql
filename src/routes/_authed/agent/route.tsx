@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { getChatSessions } from '@/features/agentChat/server/getChatSessions';
+import { getChatSessions } from '@/features/agentChat/serverFns/getChatSessions';
 import { AgentChatLayout } from '@/features/agentChat/components/AgentChatLayout';
 
 export const Route = createFileRoute('/_authed/agent')({

@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/features/auth/hooks';
 import type { AuthContextType } from '@/features/auth/interfaces';
-import { getChatSessions } from '@/features/agentChat/server/getChatSessions';
+import { getChatSessions } from '@/features/agentChat/serverFns/getChatSessions';
 import {
 	SidebarMenu,
 	SidebarGroup,

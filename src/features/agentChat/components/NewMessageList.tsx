@@ -12,7 +12,7 @@ import { ChatMessage } from '@/features/agentChat/components/ChatMessage';
 export const ChatMessageList = ({
 	messages,
 }: {
-	messages: { message: string; isUser?: boolean }[];
+	messages: { content: string; isUser?: boolean }[];
 }) => {
 	const bottomRef = useRef<HTMLDivElement>(null);
 

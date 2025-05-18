@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getMessages } from '@/features/agentChat/server/getMessages';
+import { getMessages } from '@/features/agentChat/serverFns/getMessages';
 import { ChatInputBar } from '@/features/agentChat/components/ChatInputBar';
 import { ChatMessageList } from '@/features/agentChat/components/NewMessageList';
 import { Route as ChatRoute } from '@/routes/_authed/agent/chats.$id';
@@ -8,7 +8,7 @@ export const Chat = () => {
 	const { id } = ChatRoute.useParams();
 	const chatSessionId = Number(id);
 
-	const { data: messages } = useQuery({
+	const { data: rawMessages } = useQuery({
 		queryKey: ['messages', `chatSessionId-${chatSessionId}`],
 		queryFn: () =>
 			getMessages({
@@ -17,6 +17,14 @@ export const Chat = () => {
 				},
 			}),
 	});
+
+	// Transform messages to match ChatMessageList's expected format
+	const messages =
+		rawMessages?.map((msg) => ({
+			content: msg.content || '',
+			sender: msg.sender,
+		})) || [];
+	console.log('messages', messages);
 
 	return (
 		<>
