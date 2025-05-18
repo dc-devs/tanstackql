@@ -13,10 +13,11 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignupImport } from './routes/signup'
 import { Route as SigninImport } from './routes/signin'
-import { Route as PathlessLayoutImport } from './routes/_pathlessLayout'
 import { Route as AuthedImport } from './routes/_authed'
 import { Route as IndexImport } from './routes/index'
-import { Route as AuthedAgentChatImport } from './routes/_authed/agent-chat'
+import { Route as AuthedAgentRouteImport } from './routes/_authed/agent/route'
+import { Route as AuthedAgentChatsIndexImport } from './routes/_authed/agent/chats.index'
+import { Route as AuthedAgentChatsIdImport } from './routes/_authed/agent/chats.$id'
 
 // Create/Update Routes
 
@@ -32,11 +33,6 @@ const SigninRoute = SigninImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PathlessLayoutRoute = PathlessLayoutImport.update({
-  id: '/_pathlessLayout',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AuthedRoute = AuthedImport.update({
   id: '/_authed',
   getParentRoute: () => rootRoute,
@@ -48,10 +44,22 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthedAgentChatRoute = AuthedAgentChatImport.update({
-  id: '/agent-chat',
-  path: '/agent-chat',
+const AuthedAgentRouteRoute = AuthedAgentRouteImport.update({
+  id: '/agent',
+  path: '/agent',
   getParentRoute: () => AuthedRoute,
+} as any)
+
+const AuthedAgentChatsIndexRoute = AuthedAgentChatsIndexImport.update({
+  id: '/chats/',
+  path: '/chats/',
+  getParentRoute: () => AuthedAgentRouteRoute,
+} as any)
+
+const AuthedAgentChatsIdRoute = AuthedAgentChatsIdImport.update({
+  id: '/chats/$id',
+  path: '/chats/$id',
+  getParentRoute: () => AuthedAgentRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -72,13 +80,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedImport
       parentRoute: typeof rootRoute
     }
-    '/_pathlessLayout': {
-      id: '/_pathlessLayout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PathlessLayoutImport
-      parentRoute: typeof rootRoute
-    }
     '/signin': {
       id: '/signin'
       path: '/signin'
@@ -93,24 +94,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
-    '/_authed/agent-chat': {
-      id: '/_authed/agent-chat'
-      path: '/agent-chat'
-      fullPath: '/agent-chat'
-      preLoaderRoute: typeof AuthedAgentChatImport
+    '/_authed/agent': {
+      id: '/_authed/agent'
+      path: '/agent'
+      fullPath: '/agent'
+      preLoaderRoute: typeof AuthedAgentRouteImport
       parentRoute: typeof AuthedImport
+    }
+    '/_authed/agent/chats/$id': {
+      id: '/_authed/agent/chats/$id'
+      path: '/chats/$id'
+      fullPath: '/agent/chats/$id'
+      preLoaderRoute: typeof AuthedAgentChatsIdImport
+      parentRoute: typeof AuthedAgentRouteImport
+    }
+    '/_authed/agent/chats/': {
+      id: '/_authed/agent/chats/'
+      path: '/chats'
+      fullPath: '/agent/chats'
+      preLoaderRoute: typeof AuthedAgentChatsIndexImport
+      parentRoute: typeof AuthedAgentRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AuthedAgentRouteRouteChildren {
+  AuthedAgentChatsIdRoute: typeof AuthedAgentChatsIdRoute
+  AuthedAgentChatsIndexRoute: typeof AuthedAgentChatsIndexRoute
+}
+
+const AuthedAgentRouteRouteChildren: AuthedAgentRouteRouteChildren = {
+  AuthedAgentChatsIdRoute: AuthedAgentChatsIdRoute,
+  AuthedAgentChatsIndexRoute: AuthedAgentChatsIndexRoute,
+}
+
+const AuthedAgentRouteRouteWithChildren =
+  AuthedAgentRouteRoute._addFileChildren(AuthedAgentRouteRouteChildren)
+
 interface AuthedRouteChildren {
-  AuthedAgentChatRoute: typeof AuthedAgentChatRoute
+  AuthedAgentRouteRoute: typeof AuthedAgentRouteRouteWithChildren
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
-  AuthedAgentChatRoute: AuthedAgentChatRoute,
+  AuthedAgentRouteRoute: AuthedAgentRouteRouteWithChildren,
 }
 
 const AuthedRouteWithChildren =
@@ -118,50 +146,69 @@ const AuthedRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof PathlessLayoutRoute
+  '': typeof AuthedRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
-  '/agent-chat': typeof AuthedAgentChatRoute
+  '/agent': typeof AuthedAgentRouteRouteWithChildren
+  '/agent/chats/$id': typeof AuthedAgentChatsIdRoute
+  '/agent/chats': typeof AuthedAgentChatsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof PathlessLayoutRoute
+  '': typeof AuthedRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
-  '/agent-chat': typeof AuthedAgentChatRoute
+  '/agent': typeof AuthedAgentRouteRouteWithChildren
+  '/agent/chats/$id': typeof AuthedAgentChatsIdRoute
+  '/agent/chats': typeof AuthedAgentChatsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
-  '/_pathlessLayout': typeof PathlessLayoutRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
-  '/_authed/agent-chat': typeof AuthedAgentChatRoute
+  '/_authed/agent': typeof AuthedAgentRouteRouteWithChildren
+  '/_authed/agent/chats/$id': typeof AuthedAgentChatsIdRoute
+  '/_authed/agent/chats/': typeof AuthedAgentChatsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/signin' | '/signup' | '/agent-chat'
+  fullPaths:
+    | '/'
+    | ''
+    | '/signin'
+    | '/signup'
+    | '/agent'
+    | '/agent/chats/$id'
+    | '/agent/chats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/signin' | '/signup' | '/agent-chat'
+  to:
+    | '/'
+    | ''
+    | '/signin'
+    | '/signup'
+    | '/agent'
+    | '/agent/chats/$id'
+    | '/agent/chats'
   id:
     | '__root__'
     | '/'
     | '/_authed'
-    | '/_pathlessLayout'
     | '/signin'
     | '/signup'
-    | '/_authed/agent-chat'
+    | '/_authed/agent'
+    | '/_authed/agent/chats/$id'
+    | '/_authed/agent/chats/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
-  PathlessLayoutRoute: typeof PathlessLayoutRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
 }
@@ -169,7 +216,6 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
-  PathlessLayoutRoute: PathlessLayoutRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
 }
@@ -186,7 +232,6 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_authed",
-        "/_pathlessLayout",
         "/signin",
         "/signup"
       ]
@@ -197,11 +242,8 @@ export const routeTree = rootRoute
     "/_authed": {
       "filePath": "_authed.tsx",
       "children": [
-        "/_authed/agent-chat"
+        "/_authed/agent"
       ]
-    },
-    "/_pathlessLayout": {
-      "filePath": "_pathlessLayout.tsx"
     },
     "/signin": {
       "filePath": "signin.tsx"
@@ -209,9 +251,21 @@ export const routeTree = rootRoute
     "/signup": {
       "filePath": "signup.tsx"
     },
-    "/_authed/agent-chat": {
-      "filePath": "_authed/agent-chat.tsx",
-      "parent": "/_authed"
+    "/_authed/agent": {
+      "filePath": "_authed/agent/route.tsx",
+      "parent": "/_authed",
+      "children": [
+        "/_authed/agent/chats/$id",
+        "/_authed/agent/chats/"
+      ]
+    },
+    "/_authed/agent/chats/$id": {
+      "filePath": "_authed/agent/chats.$id.tsx",
+      "parent": "/_authed/agent"
+    },
+    "/_authed/agent/chats/": {
+      "filePath": "_authed/agent/chats.index.tsx",
+      "parent": "/_authed/agent"
     }
   }
 }

@@ -1,8 +1,8 @@
 export const ChatMessage = ({
-	message,
+	content,
 	isUser,
 }: {
-	message: string;
+	content: string;
 	isUser?: boolean;
 }) => (
 	<div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-2`}>
@@ -13,7 +13,7 @@ export const ChatMessage = ({
 					: 'bg-gray-100 text-gray-900 border border-gray-200'
 			}`}
 		>
-			{message}
+			{content}
 		</div>
 	</div>
 );

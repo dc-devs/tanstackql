@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { NavUser } from '@/features/agentChat/components/NavUser';
 import { NavChats } from '@/features/agentChat/components/NavChats';
-import { getChatSessions } from '@/features/agentChat/server/getChatSessions';
 import { SidebarHeaderLogo } from '@/features/agentChat/components/SidebarHeaderLogo';
 import { CreateNewChatButton } from '@/features/agentChat/components/CreateNewChatButton';
 import {
@@ -16,11 +14,6 @@ import {
 export const AppSidebar = ({
 	...props
 }: React.ComponentProps<typeof Sidebar>) => {
-	const { data } = useQuery({
-		queryKey: ['chat-sessions'],
-		queryFn: getChatSessions,
-	});
-
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
@@ -28,7 +21,7 @@ export const AppSidebar = ({
 				<CreateNewChatButton />
 			</SidebarHeader>
 			<SidebarContent>
-				<NavChats chats={data} />
+				<NavChats />
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser />

@@ -1,4 +1,5 @@
 import { Plus } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
 import {
 	SidebarMenu,
 	SidebarMenuItem,
@@ -19,9 +20,12 @@ export const CreateNewChatButton = () => {
 					<div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
 						<Plus className="size-5" />
 					</div>
-					<div className="grid flex-1 text-left text-sm leading-tight">
+					<Link
+						to="/agent/chats"
+						className="grid flex-1 text-left text-sm leading-tight"
+					>
 						<span className="truncate font-semibold">New Chat</span>
-					</div>
+					</Link>
 				</SidebarMenuButton>
 			</SidebarMenuItem>
 		</SidebarMenu>
