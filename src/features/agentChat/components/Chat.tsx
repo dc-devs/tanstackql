@@ -1,3 +1,4 @@
+import type { Message } from '@/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
 import { getMessages } from '@/features/agentChat/serverFns/getMessages';
 import { ChatInputBar } from '@/features/agentChat/components/ChatInputBar';
@@ -8,7 +9,7 @@ export const Chat = () => {
 	const { id } = ChatRoute.useParams();
 	const chatSessionId = Number(id);
 
-	const { data: rawMessages } = useQuery({
+	const { data: messages } = useQuery({
 		queryKey: ['messages', `chatSessionId-${chatSessionId}`],
 		queryFn: () =>
 			getMessages({
@@ -18,17 +19,9 @@ export const Chat = () => {
 			}),
 	});
 
-	// Transform messages to match ChatMessageList's expected format
-	const messages =
-		rawMessages?.map((msg) => ({
-			content: msg.content || '',
-			sender: msg.sender,
-		})) || [];
-	console.log('messages', messages);
-
 	return (
 		<>
-			<ChatMessageList messages={messages} />
+			<ChatMessageList messages={messages as Message[]} />
 
 			<div className="absolute left-0 bottom-7 w-full bg-white pb-2 pt-2 px-3">
 				<ChatInputBar />
