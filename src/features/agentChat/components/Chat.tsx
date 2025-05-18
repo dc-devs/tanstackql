@@ -2,11 +2,20 @@ import { useQuery } from '@tanstack/react-query';
 import { getMessages } from '@/features/agentChat/server/getMessages';
 import { ChatInputBar } from '@/features/agentChat/components/ChatInputBar';
 import { ChatMessageList } from '@/features/agentChat/components/NewMessageList';
+import { Route as ChatRoute } from '@/routes/_authed/agent/chats.$id';
 
 export const Chat = () => {
+	const { id } = ChatRoute.useParams();
+	const chatSessionId = Number(id);
+
 	const { data: messages } = useQuery({
-		queryKey: ['messages'],
-		queryFn: getMessages,
+		queryKey: ['messages', `chatSessionId-${chatSessionId}`],
+		queryFn: () =>
+			getMessages({
+				data: {
+					where: { chatSessionId: { equals: chatSessionId } },
+				},
+			}),
 	});
 
 	return (
