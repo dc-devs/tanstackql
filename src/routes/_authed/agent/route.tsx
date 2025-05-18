@@ -4,10 +4,22 @@ import { AgentChatLayout } from '@/features/agentChat/components/AgentChatLayout
 
 export const Route = createFileRoute('/_authed/agent')({
 	loader: async ({ context }) => {
+		const userId = Number(context?.currentUser?.user?.id);
+		console.log('userId', userId);
+
 		// Prefetch and cache the data for SSR
 		const data = await context.queryClient.prefetchQuery({
-			queryKey: ['chat-sessions'],
-			queryFn: getChatSessions,
+			queryKey: ['chat-sessions', `userId-${userId}`],
+			queryFn: () =>
+				getChatSessions({
+					data: {
+						where: {
+							userId: {
+								equals: userId,
+							},
+						},
+					},
+				}),
 		});
 		// You can return nothing, or return the data if you want
 		return data;

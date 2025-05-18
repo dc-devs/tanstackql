@@ -1,5 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/features/auth/hooks';
+import type { AuthContextType } from '@/features/auth/interfaces';
 import { getChatSessions } from '@/features/agentChat/server/getChatSessions';
 import {
 	SidebarMenu,
@@ -10,9 +12,22 @@ import {
 } from '@/common/components/shadcn-ui/sidebar';
 
 export const NavChats = () => {
+	const auth = useAuth() as AuthContextType;
+	const user = auth ? auth.user : null;
+	const userId = Number(user?.id);
+
 	const { data: chats } = useQuery({
-		queryKey: ['chat-sessions'],
-		queryFn: getChatSessions,
+		queryKey: ['chat-sessions', `userId-${userId}`],
+		queryFn: () =>
+			getChatSessions({
+				data: {
+					where: {
+						userId: {
+							equals: userId,
+						},
+					},
+				},
+			}),
 	});
 
 	return (
