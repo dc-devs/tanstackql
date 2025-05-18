@@ -6,7 +6,9 @@
 	"scripts": {
 		"dev": "vinxi dev --host 0.0.0.0 --port 3003",
 		"build": "vinxi build",
-		"start": "vinxi start"
+		"start": "vinxi start",
+		"codegen": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx graphql-codegen",
+		"codegen:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx graphql-codegen --watch"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.0.1",
@@ -44,6 +46,10 @@
 		"@eslint/compat": "1.2.8",
 		"@eslint/eslintrc": "3.3.1",
 		"@eslint/js": "9.24.0",
+		"@graphql-codegen/cli": "^5.0.6",
+		"@graphql-codegen/typescript": "^4.1.6",
+		"@graphql-codegen/typescript-operations": "^4.6.1",
+		"@parcel/watcher": "^2.5.1",
 		"@types/bun": "latest",
 		"@types/figlet": "1.7.0",
 		"@types/node": "^22.5.4",
@@ -56,6 +62,7 @@
 		"eslint": "9.24.0",
 		"eslint-config-prettier": "10.1.1",
 		"globals": "16.0.0",
+		"graphql": "^16.11.0",
 		"postcss": "^8.5.3",
 		"prettier": "3.5.3",
 		"tailwindcss": "^4.1.4",

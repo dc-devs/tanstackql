@@ -8,7 +8,7 @@ import { request, type RequestDocument } from 'graphql-request';
  * @constant {DocumentNode} FindAllChatSessionsQuery
  */
 export const FindAllChatSessionsQuery = gql`
-	query Query {
+	query FindAllChatSessionsClient {
 		findAllChatSessions {
 			id
 			title

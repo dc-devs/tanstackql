@@ -13,7 +13,7 @@ export const getChatSessions = createServerFn({ method: 'GET' })
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();
 		const query = gql`
-			query Query($where: ChatSessionWhereInput) {
+			query FindAllChatSessionsServer($where: ChatSessionWhereInput) {
 				findAllChatSessions(where: $where) {
 					id
 					title
