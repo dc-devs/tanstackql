@@ -7,8 +7,8 @@
 		"dev": "vinxi dev --host 0.0.0.0 --port 3003",
 		"build": "vinxi build",
 		"start": "vinxi start",
-		"codegen": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx graphql-codegen",
-		"codegen:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx graphql-codegen --watch"
+		"gen:gql": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx graphql-codegen",
+		"gen:gql:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx graphql-codegen --watch"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.0.1",

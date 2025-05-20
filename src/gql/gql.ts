@@ -14,7 +14,6 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n\tquery FindAllChatSessionsClient {\n\t\tfindAllChatSessions {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": typeof types.FindAllChatSessionsClientDocument,
     "\n\t\t\tquery FindAllChatSessionsServer($where: ChatSessionWhereInput) {\n\t\t\t\tfindAllChatSessions(where: $where) {\n\t\t\t\t\tid\n\t\t\t\t\ttitle\n\t\t\t\t\tuserId\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tupdatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t": typeof types.FindAllChatSessionsServerDocument,
     "\n\tquery GetMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": typeof types.GetMessagesDocument,
     "\n\tquery CurrentUser {\n\t\tcurrentUser {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": typeof types.CurrentUserDocument,
@@ -23,7 +22,6 @@ type Documents = {
     "\n\tmutation SignUp($data: UserCreateInput!) {\n\t\tsignUp(data: $data) {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": typeof types.SignUpDocument,
 };
 const documents: Documents = {
-    "\n\tquery FindAllChatSessionsClient {\n\t\tfindAllChatSessions {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": types.FindAllChatSessionsClientDocument,
     "\n\t\t\tquery FindAllChatSessionsServer($where: ChatSessionWhereInput) {\n\t\t\t\tfindAllChatSessions(where: $where) {\n\t\t\t\t\tid\n\t\t\t\t\ttitle\n\t\t\t\t\tuserId\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tupdatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t": types.FindAllChatSessionsServerDocument,
     "\n\tquery GetMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": types.GetMessagesDocument,
     "\n\tquery CurrentUser {\n\t\tcurrentUser {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": types.CurrentUserDocument,
@@ -46,10 +44,6 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n\tquery FindAllChatSessionsClient {\n\t\tfindAllChatSessions {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery FindAllChatSessionsClient {\n\t\tfindAllChatSessions {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

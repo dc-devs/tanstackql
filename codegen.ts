@@ -1,13 +1,5 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
-export type JsonValue =
-	| string
-	| number
-	| boolean
-	| null
-	| JsonValue[]
-	| { [key: string]: JsonValue };
-
 const config: CodegenConfig = {
 	schema: {
 		'https://local.nestql.com/graphql': {
@@ -20,17 +12,17 @@ const config: CodegenConfig = {
 	generates: {
 		'./src/gql/': {
 			preset: 'client',
-			plugins: ['typescript', 'typescript-operations'],
 			config: {
 				strictScalars: true,
 				useTypeImports: true,
 				scalars: {
 					DateTime: 'string',
-					JSON: './codegen#JsonValue',
+					JSON: './types/JsonValue#JsonValue',
 				},
 			},
 		},
 	},
+	overwrite: true,
 	ignoreNoDocuments: true,
 };
 
