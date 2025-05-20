@@ -17,7 +17,7 @@ const config: CodegenConfig = {
 				useTypeImports: true,
 				scalars: {
 					DateTime: 'string',
-					JSON: './types/JsonValue#JsonValue',
+					JSON: 'any',
 				},
 			},
 		},

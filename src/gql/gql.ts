@@ -15,7 +15,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  */
 type Documents = {
     "\n\t\t\tquery FindAllChatSessions($where: ChatSessionWhereInput) {\n\t\t\t\tfindAllChatSessions(where: $where) {\n\t\t\t\t\tid\n\t\t\t\t\ttitle\n\t\t\t\t\tuserId\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tupdatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t": typeof types.FindAllChatSessionsDocument,
-    "\n\tquery GetMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": typeof types.GetMessagesDocument,
+    "\n\tquery FindAllMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": typeof types.FindAllMessagesDocument,
     "\n\tquery CurrentUser {\n\t\tcurrentUser {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": typeof types.CurrentUserDocument,
     "\n\tmutation SignIn($sessionInput: SessionInput!) {\n\t\tsignIn(sessionInput: $sessionInput) {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": typeof types.SignInDocument,
     "\n\tmutation SignOut($userId: String!) {\n\t\tsignOut(userId: $userId) {\n\t\t\tisAuthenticated\n\t\t\tuserId\n\t\t}\n\t}\n": typeof types.SignOutDocument,
@@ -23,7 +23,7 @@ type Documents = {
 };
 const documents: Documents = {
     "\n\t\t\tquery FindAllChatSessions($where: ChatSessionWhereInput) {\n\t\t\t\tfindAllChatSessions(where: $where) {\n\t\t\t\t\tid\n\t\t\t\t\ttitle\n\t\t\t\t\tuserId\n\t\t\t\t\tcreatedAt\n\t\t\t\t\tupdatedAt\n\t\t\t\t}\n\t\t\t}\n\t\t": types.FindAllChatSessionsDocument,
-    "\n\tquery GetMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": types.GetMessagesDocument,
+    "\n\tquery FindAllMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": types.FindAllMessagesDocument,
     "\n\tquery CurrentUser {\n\t\tcurrentUser {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": types.CurrentUserDocument,
     "\n\tmutation SignIn($sessionInput: SessionInput!) {\n\t\tsignIn(sessionInput: $sessionInput) {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": types.SignInDocument,
     "\n\tmutation SignOut($userId: String!) {\n\t\tsignOut(userId: $userId) {\n\t\t\tisAuthenticated\n\t\t\tuserId\n\t\t}\n\t}\n": types.SignOutDocument,
@@ -51,7 +51,7 @@ export function graphql(source: "\n\t\t\tquery FindAllChatSessions($where: ChatS
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\tquery GetMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n"];
+export function graphql(source: "\n\tquery FindAllMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery FindAllMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

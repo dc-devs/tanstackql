@@ -1,15 +1,15 @@
+import { graphql } from '@/gql/gql';
 import { request } from 'graphql-request';
 import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
-import { graphql } from '@/gql/gql';
 import type {
-	GetMessagesQuery,
-	GetMessagesQueryVariables,
+	FindAllMessagesQuery,
+	FindAllMessagesQueryVariables,
 } from '@/gql/graphql';
 
 // Define the query using the graphql tag
-const GetMessagesDocument = graphql(`
-	query GetMessages($where: MessageWhereInput) {
+const FindAllMessagesDocument = graphql(`
+	query FindAllMessages($where: MessageWhereInput) {
 		findAllMessages(where: $where) {
 			id
 			type
@@ -22,15 +22,16 @@ const GetMessagesDocument = graphql(`
 	}
 `);
 
-type WhereInput = GetMessagesQueryVariables['where'];
-
-export const getMessages = createServerFn({ method: 'GET' })
-	.validator((data: { where?: WhereInput }) => data)
+export const findAllMessages = createServerFn({ method: 'GET' })
+	.validator((data: FindAllMessagesQueryVariables) => {
+		console.log('[DEBUG] findAllMessages-data', JSON.stringify(data));
+		return data;
+	})
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();
-		const response = await request<GetMessagesQuery>(
+		const response = await request<FindAllMessagesQuery>(
 			endpoint,
-			GetMessagesDocument,
+			FindAllMessagesDocument,
 			{ where: data.where },
 		);
 

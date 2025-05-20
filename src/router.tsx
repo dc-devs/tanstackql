@@ -6,6 +6,19 @@ import { NotFound } from './features/root/components/NotFound';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { dehydrate, hydrate } from '@tanstack/react-query';
 
+// Add type for the router context
+declare module '@tanstack/react-router' {
+	interface RouterContext {
+		queryClient: QueryClient;
+	}
+}
+
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: ReturnType<typeof createRouter>;
+	}
+}
+
 export const createRouter = () => {
 	const queryClient = new QueryClient({
 		defaultOptions: {
@@ -55,16 +68,3 @@ export const createRouter = () => {
 
 	return router;
 };
-
-declare module '@tanstack/react-router' {
-	interface Register {
-		router: ReturnType<typeof createRouter>;
-	}
-}
-
-// Add type for the router context
-declare module '@tanstack/react-router' {
-	interface RouterContext {
-		queryClient: QueryClient;
-	}
-}

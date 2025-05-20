@@ -1,6 +1,6 @@
 import type { Message } from '@/gql/graphql';
 import { useQuery } from '@tanstack/react-query';
-import { getMessages } from '@/features/agentChat/serverFns/getMessages';
+import { findAllMessages } from '@/features/agentChat/serverFns/findAllMessages';
 import { ChatInputBar } from '@/features/agentChat/components/ChatInputBar';
 import { ChatMessageList } from '@/features/agentChat/components/NewMessageList';
 import { Route as ChatRoute } from '@/routes/_authed/agent/chats.$id';
@@ -12,7 +12,7 @@ export const Chat = () => {
 	const { data: messages } = useQuery({
 		queryKey: ['messages', `chatSessionId-${chatSessionId}`],
 		queryFn: () =>
-			getMessages({
+			findAllMessages({
 				data: {
 					where: { chatSessionId: { equals: chatSessionId } },
 				},

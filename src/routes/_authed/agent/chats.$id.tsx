@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Chat } from '@/features/agentChat/components/Chat';
-import { getMessages } from '@/features/agentChat/serverFns/getMessages';
+import { findAllMessages } from '@/features/agentChat/serverFns/findAllMessages';
 
 export const Route = createFileRoute('/_authed/agent/chats/$id')({
 	loader: async ({ params, context }) => {
@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_authed/agent/chats/$id')({
 		const data = await context.queryClient.prefetchQuery({
 			queryKey: ['messages', `chatSessionId-${chatSessionId}`],
 			queryFn: () =>
-				getMessages({
+				findAllMessages({
 					data: {
 						where: {
 							chatSessionId: {
