@@ -1,9 +1,22 @@
 import { useRef, useEffect } from 'react';
-import type { Message } from '@/gql/graphql';
+import { useQuery } from '@tanstack/react-query';
+import { findAllMessages } from '@/features/agentChat/serverFns/findAllMessages';
+import { Route as ChatRoute } from '@/routes/_authed/agent/chats.$id';
 import { ChatMessage } from '@/features/agentChat/components/ChatMessage';
 
-export const ChatMessageList = ({ messages }: { messages: Message[] }) => {
+export const ChatMessageList = () => {
 	const bottomRef = useRef<HTMLDivElement>(null);
+	const { id } = ChatRoute.useParams();
+	const chatSessionId = Number(id);
+	const { data: messages } = useQuery({
+		queryKey: ['messages', `chatSessionId-${chatSessionId}`],
+		queryFn: () =>
+			findAllMessages({
+				data: {
+					where: { chatSessionId: { equals: chatSessionId } },
+				},
+			}),
+	});
 
 	useEffect(() => {
 		bottomRef.current?.scrollIntoView({ behavior: 'smooth' });

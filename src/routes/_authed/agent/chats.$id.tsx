@@ -20,6 +20,7 @@ export const Route = createFileRoute('/_authed/agent/chats/$id')({
 					},
 				}),
 		});
+
 		// You can return nothing, or return the data if you want
 		return data;
 	},
