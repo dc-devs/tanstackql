@@ -1,30 +1,32 @@
 import { request, gql } from 'graphql-request';
 import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
+import type {
+	FindAllChatSessionsQuery,
+	FindAllChatSessionsQueryVariables,
+} from '@/gql/graphql';
 
-type WhereInput = {
-	userId?: {
-		equals?: number;
-	};
-};
+const FindAllChatSessionsDocument = gql`
+	query FindAllChatSessions($where: ChatSessionWhereInput) {
+		findAllChatSessions(where: $where) {
+			id
+			title
+			userId
+			createdAt
+			updatedAt
+		}
+	}
+`;
 
 export const findAllChatSessions = createServerFn({ method: 'GET' })
-	.validator((data: { where?: WhereInput }) => data)
+	.validator((data: FindAllChatSessionsQueryVariables) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();
-		const query = gql`
-			query FindAllChatSessions($where: ChatSessionWhereInput) {
-				findAllChatSessions(where: $where) {
-					id
-					title
-					userId
-					createdAt
-					updatedAt
-				}
-			}
-		`;
-		const response = await request(endpoint, query, { where: data.where });
+		const response = await request<FindAllChatSessionsQuery>(
+			endpoint,
+			FindAllChatSessionsDocument,
+			{ where: data.where },
+		);
 
-		// @ts-expect-error - response is not typed
 		return response.findAllChatSessions;
 	});

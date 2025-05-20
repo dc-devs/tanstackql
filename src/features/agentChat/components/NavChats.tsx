@@ -36,7 +36,7 @@ export const NavChats = () => {
 			<div className="border-r-2 border-gray-200 h-full mx-2"></div>
 			<div className="border-b-2 border-gray-200 w-full my-2"></div>
 			<SidebarMenu>
-				{chats.map((chat: any, index: number) => (
+				{chats?.map((chat, index) => (
 					<SidebarMenuItem key={index}>
 						<SidebarMenuButton asChild>
 							<Link

@@ -23,10 +23,7 @@ const FindAllMessagesDocument = graphql(`
 `);
 
 export const findAllMessages = createServerFn({ method: 'GET' })
-	.validator((data: FindAllMessagesQueryVariables) => {
-		console.log('[DEBUG] findAllMessages-data', JSON.stringify(data));
-		return data;
-	})
+	.validator((data: FindAllMessagesQueryVariables) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();
 		const response = await request<FindAllMessagesQuery>(
