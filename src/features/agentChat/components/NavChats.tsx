@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/features/auth/hooks';
 import type { AuthContextType } from '@/features/auth/interfaces';
-import { getChatSessions } from '@/features/agentChat/serverFns/getChatSessions';
+import { findAllChatSessions } from '@/features/agentChat/serverFns/findAllChatSessions';
 import {
 	SidebarMenu,
 	SidebarGroup,
@@ -19,7 +19,7 @@ export const NavChats = () => {
 	const { data: chats } = useQuery({
 		queryKey: ['chat-sessions', `userId-${userId}`],
 		queryFn: () =>
-			getChatSessions({
+			findAllChatSessions({
 				data: {
 					where: {
 						userId: {

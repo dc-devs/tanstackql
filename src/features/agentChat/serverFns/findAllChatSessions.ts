@@ -8,12 +8,12 @@ type WhereInput = {
 	};
 };
 
-export const getChatSessions = createServerFn({ method: 'GET' })
+export const findAllChatSessions = createServerFn({ method: 'GET' })
 	.validator((data: { where?: WhereInput }) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();
 		const query = gql`
-			query FindAllChatSessionsServer($where: ChatSessionWhereInput) {
+			query FindAllChatSessions($where: ChatSessionWhereInput) {
 				findAllChatSessions(where: $where) {
 					id
 					title
