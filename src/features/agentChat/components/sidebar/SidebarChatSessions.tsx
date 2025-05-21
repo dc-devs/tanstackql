@@ -11,7 +11,7 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
-export const NavChats = () => {
+export const SidebarChatSessions = () => {
 	const auth = useAuth() as AuthContextType;
 	const user = auth ? auth.user : null;
 	const userId = Number(user?.id);

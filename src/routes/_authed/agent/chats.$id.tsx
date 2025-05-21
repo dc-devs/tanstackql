@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Chat } from '@/features/agentChat/components/Chat';
+import { ChatScreen } from '@/features/agentChat/components/chat/ChatScreen';
 import { findAllMessages } from '@/features/agentChat/serverFns/findAllMessages';
 
 export const Route = createFileRoute('/_authed/agent/chats/$id')({
@@ -25,6 +25,6 @@ export const Route = createFileRoute('/_authed/agent/chats/$id')({
 		return data;
 	},
 	component: () => {
-		return <Chat />;
+		return <ChatScreen />;
 	},
 });

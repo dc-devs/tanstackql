@@ -30,7 +30,7 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
-export const NavUser = () => {
+export const SidebarUser = () => {
 	const navigate = useNavigate();
 	const { isMobile } = useSidebar();
 	const signOutMutation = useSignOut();
