@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ChatScreen } from '@/features/agentChat/components/chat/ChatScreen';
-import { findAllMessages } from '@/features/agentChat/serverFns/findAllMessages';
+import { findAllMessages } from '@/serverFns/findAllMessages';
 
 export const Route = createFileRoute('/_authed/agent/chats/$id')({
 	loader: async ({ params, context }) => {
