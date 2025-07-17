@@ -1,65 +1,27 @@
+import { QueryClient } from '@tanstack/react-query';
 import { createRouter as createTanStackRouter } from '@tanstack/react-router';
-import { routeTree } from './routeTree.gen';
+import { routerWithQueryClient } from '@tanstack/react-router-with-query';
+import { routeTree } from '@/routeTree.gen';
+import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundary';
+import { NotFound } from '@/components/NotFound';
 
-function NotFound() {
-	return (
-		<div
-			style={{
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				justifyContent: 'center',
-				minHeight: '50vh',
-				padding: '2rem',
-				textAlign: 'center',
-			}}
-		>
-			<h1
-				style={{
-					fontSize: '4rem',
-					margin: '0 0 1rem 0',
-					color: '#666',
-				}}
-			>
-				404
-			</h1>
-			<h2
-				style={{
-					fontSize: '1.5rem',
-					margin: '0 0 1rem 0',
-					color: '#333',
-				}}
-			>
-				Page Not Found
-			</h2>
-			<p style={{ color: '#666', marginBottom: '2rem' }}>
-				The page you're looking for doesn't exist.
-			</p>
-			<a
-				href="/"
-				style={{
-					padding: '0.75rem 1.5rem',
-					backgroundColor: '#007bff',
-					color: 'white',
-					textDecoration: 'none',
-					borderRadius: '0.375rem',
-					fontSize: '1rem',
-				}}
-			>
-				Go Home
-			</a>
-		</div>
-	);
-}
+// NOTE: Most of the integration code found here is experimental and will
+// definitely end up in a more streamlined API in the future. This is just
+// to show what's possible with the current APIs.
 
 export function createRouter() {
-	const router = createTanStackRouter({
-		routeTree,
-		scrollRestoration: true,
-		defaultNotFoundComponent: NotFound,
-	});
+	const queryClient = new QueryClient();
 
-	return router;
+	return routerWithQueryClient(
+		createTanStackRouter({
+			routeTree,
+			context: { queryClient },
+			defaultPreload: 'intent',
+			defaultErrorComponent: DefaultCatchBoundary,
+			defaultNotFoundComponent: () => <NotFound />,
+		}),
+		queryClient,
+	);
 }
 
 declare module '@tanstack/react-router' {
