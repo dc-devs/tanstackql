@@ -15,7 +15,14 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@common/*": ["./src/common/*"],
+			"@features/*": ["./src/features/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@lib/*": ["./src/lib/*"],
+			"@ui/*": ["./src/ui/*"],
+			"@utils/*": ["src/features/root/utils/*"],
+			"@types/*": ["./src/types/*"]
 		},
 		"noEmit": true
 	}
