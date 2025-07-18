@@ -2,11 +2,11 @@ import { gql } from 'graphql-request';
 
 /**
  * GraphQL query to fetch the current user's data
- * @constant {DocumentNode} CurrentUserDocument
+ * @constant {DocumentNode} GetAuthSessionDocument
  */
-export const CurrentUserDocument = gql`
-	query CurrentUser {
-		currentUser {
+export const GetAuthSessionDocument = gql`
+	query GetAuthSession {
+		getAuthSession {
 			isAuthenticated
 			user {
 				id

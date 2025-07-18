@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { SessionResponse } from '@/gql/graphql';
+import { useRouter } from '@tanstack/react-router';
+import { useServerFn } from '@tanstack/react-start';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
+import { useAuthForm } from '@/features/auth/hooks';
 import { Button } from '@/common/components/shadcn-ui/button';
-import { useSignIn, useAuthForm } from '@/features/auth/hooks';
+import { signInServer } from '@/features/auth/serverFns/signIn';
 import { GoogleSignInButton } from '@/features/auth/components/buttons';
 import { SocialButtonSeparator } from '@/features/auth/components/separators';
 import { EmailField, PasswordField } from '@/features/auth/components/fields';
@@ -13,21 +18,46 @@ import { emailValidator, passwordValidator } from '@/features/auth/validators';
  * @returns {React.ReactNode} Sign-in form component
  */
 export const SignInForm = () => {
-	const [submissionError, setSubmissionError] = useState<string | null>(null);
-	const signInMutation = useSignIn();
+	const router = useRouter();
 	const navigate = useNavigate();
+	const [submissionError, setSubmissionError] = useState<string | null>(null);
+	const signInMutation = useMutation({
+		mutationFn: useServerFn(signInServer),
+	});
 	const form = useAuthForm({
 		defaultValues: {
 			email: '',
 			password: '',
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value: data }) => {
 			// Clear any previous errors
 			setSubmissionError(null);
+
 			try {
 				// Sign in the user - this will also update the auth context
-				await signInMutation.mutateAsync(value);
-				navigate({ to: '/' });
+				const authSession = await signInMutation.mutateAsync({ data });
+
+				if (authSession.isAuthenticated) {
+					const { user } = authSession as SessionResponse;
+					const userId = user!.id;
+					console.log('mutation userId', userId);
+					console.log('mutation result', user);
+
+					// TODO: Fix redirect
+					// Redirect to the prev page stored in the "redirect" search param
+					// throw redirect({
+					// 	href: data.redirectUrl || '/',
+					// });
+
+					console.log('invalidating router');
+					await router.invalidate();
+
+					navigate({
+						to: '/users/$userId',
+						params: { userId },
+					});
+					console.log('navigated to', userId);
+				}
 			} catch (error) {
 				console.error('Sign in error:', error);
 				setSubmissionError('Failed to sign in. Please try again.');

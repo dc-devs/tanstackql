@@ -9,6 +9,8 @@ import { isDevelopment } from '@/common/constants/environment';
  * @param requestHeaders - Additional request headers
  * @returns Promise with the GraphQL response
  */
+
+// TODO: DELETE THIS FILE
 export const createGraphQLRequest = async <
 	T = any,
 	V extends Variables = Variables,

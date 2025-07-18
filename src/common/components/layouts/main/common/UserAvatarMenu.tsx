@@ -1,7 +1,6 @@
 import { LogOut } from 'lucide-react';
 import { useNavigate } from '@tanstack/react-router';
-import { useAuth, useSignOut } from '@/features/auth/hooks';
-import type { AuthContextType } from '@/features/auth/interfaces';
+import { useSignOut } from '@/features/auth/hooks';
 import { Avatar, AvatarFallback } from '@/common/components/shadcn-ui/avatar';
 import {
 	DropdownMenu,
@@ -10,11 +9,15 @@ import {
 	DropdownMenuItem,
 } from '@/common/components/shadcn-ui/dropdown-menu';
 
+// TODO: FIX AUTH
 export const UserAvatarMenu = () => {
 	const navigate = useNavigate();
 	const signOutMutation = useSignOut();
-	const auth = useAuth() as AuthContextType;
-	const user = auth ? auth.user : null;
+	// const user = auth ? auth.user : null;
+	const user = {
+		id: '1',
+		email: 'test@test.com',
+	};
 
 	const handleLogout = async () => {
 		if (user?.id) {

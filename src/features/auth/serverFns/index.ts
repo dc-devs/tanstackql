@@ -1,1 +1,1 @@
-export { fetchCurrentUser } from '@/features/auth/serverFns/fetchCurrentUser';
+export { getAuthSessionServer } from '@/features/auth/serverFns/getAuthSessionServer/getAuthSessionServer';

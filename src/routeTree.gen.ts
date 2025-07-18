@@ -9,19 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthedAgentRouteRouteImport } from './routes/_authed/agent/route'
-import { Route as AuthedAgentChatsIndexRouteImport } from './routes/_authed/agent/chats.index'
-import { Route as AuthedAgentChatsIdRouteImport } from './routes/_authed/agent/chats.$id'
+import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
@@ -36,92 +28,45 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthedAgentRouteRoute = AuthedAgentRouteRouteImport.update({
-  id: '/agent',
-  path: '/agent',
+const AuthedUsersUserIdRoute = AuthedUsersUserIdRouteImport.update({
+  id: '/users/$userId',
+  path: '/users/$userId',
   getParentRoute: () => AuthedRoute,
-} as any)
-const AuthedAgentChatsIndexRoute = AuthedAgentChatsIndexRouteImport.update({
-  id: '/chats/',
-  path: '/chats/',
-  getParentRoute: () => AuthedAgentRouteRoute,
-} as any)
-const AuthedAgentChatsIdRoute = AuthedAgentChatsIdRouteImport.update({
-  id: '/chats/$id',
-  path: '/chats/$id',
-  getParentRoute: () => AuthedAgentRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
-  '/agent': typeof AuthedAgentRouteRouteWithChildren
-  '/agent/chats/$id': typeof AuthedAgentChatsIdRoute
-  '/agent/chats': typeof AuthedAgentChatsIndexRoute
+  '/users/$userId': typeof AuthedUsersUserIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
-  '/agent': typeof AuthedAgentRouteRouteWithChildren
-  '/agent/chats/$id': typeof AuthedAgentChatsIdRoute
-  '/agent/chats': typeof AuthedAgentChatsIndexRoute
+  '/users/$userId': typeof AuthedUsersUserIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
   '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
-  '/_authed/agent': typeof AuthedAgentRouteRouteWithChildren
-  '/_authed/agent/chats/$id': typeof AuthedAgentChatsIdRoute
-  '/_authed/agent/chats/': typeof AuthedAgentChatsIndexRoute
+  '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/signin'
-    | '/signup'
-    | '/agent'
-    | '/agent/chats/$id'
-    | '/agent/chats'
+  fullPaths: '/' | '/signin' | '/users/$userId'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/signin'
-    | '/signup'
-    | '/agent'
-    | '/agent/chats/$id'
-    | '/agent/chats'
-  id:
-    | '__root__'
-    | '/'
-    | '/_authed'
-    | '/signin'
-    | '/signup'
-    | '/_authed/agent'
-    | '/_authed/agent/chats/$id'
-    | '/_authed/agent/chats/'
+  to: '/' | '/signin' | '/users/$userId'
+  id: '__root__' | '/' | '/_authed' | '/signin' | '/_authed/users/$userId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
   SigninRoute: typeof SigninRoute
-  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/signin': {
       id: '/signin'
       path: '/signin'
@@ -143,49 +88,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authed/agent': {
-      id: '/_authed/agent'
-      path: '/agent'
-      fullPath: '/agent'
-      preLoaderRoute: typeof AuthedAgentRouteRouteImport
+    '/_authed/users/$userId': {
+      id: '/_authed/users/$userId'
+      path: '/users/$userId'
+      fullPath: '/users/$userId'
+      preLoaderRoute: typeof AuthedUsersUserIdRouteImport
       parentRoute: typeof AuthedRoute
-    }
-    '/_authed/agent/chats/': {
-      id: '/_authed/agent/chats/'
-      path: '/chats'
-      fullPath: '/agent/chats'
-      preLoaderRoute: typeof AuthedAgentChatsIndexRouteImport
-      parentRoute: typeof AuthedAgentRouteRoute
-    }
-    '/_authed/agent/chats/$id': {
-      id: '/_authed/agent/chats/$id'
-      path: '/chats/$id'
-      fullPath: '/agent/chats/$id'
-      preLoaderRoute: typeof AuthedAgentChatsIdRouteImport
-      parentRoute: typeof AuthedAgentRouteRoute
     }
   }
 }
 
-interface AuthedAgentRouteRouteChildren {
-  AuthedAgentChatsIdRoute: typeof AuthedAgentChatsIdRoute
-  AuthedAgentChatsIndexRoute: typeof AuthedAgentChatsIndexRoute
-}
-
-const AuthedAgentRouteRouteChildren: AuthedAgentRouteRouteChildren = {
-  AuthedAgentChatsIdRoute: AuthedAgentChatsIdRoute,
-  AuthedAgentChatsIndexRoute: AuthedAgentChatsIndexRoute,
-}
-
-const AuthedAgentRouteRouteWithChildren =
-  AuthedAgentRouteRoute._addFileChildren(AuthedAgentRouteRouteChildren)
-
 interface AuthedRouteChildren {
-  AuthedAgentRouteRoute: typeof AuthedAgentRouteRouteWithChildren
+  AuthedUsersUserIdRoute: typeof AuthedUsersUserIdRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
-  AuthedAgentRouteRoute: AuthedAgentRouteRouteWithChildren,
+  AuthedUsersUserIdRoute: AuthedUsersUserIdRoute,
 }
 
 const AuthedRouteWithChildren =
@@ -195,7 +113,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
   SigninRoute: SigninRoute,
-  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,6 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useAuth, useSignOut } from '@/features/auth/hooks';
-import type { AuthContextType } from '@/features/auth/interfaces';
+import { useSignOut } from '@/features/auth/hooks';
 import {
 	Bell,
 	LogOut,
@@ -30,11 +29,15 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
+// TODO: FIX AUTH
 export const SidebarUser = () => {
 	const navigate = useNavigate();
 	const { isMobile } = useSidebar();
 	const signOutMutation = useSignOut();
-	const { user } = useAuth() as AuthContextType;
+	const user = {
+		id: '1',
+		email: 'test@test.com',
+	};
 	const userEmailAbbreviation = user?.email?.charAt(0).toUpperCase() || '?';
 	const userEmailName = user?.email?.split('@')[0] || '?';
 

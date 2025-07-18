@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createGraphQLRequest } from '@/common/utils';
 import { SignUpMutation } from '@/features/auth/queries';
-import { currentUserQuery } from '@/features/auth/queries/authQueries';
+// import { currentUserQuery } from '@/features/auth/queries/authQueries';
 import type { SignUpResponse } from '@/features/auth/interfaces';
 
 /**
@@ -35,7 +35,7 @@ export const useSignUp = () => {
 		},
 		onSuccess: (data) => {
 			// Update the currentUser query cache with the sign up response
-			queryClient.setQueryData(currentUserQuery.queryKey, data);
+			// queryClient.setQueryData(currentUserQuery.queryKey, data);
 		},
 	});
 };

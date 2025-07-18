@@ -1,7 +1,5 @@
 import { Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/features/auth/hooks';
-import type { AuthContextType } from '@/features/auth/interfaces';
 import { findAllChatSessions } from '@/serverFns/chatSessions/fns/findAllChatSessions';
 import {
 	SidebarMenu,
@@ -11,10 +9,9 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
+// TODO: FIX AUTH
 export const SidebarChatSessions = () => {
-	const auth = useAuth() as AuthContextType;
-	const user = auth ? auth.user : null;
-	const userId = Number(user?.id);
+	const userId = 1;
 
 	const { data: chats } = useQuery({
 		queryKey: ['chat-sessions', `userId-${userId}`],

@@ -1,12 +1,11 @@
 /// <reference types="vite/client" />
+import { NotFound } from '@/components/NotFound';
+import type { QueryClient } from '@tanstack/react-query';
+import { getHead } from '@/features/root/utils/getHead';
+import { getAuthSessionServer } from '@/features/auth/serverFns';
 import { createRootRouteWithContext } from '@tanstack/react-router';
 import { RootComponent, RootDocument } from '@/features/root/components';
-import { currentUserQuery } from '@/features/auth/queries/authQueries';
-import { dehydrate } from '@tanstack/react-query';
-import type { QueryClient } from '@tanstack/react-query';
 import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundary';
-import { NotFound } from '@/components/NotFound';
-import { getHead } from '@/features/root/utils/getHead';
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
@@ -17,34 +16,16 @@ export const Route = createRootRouteWithContext<{
 	}: {
 		context: { queryClient: QueryClient };
 	}) => {
-		// Configure the query client for SSR
-		context.queryClient.setDefaultOptions({
-			queries: {
-				retry: false,
-				refetchOnMount: false,
-				refetchOnWindowFocus: false,
-				refetchOnReconnect: false,
-			},
-		});
+		// TODO: Fix with proper SSL
+		process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+		// queryClient available, not using..
+		console.log('__root context', context);
 
-		// Prefetch current user (server-side cookies will be handled automatically)
-		try {
-			await context.queryClient.prefetchQuery(currentUserQuery);
-		} catch (error) {
-			console.error('[DEBUG] Error prefetching current user', error);
-		}
-
-		// Get the current user data
-		const currentUser = context.queryClient.getQueryData(
-			currentUserQuery.queryKey,
-		);
-
-		// Dehydrate the query client state
-		const dehydratedState = dehydrate(context.queryClient);
+		const authSession = await getAuthSessionServer();
+		console.log('__root authSession', authSession);
 
 		return {
-			currentUser,
-			dehydratedState,
+			authSession,
 		};
 	},
 	errorComponent: (props) => {

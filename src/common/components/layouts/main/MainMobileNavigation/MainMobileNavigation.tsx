@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import { useAuth } from '@/features/auth/hooks';
-import type { AuthContextType } from '@/features/auth/interfaces';
 import { MobileMenu } from '@/common/components/layouts/main/MainMobileNavigation/MobileMenu/MobileMenu';
 import {
 	LogoLink,
 	UserAvatarMenu,
 } from '@/common/components/layouts/main/common';
 
+// TODO: FIX AUTH
 export const MainMobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const auth = useAuth() as AuthContextType;
-	const isAuthenticated = auth ? auth.isAuthenticated : false;
+	// const isAuthenticated = auth ? auth.isAuthenticated : false;
+	const isAuthenticated = false;
 
 	return (
 		<header className="md:hidden sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
