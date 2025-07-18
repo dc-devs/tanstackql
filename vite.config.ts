@@ -6,7 +6,14 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
 	server: {
-		port: 3000,
+		host: '0.0.0.0',
+		port: 3003,
+		allowedHosts: ['localhost', 'local.nestql.com'],
+		hmr: {
+			protocol: 'ws',
+			host: 'localhost',
+			port: 3003,
+		},
 	},
 	plugins: [
 		tanstackStart({
