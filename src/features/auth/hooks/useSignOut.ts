@@ -1,6 +1,5 @@
-import { request } from 'graphql-request';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getBackendEndpoint } from '@/common/utils';
+import { createGraphQLRequest } from '@/common/utils';
 import { SignOutMutation } from '@/features/auth/queries';
 import type { SignOutResponse } from '@/features/auth/interfaces';
 import { currentUserQuery } from '../queries/authQueries';
@@ -10,13 +9,11 @@ import { currentUserQuery } from '../queries/authQueries';
  * @returns {UseMutationResult} Mutation result object containing state and handlers
  */
 export const useSignOut = () => {
-	const endpoint = getBackendEndpoint();
 	const queryClient = useQueryClient();
 
 	return useMutation({
 		mutationFn: async ({ userId }: { userId: string }) => {
-			const response = await request<SignOutResponse>(
-				endpoint,
+			const response = await createGraphQLRequest<SignOutResponse>(
 				SignOutMutation,
 				{
 					userId,

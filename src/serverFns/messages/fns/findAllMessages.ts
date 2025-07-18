@@ -1,6 +1,5 @@
-import { request } from 'graphql-request';
-import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
+import { createGraphQLRequest } from '@/common/utils';
 import { FindAllMessagesDocument } from '@/serverFns/messages/documents';
 import type {
 	FindAllMessagesQuery,
@@ -13,9 +12,7 @@ import type {
 export const findAllMessages = createServerFn({ method: 'GET' })
 	.validator((data: FindAllMessagesQueryVariables) => data)
 	.handler(async ({ data }) => {
-		const endpoint = getBackendEndpoint();
-		const response = await request<FindAllMessagesQuery>(
-			endpoint,
+		const response = await createGraphQLRequest<FindAllMessagesQuery>(
 			FindAllMessagesDocument,
 			{ where: data.where },
 		);

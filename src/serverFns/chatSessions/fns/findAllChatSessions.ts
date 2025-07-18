@@ -1,6 +1,5 @@
-import { request } from 'graphql-request';
-import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
+import { createGraphQLRequest } from '@/common/utils';
 import { FindAllChatSessionsDocument } from '@/serverFns/chatSessions/documents';
 import type {
 	FindAllChatSessionsQuery,
@@ -14,9 +13,7 @@ import type {
 export const findAllChatSessions = createServerFn({ method: 'GET' })
 	.validator((data: FindAllChatSessionsQueryVariables) => data)
 	.handler(async ({ data }) => {
-		const endpoint = getBackendEndpoint();
-		const response = await request<FindAllChatSessionsQuery>(
-			endpoint,
+		const response = await createGraphQLRequest<FindAllChatSessionsQuery>(
 			FindAllChatSessionsDocument,
 			{ where: data.where },
 		);

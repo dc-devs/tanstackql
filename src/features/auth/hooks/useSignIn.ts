@@ -1,6 +1,5 @@
-import { request } from 'graphql-request';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getBackendEndpoint } from '@/common/utils';
+import { createGraphQLRequest } from '@/common/utils';
 import { SignInMutation } from '@/features/auth/queries';
 import { currentUserQuery } from '@/features/auth/queries/authQueries';
 import type { SignInResponse } from '@/features/auth/interfaces';
@@ -15,7 +14,6 @@ import type { SignInResponse } from '@/features/auth/interfaces';
  * @property {SignInResponse} data - Response data from successful mutation
  */
 export const useSignIn = () => {
-	const endpoint = getBackendEndpoint();
 	const queryClient = useQueryClient();
 
 	return useMutation({
@@ -23,8 +21,7 @@ export const useSignIn = () => {
 			email: string;
 			password: string;
 		}) => {
-			const response = await request<SignInResponse>(
-				endpoint,
+			const response = await createGraphQLRequest<SignInResponse>(
 				SignInMutation,
 				{
 					sessionInput: {

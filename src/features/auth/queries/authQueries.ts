@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
-import { request, type RequestDocument } from 'graphql-request';
-import { getBackendEndpoint } from '@/common/utils';
+import { type RequestDocument } from 'graphql-request';
+import { createGraphQLRequest } from '@/common/utils';
 import { CurrentUserDocument } from '../../../serverFns/currentUser/documents/CurrentUserDocument';
 import type { AuthState } from '../interfaces';
 
@@ -9,8 +9,7 @@ const authenticatedRequest = async <T>(
 	document: RequestDocument,
 	headers?: HeadersInit,
 ) => {
-	const endpoint = getBackendEndpoint();
-	return request<T>(endpoint, document, undefined, {
+	return createGraphQLRequest<T>(document, undefined, {
 		credentials: 'include',
 		...headers,
 	});
