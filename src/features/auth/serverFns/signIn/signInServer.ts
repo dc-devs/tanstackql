@@ -1,6 +1,7 @@
-import { request } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
+import { setResponseHeaders } from '@tanstack/react-start/server';
 import { SessionInput, SessionResponse } from '@/gql/graphql';
 import { SignInDocument } from '@/features/auth/serverFns/signIn/SignInDocument';
 
@@ -8,15 +9,34 @@ export const signInServer = createServerFn({ method: 'POST' })
 	.validator((data: SessionInput) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();
-		let authSession = null;
 
-		const response = (await request({
-			url: endpoint,
-			document: SignInDocument,
-			variables: { sessionInput: data },
+		// Create GraphQL client with custom fetch to capture response
+		let capturedResponse: Response | undefined;
+
+		const client = new GraphQLClient(endpoint, {
+			fetch: async (url, init) => {
+				const response = await fetch(url, init);
+
+				// Capture the response to extract cookies later
+				capturedResponse = response.clone();
+				return response;
+			},
+		});
+
+		// Make the GraphQL request as usual
+		const response = (await client.request(SignInDocument, {
+			sessionInput: data,
 		})) as { signIn: SessionResponse };
 
-		authSession = response.signIn;
+		// Forward cookies from API response to browser
+		if (capturedResponse) {
+			const setCookieHeaders = capturedResponse.headers.get('set-cookie');
+			if (setCookieHeaders) {
+				setResponseHeaders({
+					'Set-Cookie': setCookieHeaders,
+				});
+			}
+		}
 
-		return authSession;
+		return response.signIn;
 	});

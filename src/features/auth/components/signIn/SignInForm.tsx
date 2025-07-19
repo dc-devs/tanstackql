@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
 import { SessionResponse } from '@/gql/graphql';
-import { useRouter } from '@tanstack/react-router';
+import { useRouter, useLocation } from '@tanstack/react-router';
 import { useServerFn } from '@tanstack/react-start';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 import { useAuthForm } from '@/features/auth/hooks';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
 import { signInServer } from '@/features/auth/serverFns/signIn';
 import { GoogleSignInButton } from '@/features/auth/components/buttons';
@@ -19,6 +18,7 @@ import { emailValidator, passwordValidator } from '@/features/auth/validators';
  */
 export const SignInForm = () => {
 	const router = useRouter();
+	const location = useLocation();
 	const navigate = useNavigate();
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signInMutation = useMutation({
@@ -40,23 +40,19 @@ export const SignInForm = () => {
 				if (authSession.isAuthenticated) {
 					const { user } = authSession as SessionResponse;
 					const userId = user!.id;
-					console.log('mutation userId', userId);
-					console.log('mutation result', user);
 
-					// TODO: Fix redirect
-					// Redirect to the prev page stored in the "redirect" search param
-					// throw redirect({
-					// 	href: data.redirectUrl || '/',
-					// });
-
-					console.log('invalidating router');
 					await router.invalidate();
 
 					navigate({
 						to: '/users/$userId',
 						params: { userId },
+						state: { from: location.pathname } as Record<
+							string,
+							unknown
+						>,
 					});
-					console.log('navigated to', userId);
+
+					return;
 				}
 			} catch (error) {
 				console.error('Sign in error:', error);
