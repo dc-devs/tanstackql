@@ -2,11 +2,11 @@ import { gql } from 'graphql-request';
 
 /**
  * GraphQL mutation to sign in a user
- * @constant {DocumentNode} SignInMutation
+ * @constant {DocumentNode} SignUpDocument
  */
-export const SignInMutation = gql`
-	mutation SignIn($sessionInput: SessionInput!) {
-		signIn(sessionInput: $sessionInput) {
+export const SignUpDocument = gql`
+	mutation SignUp($data: UserCreateInput!) {
+		signUp(data: $data) {
 			isAuthenticated
 			user {
 				id

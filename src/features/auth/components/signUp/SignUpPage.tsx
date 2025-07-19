@@ -1,8 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { SignUpForm } from '@/features/auth/components/forms';
 import { MainLayout } from '@/common/components/layouts/main';
+import { SignUpForm } from '@/features/auth/components/signUp/SignUpForm';
 
-const SignUpPage = () => {
+export const SignUpPage = () => {
 	return (
 		<MainLayout>
 			<div className="flex-1 flex flex-col items-center justify-center">
@@ -22,7 +21,3 @@ const SignUpPage = () => {
 		</MainLayout>
 	);
 };
-
-export const Route = createFileRoute('/signup')({
-	component: SignUpPage,
-});

@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAuthForm } from '@/features/auth/hooks';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
-import { signInServer } from '@/features/auth/serverFns/signIn';
+import { signInServer } from '@/features/auth/serverFns/signInServer';
 import { GoogleSignInButton } from '@/features/auth/components/buttons';
 import { SocialButtonSeparator } from '@/features/auth/components/separators';
 import { EmailField, PasswordField } from '@/features/auth/components/fields';

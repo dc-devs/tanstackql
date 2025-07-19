@@ -3,7 +3,7 @@ import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
 import { setResponseHeaders } from '@tanstack/react-start/server';
 import { SessionInput, SessionResponse } from '@/gql/graphql';
-import { SignInDocument } from '@/features/auth/serverFns/signIn/SignInDocument';
+import { SignInDocument } from '@/features/auth/serverFns/signInServer/SignInDocument';
 
 export const signInServer = createServerFn({ method: 'POST' })
 	.validator((data: SessionInput) => data)

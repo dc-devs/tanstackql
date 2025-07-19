@@ -1,34 +1,51 @@
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { useNavigate } from '@tanstack/react-router';
+import { SessionResponse } from '@/gql/graphql';
+import { useMutation } from '@tanstack/react-query';
+import { useAuthForm } from '@/features/auth/hooks';
+import { useServerFn } from '@tanstack/react-start';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
-import { useSignUp, useAuthForm } from '@/features/auth/hooks';
 import { GoogleSignInButton } from '@/features/auth/components/buttons';
 import { SocialButtonSeparator } from '@/features/auth/components/separators';
 import { EmailField, PasswordField } from '@/features/auth/components/fields';
 import { emailValidator, passwordValidator } from '@/features/auth/validators';
+import { signUpServer } from '@/features/auth/serverFns/signUpServer/signUpServer';
 
 /**
  * Sign-up form component for user authentication
  * @returns {React.ReactNode} Sign-up form component
  */
 export const SignUpForm = () => {
-	const [submissionError, setSubmissionError] = useState<string | null>(null);
-	const signUpMutation = useSignUp();
 	const navigate = useNavigate();
+	const [submissionError, setSubmissionError] = useState<string | null>(null);
+	const signUpMutation = useMutation({
+		mutationFn: useServerFn(signUpServer),
+	});
 
 	const form = useAuthForm({
 		defaultValues: {
 			email: '',
 			password: '',
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value: data }) => {
 			// Clear any previous errors
 			setSubmissionError(null);
+
 			try {
 				// Sign up the user - this will also update the auth context
-				await signUpMutation.mutateAsync(value);
-				navigate({ to: '/' });
+				const authSession = await signUpMutation.mutateAsync({ data });
+				console.log('authSession', authSession);
+				if (authSession.isAuthenticated) {
+					const { user } = authSession as SessionResponse;
+					const userId = user!.id;
+
+					navigate({
+						to: '/users/$userId',
+						params: { userId },
+					});
+				}
+
+				return;
 			} catch (error) {
 				console.error('Sign up error:', error);
 				setSubmissionError(
