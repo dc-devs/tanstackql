@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SessionResponse } from '@/gql/graphql';
-import { useRouter, useLocation } from '@tanstack/react-router';
 import { useServerFn } from '@tanstack/react-start';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthForm } from '@/features/auth/hooks';
@@ -17,8 +16,6 @@ import { emailValidator, passwordValidator } from '@/features/auth/validators';
  * @returns {React.ReactNode} Sign-in form component
  */
 export const SignInForm = () => {
-	const router = useRouter();
-	const location = useLocation();
 	const navigate = useNavigate();
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signInMutation = useMutation({
@@ -41,19 +38,13 @@ export const SignInForm = () => {
 					const { user } = authSession as SessionResponse;
 					const userId = user!.id;
 
-					await router.invalidate();
-
 					navigate({
 						to: '/users/$userId',
 						params: { userId },
-						state: { from: location.pathname } as Record<
-							string,
-							unknown
-						>,
 					});
-
-					return;
 				}
+
+				return;
 			} catch (error) {
 				console.error('Sign in error:', error);
 				setSubmissionError('Failed to sign in. Please try again.');

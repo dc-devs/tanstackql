@@ -11,15 +11,11 @@ export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 }>()({
 	head: getHead,
-	beforeLoad: async ({
-		context,
-	}: {
-		context: { queryClient: QueryClient };
-	}) => {
+	beforeLoad: async (data) => {
 		// TODO: Fix with proper SSL
 		process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 		// queryClient available, not using..
-		console.log('__root context', context);
+		console.log('__root data', data);
 
 		const authSession = await getAuthSessionServer();
 		console.log('__root authSession', authSession);
