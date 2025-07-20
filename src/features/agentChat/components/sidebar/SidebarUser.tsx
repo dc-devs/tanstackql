@@ -1,4 +1,8 @@
-// import { useNavigate } from '@tanstack/react-router';
+import { Route } from '@/routes/__root';
+import { useMutation } from '@tanstack/react-query';
+import { useServerFn } from '@tanstack/react-start';
+import { useNavigate } from '@tanstack/react-router';
+import { signOutServer } from '@/features/auth/serverFns/signOutServer/signOutServer';
 import {
 	Bell,
 	LogOut,
@@ -28,20 +32,23 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
-// TODO: FIX AUTH
 export const SidebarUser = () => {
-	// const navigate = useNavigate();
-	const { isMobile } = useSidebar();
-	const user = {
-		id: '1',
-		email: 'test@test.com',
+	const navigate = useNavigate();
+	const { authSession } = Route.useRouteContext();
+	const user = authSession?.user;
+	const userId = user!.id;
+	const signOutMutation = useMutation({
+		mutationFn: useServerFn(signOutServer),
+	});
+	const handleLogout = async () => {
+		const data = { userId };
+
+		await signOutMutation.mutateAsync({ data });
+		navigate({ to: '/' });
 	};
+	const { isMobile } = useSidebar();
 	const userEmailAbbreviation = user?.email?.charAt(0).toUpperCase() || '?';
 	const userEmailName = user?.email?.split('@')[0] || '?';
-
-	const handleLogout = async () => {
-		console.log('handleLogout');
-	};
 
 	return (
 		<SidebarMenu>
@@ -125,7 +132,7 @@ export const SidebarUser = () => {
 						<DropdownMenuItem
 							className="cursor-pointer"
 							onClick={handleLogout}
-							// disabled={signOutMutation.isPending}
+							disabled={signOutMutation.isPending}
 						>
 							<LogOut />
 							Log out

@@ -1,5 +1,5 @@
 import { Route } from '@/routes/__root';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Bot } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
 import { Link, useNavigate } from '@tanstack/react-router';
@@ -16,6 +16,7 @@ export const UserAvatarMenu = () => {
 	const navigate = useNavigate();
 	const { authSession } = Route.useRouteContext();
 	const user = authSession?.user;
+	const isSuperAdmin = user?.role === 'SUPER_ADMIN';
 	const userId = user!.id;
 	const signOutMutation = useMutation({
 		mutationFn: useServerFn(signOutServer),
@@ -47,6 +48,18 @@ export const UserAvatarMenu = () => {
 						<p className="text-sm">Profile</p>
 					</Link>
 				</DropdownMenuItem>
+				{isSuperAdmin && (
+					<DropdownMenuItem className="cursor-pointer flex items-center gap-2 px-3 py-2">
+						<Link
+							to="/agent/chats"
+							params={{ userId }}
+							className="flex flex-row items-center content-center gap-2 w-full"
+						>
+							<Bot className="h-4 w-4" />
+							<p className="text-sm">Agent Chat</p>
+						</Link>
+					</DropdownMenuItem>
+				)}
 				<DropdownMenuItem
 					className="cursor-pointer flex items-center gap-2 px-3 py-2"
 					onClick={handleLogout}

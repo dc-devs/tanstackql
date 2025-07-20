@@ -1,6 +1,5 @@
+import { Route } from '@/routes/_authed/agent/route';
 import { Link } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
-import { findAllChatSessions } from '@/serverFns/chatSessions/fns/findAllChatSessions';
 import {
 	SidebarMenu,
 	SidebarGroup,
@@ -9,23 +8,8 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
-// TODO: FIX AUTH
 export const SidebarChatSessions = () => {
-	const userId = 1;
-
-	const { data: chats } = useQuery({
-		queryKey: ['chat-sessions', `userId-${userId}`],
-		queryFn: () =>
-			findAllChatSessions({
-				data: {
-					where: {
-						userId: {
-							equals: userId,
-						},
-					},
-				},
-			}),
-	});
+	const { chatSessions } = Route.useLoaderData();
 
 	return (
 		<SidebarGroup className="mt-10 group-data-[collapsible=icon]:hidden">
@@ -33,14 +17,14 @@ export const SidebarChatSessions = () => {
 			<div className="border-r-2 border-gray-200 h-full mx-2"></div>
 			<div className="border-b-2 border-gray-200 w-full my-2"></div>
 			<SidebarMenu>
-				{chats?.map((chat, index) => (
+				{chatSessions?.map((chatSession, index) => (
 					<SidebarMenuItem key={index}>
 						<SidebarMenuButton asChild>
 							<Link
 								to="/agent/chats/$id"
-								params={{ id: chat.id }}
+								params={{ id: chatSession.id }}
 							>
-								<span>{chat.title}</span>
+								<span>{chatSession.title}</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

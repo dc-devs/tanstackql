@@ -1,15 +1,16 @@
 import { createServerFn } from '@tanstack/react-start';
 import { createGraphQLRequest } from '@/common/utils';
-import { FindAllMessagesDocument } from '@/serverFns/messages/documents';
+import { FindAllMessagesDocument } from '@/features/agentChat/serverFns/messages/findAllMessages/FindAllMessagesDocument';
 import type {
 	FindAllMessagesQuery,
 	FindAllMessagesQueryVariables,
 } from '@/gql/graphql';
+
 /**
  * Server function to find all messages
- * @constant {ServerFn} findAllMessages
+ * @constant {ServerFn} findAllMessagesServerFn
  */
-export const findAllMessages = createServerFn({ method: 'GET' })
+export const findAllMessagesServerFn = createServerFn({ method: 'GET' })
 	.validator((data: FindAllMessagesQueryVariables) => data)
 	.handler(async ({ data }) => {
 		const response = await createGraphQLRequest<FindAllMessagesQuery>(

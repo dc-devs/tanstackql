@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
 import { createGraphQLRequest } from '@/common/utils';
-import { FindAllChatSessionsDocument } from '@/serverFns/chatSessions/documents';
+import { FindAllChatSessionsDocument } from '@/features/agentChat/serverFns/chatSessions/findAllChatSessions/FindAllChatSessionsDocument';
 import type {
 	FindAllChatSessionsQuery,
 	FindAllChatSessionsQueryVariables,
@@ -8,9 +8,9 @@ import type {
 
 /**
  * Server function to find all chat sessions
- * @constant {ServerFn} findAllChatSessions
+ * @constant {ServerFn} findAllChatSessionsServerFn
  */
-export const findAllChatSessions = createServerFn({ method: 'GET' })
+export const findAllChatSessionsServerFn = createServerFn({ method: 'GET' })
 	.validator((data: FindAllChatSessionsQueryVariables) => data)
 	.handler(async ({ data }) => {
 		const response = await createGraphQLRequest<FindAllChatSessionsQuery>(

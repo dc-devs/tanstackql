@@ -27,7 +27,7 @@ export const SheetBody = ({ setIsOpen }: Props) => {
 				Docs
 			</Link>
 			<Link
-				to="/agent/chats"
+				to="/"
 				className="text-muted-foreground text-base font-light py-2 hover:text-foreground"
 				onClick={() => setIsOpen(false)}
 			>

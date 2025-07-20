@@ -10,7 +10,7 @@ export const NavigationLinks = () => {
 				<Link to="/" className="hover:text-foreground">
 					Docs
 				</Link>
-				<Link to="/agent/chats" className="hover:text-foreground">
+				<Link to="/" className="hover:text-foreground">
 					Demo
 				</Link>
 			</div>
