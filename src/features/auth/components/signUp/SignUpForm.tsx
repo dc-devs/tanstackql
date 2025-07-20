@@ -34,7 +34,7 @@ export const SignUpForm = () => {
 			try {
 				// Sign up the user - this will also update the auth context
 				const authSession = await signUpMutation.mutateAsync({ data });
-				console.log('authSession', authSession);
+
 				if (authSession.isAuthenticated) {
 					const { user } = authSession as SessionResponse;
 					const userId = user!.id;

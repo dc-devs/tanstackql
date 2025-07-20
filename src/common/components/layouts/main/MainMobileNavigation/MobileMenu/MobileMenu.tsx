@@ -9,27 +9,19 @@ import {
 
 interface Props {
 	isOpen: boolean;
-	isAuthenticated: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 }
 
-export const MobileMenu = ({ isOpen, setIsOpen, isAuthenticated }: Props) => {
+export const MobileMenu = ({ isOpen, setIsOpen }: Props) => {
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger asChild>
 				<SheetToggleButton />
 			</SheetTrigger>
 
-			<SheetContent
-				side="left"
-				className="w-full sm:w-full p-0"
-				closeButton={false}
-			>
+			<SheetContent side="left" className="w-full sm:w-full p-0">
 				<SheetHeader setIsOpen={setIsOpen} />
-				<SheetBody
-					setIsOpen={setIsOpen}
-					isAuthenticated={isAuthenticated}
-				/>
+				<SheetBody setIsOpen={setIsOpen} />
 			</SheetContent>
 		</Sheet>
 	);

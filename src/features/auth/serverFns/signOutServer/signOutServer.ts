@@ -8,7 +8,6 @@ import { SignOutDocument } from '@/features/auth/serverFns/signOutServer/SignOut
 export const signOutServer = createServerFn({ method: 'POST' })
 	.validator((data: MutationSignOutArgs) => data)
 	.handler(async ({ data }) => {
-		console.log('signOutServer', data);
 		const endpoint = getBackendEndpoint();
 
 		// Create GraphQL client with custom fetch to capture response

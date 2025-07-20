@@ -1,12 +1,15 @@
+import { Route } from '@/routes/__root';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
 
 interface Props {
-	isAuthenticated: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 }
 
-export const SheetBody = ({ setIsOpen, isAuthenticated }: Props) => {
+export const SheetBody = ({ setIsOpen }: Props) => {
+	const { authSession } = Route.useRouteContext();
+	const isAuthenticated = authSession?.isAuthenticated;
+
 	return (
 		<nav className="flex flex-col px-4 pb-3">
 			<Link
