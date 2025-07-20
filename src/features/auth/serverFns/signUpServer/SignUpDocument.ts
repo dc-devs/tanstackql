@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
 /**
- * GraphQL mutation to sign in a user
+ * GraphQL mutation to sign up a user
  * @constant {DocumentNode} SignUpDocument
  */
 export const SignUpDocument = gql`

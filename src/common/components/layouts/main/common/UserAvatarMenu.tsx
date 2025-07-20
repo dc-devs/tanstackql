@@ -1,7 +1,10 @@
-import { LogOut } from 'lucide-react';
-import { useNavigate } from '@tanstack/react-router';
-import { useSignOut } from '@/features/auth/hooks';
+import { Route } from '@/routes/__root';
+import { LogOut, User } from 'lucide-react';
+import { useMutation } from '@tanstack/react-query';
+import { useServerFn } from '@tanstack/react-start';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Avatar, AvatarFallback } from '@/common/components/shadcn-ui/avatar';
+import { signOutServer } from '@/features/auth/serverFns/signOutServer/signOutServer';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -9,21 +12,19 @@ import {
 	DropdownMenuItem,
 } from '@/common/components/shadcn-ui/dropdown-menu';
 
-// TODO: FIX AUTH
 export const UserAvatarMenu = () => {
 	const navigate = useNavigate();
-	const signOutMutation = useSignOut();
-	// const user = auth ? auth.user : null;
-	const user = {
-		id: '1',
-		email: 'test@test.com',
-	};
-
+	const { authSession } = Route.useRouteContext();
+	const user = authSession?.user;
+	const userId = user!.id;
+	const signOutMutation = useMutation({
+		mutationFn: useServerFn(signOutServer),
+	});
 	const handleLogout = async () => {
-		if (user?.id) {
-			await signOutMutation.mutateAsync({ userId: user.id });
-			navigate({ to: '/' });
-		}
+		const data = { userId };
+
+		await signOutMutation.mutateAsync({ data });
+		navigate({ to: '/' });
 	};
 
 	return (
@@ -36,6 +37,16 @@ export const UserAvatarMenu = () => {
 				</Avatar>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
+				<DropdownMenuItem className="cursor-pointer flex items-center gap-2 px-3 py-2">
+					<Link
+						to="/users/$userId"
+						params={{ userId }}
+						className="flex flex-row items-center content-center gap-2 w-full"
+					>
+						<User className="h-4 w-4" />
+						<p className="text-sm">Profile</p>
+					</Link>
+				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="cursor-pointer flex items-center gap-2 px-3 py-2"
 					onClick={handleLogout}
@@ -43,11 +54,7 @@ export const UserAvatarMenu = () => {
 				>
 					<div className="flex flex-row items-center content-center gap-2 w-full">
 						<LogOut className="h-4 w-4" />
-						<p className="text-sm">
-							{signOutMutation.isPending
-								? 'Logging out...'
-								: 'Log out'}
-						</p>
+						<p className="text-sm">Log out</p>
 					</div>
 				</DropdownMenuItem>
 			</DropdownMenuContent>

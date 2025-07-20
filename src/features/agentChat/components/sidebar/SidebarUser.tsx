@@ -1,5 +1,4 @@
-import { useNavigate } from '@tanstack/react-router';
-import { useSignOut } from '@/features/auth/hooks';
+// import { useNavigate } from '@tanstack/react-router';
 import {
 	Bell,
 	LogOut,
@@ -31,9 +30,8 @@ import {
 
 // TODO: FIX AUTH
 export const SidebarUser = () => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const { isMobile } = useSidebar();
-	const signOutMutation = useSignOut();
 	const user = {
 		id: '1',
 		email: 'test@test.com',
@@ -42,10 +40,7 @@ export const SidebarUser = () => {
 	const userEmailName = user?.email?.split('@')[0] || '?';
 
 	const handleLogout = async () => {
-		if (user?.id) {
-			await signOutMutation.mutateAsync({ userId: user.id });
-			navigate({ to: '/' });
-		}
+		console.log('handleLogout');
 	};
 
 	return (
@@ -130,7 +125,7 @@ export const SidebarUser = () => {
 						<DropdownMenuItem
 							className="cursor-pointer"
 							onClick={handleLogout}
-							disabled={signOutMutation.isPending}
+							// disabled={signOutMutation.isPending}
 						>
 							<LogOut />
 							Log out
