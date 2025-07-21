@@ -1,45 +1,12 @@
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
-import { SidebarUser } from '@/features/agentChat/components/sidebar/SidebarUser';
+import {
+	SidebarUser,
+	SidebarChatSessions,
+} from '@/features/agentChat/components/sidebar';
 import {
 	Sidebar,
-	SidebarContent,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
-	SidebarMenu,
 	SidebarFooter,
-	SidebarMenuButton,
-	SidebarMenuItem,
+	SidebarContent,
 } from '@/common/components/shadcn-ui/sidebar';
-
-// Menu items.
-const items = [
-	{
-		title: 'Home',
-		url: '#',
-		icon: Home,
-	},
-	{
-		title: 'Inbox',
-		url: '#',
-		icon: Inbox,
-	},
-	{
-		title: 'Calendar',
-		url: '#',
-		icon: Calendar,
-	},
-	{
-		title: 'Search',
-		url: '#',
-		icon: Search,
-	},
-	{
-		title: 'Settings',
-		url: '#',
-		icon: Settings,
-	},
-];
 
 export function AgentChatSidebar({
 	...props
@@ -47,23 +14,7 @@ export function AgentChatSidebar({
 	return (
 		<Sidebar variant="sidebar" collapsible="icon" {...props}>
 			<SidebarContent>
-				<SidebarGroup>
-					<SidebarGroupLabel>Application</SidebarGroupLabel>
-					<SidebarGroupContent>
-						<SidebarMenu>
-							{items.map((item) => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<a href={item.url}>
-											<item.icon />
-											<span>{item.title}</span>
-										</a>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroupContent>
-				</SidebarGroup>
+				<SidebarChatSessions />
 			</SidebarContent>
 			<SidebarFooter>
 				<SidebarUser />

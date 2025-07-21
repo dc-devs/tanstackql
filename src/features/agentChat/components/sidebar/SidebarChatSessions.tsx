@@ -6,6 +6,7 @@ import {
 	SidebarMenuItem,
 	SidebarGroupLabel,
 	SidebarMenuButton,
+	SidebarGroupContent,
 } from '@/common/components/shadcn-ui/sidebar';
 
 export const SidebarChatSessions = () => {
@@ -13,23 +14,25 @@ export const SidebarChatSessions = () => {
 
 	return (
 		<SidebarGroup className="mt-10 group-data-[collapsible=icon]:hidden">
-			<SidebarGroupLabel className="text-md">Chats</SidebarGroupLabel>
+			<SidebarGroupLabel>Chat Sessions</SidebarGroupLabel>
 			<div className="border-r-2 border-gray-200 h-full mx-2"></div>
 			<div className="border-b-2 border-gray-200 w-full my-2"></div>
-			<SidebarMenu>
-				{chatSessions?.map((chatSession, index) => (
-					<SidebarMenuItem key={index}>
-						<SidebarMenuButton asChild>
-							<Link
-								to="/agent/chats/$chatSessionId"
-								params={{ chatSessionId: chatSession.id }}
-							>
-								<span>{chatSession.title}</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-				))}
-			</SidebarMenu>
+			<SidebarGroupContent>
+				<SidebarMenu>
+					{chatSessions?.map((chatSession) => (
+						<SidebarMenuItem key={chatSession.id}>
+							<SidebarMenuButton asChild>
+								<Link
+									to="/agent/chats/$chatSessionId"
+									params={{ chatSessionId: chatSession.id }}
+								>
+									<span>{chatSession.title}</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					))}
+				</SidebarMenu>
+			</SidebarGroupContent>
 		</SidebarGroup>
 	);
 };
