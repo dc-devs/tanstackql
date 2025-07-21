@@ -16,7 +16,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthedAgentRouteRouteImport } from './routes/_authed/agent/route'
 import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 import { Route as AuthedAgentChatsIndexRouteImport } from './routes/_authed/agent/chats.index'
-import { Route as AuthedAgentChatsIdRouteImport } from './routes/_authed/agent/chats.$id'
+import { Route as AuthedAgentChatsChatSessionIdRouteImport } from './routes/_authed/agent/chats.$chatSessionId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -52,11 +52,12 @@ const AuthedAgentChatsIndexRoute = AuthedAgentChatsIndexRouteImport.update({
   path: '/chats/',
   getParentRoute: () => AuthedAgentRouteRoute,
 } as any)
-const AuthedAgentChatsIdRoute = AuthedAgentChatsIdRouteImport.update({
-  id: '/chats/$id',
-  path: '/chats/$id',
-  getParentRoute: () => AuthedAgentRouteRoute,
-} as any)
+const AuthedAgentChatsChatSessionIdRoute =
+  AuthedAgentChatsChatSessionIdRouteImport.update({
+    id: '/chats/$chatSessionId',
+    path: '/chats/$chatSessionId',
+    getParentRoute: () => AuthedAgentRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -64,7 +65,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/agent': typeof AuthedAgentRouteRouteWithChildren
   '/users/$userId': typeof AuthedUsersUserIdRoute
-  '/agent/chats/$id': typeof AuthedAgentChatsIdRoute
+  '/agent/chats/$chatSessionId': typeof AuthedAgentChatsChatSessionIdRoute
   '/agent/chats': typeof AuthedAgentChatsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -73,7 +74,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/agent': typeof AuthedAgentRouteRouteWithChildren
   '/users/$userId': typeof AuthedUsersUserIdRoute
-  '/agent/chats/$id': typeof AuthedAgentChatsIdRoute
+  '/agent/chats/$chatSessionId': typeof AuthedAgentChatsChatSessionIdRoute
   '/agent/chats': typeof AuthedAgentChatsIndexRoute
 }
 export interface FileRoutesById {
@@ -84,7 +85,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_authed/agent': typeof AuthedAgentRouteRouteWithChildren
   '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
-  '/_authed/agent/chats/$id': typeof AuthedAgentChatsIdRoute
+  '/_authed/agent/chats/$chatSessionId': typeof AuthedAgentChatsChatSessionIdRoute
   '/_authed/agent/chats/': typeof AuthedAgentChatsIndexRoute
 }
 export interface FileRouteTypes {
@@ -95,7 +96,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/agent'
     | '/users/$userId'
-    | '/agent/chats/$id'
+    | '/agent/chats/$chatSessionId'
     | '/agent/chats'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -104,7 +105,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/agent'
     | '/users/$userId'
-    | '/agent/chats/$id'
+    | '/agent/chats/$chatSessionId'
     | '/agent/chats'
   id:
     | '__root__'
@@ -114,7 +115,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_authed/agent'
     | '/_authed/users/$userId'
-    | '/_authed/agent/chats/$id'
+    | '/_authed/agent/chats/$chatSessionId'
     | '/_authed/agent/chats/'
   fileRoutesById: FileRoutesById
 }
@@ -176,23 +177,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedAgentChatsIndexRouteImport
       parentRoute: typeof AuthedAgentRouteRoute
     }
-    '/_authed/agent/chats/$id': {
-      id: '/_authed/agent/chats/$id'
-      path: '/chats/$id'
-      fullPath: '/agent/chats/$id'
-      preLoaderRoute: typeof AuthedAgentChatsIdRouteImport
+    '/_authed/agent/chats/$chatSessionId': {
+      id: '/_authed/agent/chats/$chatSessionId'
+      path: '/chats/$chatSessionId'
+      fullPath: '/agent/chats/$chatSessionId'
+      preLoaderRoute: typeof AuthedAgentChatsChatSessionIdRouteImport
       parentRoute: typeof AuthedAgentRouteRoute
     }
   }
 }
 
 interface AuthedAgentRouteRouteChildren {
-  AuthedAgentChatsIdRoute: typeof AuthedAgentChatsIdRoute
+  AuthedAgentChatsChatSessionIdRoute: typeof AuthedAgentChatsChatSessionIdRoute
   AuthedAgentChatsIndexRoute: typeof AuthedAgentChatsIndexRoute
 }
 
 const AuthedAgentRouteRouteChildren: AuthedAgentRouteRouteChildren = {
-  AuthedAgentChatsIdRoute: AuthedAgentChatsIdRoute,
+  AuthedAgentChatsChatSessionIdRoute: AuthedAgentChatsChatSessionIdRoute,
   AuthedAgentChatsIndexRoute: AuthedAgentChatsIndexRoute,
 }
 

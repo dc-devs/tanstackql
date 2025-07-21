@@ -1,5 +1,5 @@
 import { Logo } from '@/common/icons';
-import { cn } from '@/common/lib/utils';
+import { cn } from '@/common/lib/cn';
 import { Link } from '@tanstack/react-router';
 
 export const LogoLink = ({ className }: { className?: string }) => {

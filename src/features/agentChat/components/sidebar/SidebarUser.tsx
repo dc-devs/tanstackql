@@ -11,6 +11,7 @@ import {
 	CreditCard,
 	ChevronsUpDown,
 } from 'lucide-react';
+
 import {
 	Avatar,
 	// AvatarImage,
@@ -18,12 +19,12 @@ import {
 } from '@/common/components/shadcn-ui/avatar';
 import {
 	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuGroup,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
 	DropdownMenuSeparator,
+	DropdownMenuTrigger,
 } from '@/common/components/shadcn-ui/dropdown-menu';
 import {
 	useSidebar,
@@ -32,7 +33,7 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
-export const SidebarUser = () => {
+export function SidebarUser() {
 	const navigate = useNavigate();
 	const { authSession } = Route.useRouteContext();
 	const user = authSession?.user;
@@ -47,6 +48,7 @@ export const SidebarUser = () => {
 		navigate({ to: '/' });
 	};
 	const { isMobile } = useSidebar();
+	const userEmail = user?.email;
 	const userEmailAbbreviation = user?.email?.charAt(0).toUpperCase() || '?';
 	const userEmailName = user?.email?.split('@')[0] || '?';
 
@@ -57,30 +59,30 @@ export const SidebarUser = () => {
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground sidebar-menu-button-overrides cursor-pointer"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
 								{/* <AvatarImage
-									src={user.avatar}
-									alt={user.name}
+									src="https://ui.shadcn.com/avatars/shadcn.jpg"
+									alt="shadCN"
 								/> */}
 								<AvatarFallback className="rounded-lg">
 									{userEmailAbbreviation}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-semibold">
+								<span className="truncate font-medium">
 									{userEmailName}
 								</span>
 								<span className="truncate text-xs">
-									{user?.email}
+									{userEmail}
 								</span>
 							</div>
 							<ChevronsUpDown className="ml-auto size-4" />
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+						className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
 						side={isMobile ? 'bottom' : 'right'}
 						align="end"
 						sideOffset={4}
@@ -89,19 +91,19 @@ export const SidebarUser = () => {
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
 									{/* <AvatarImage
-										src={user.avatar}
-										alt={user.name}
+										src="https://ui.shadcn.com/avatars/shadcn.jpg"
+										alt="shadCN"
 									/> */}
 									<AvatarFallback className="rounded-lg">
 										{userEmailAbbreviation}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
-									<span className="truncate font-semibold">
+									<span className="truncate font-medium">
 										{userEmailName}
 									</span>
 									<span className="truncate text-xs">
-										{user?.email}
+										{userEmail}
 									</span>
 								</div>
 							</div>
@@ -142,4 +144,4 @@ export const SidebarUser = () => {
 			</SidebarMenuItem>
 		</SidebarMenu>
 	);
-};
+}

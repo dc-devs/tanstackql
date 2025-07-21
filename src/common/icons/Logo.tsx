@@ -1,4 +1,4 @@
-import { cn } from '@/common/lib/utils';
+import { cn } from '@/common/lib/cn';
 
 export const Logo = ({ className }: { className?: string }) => {
 	return (

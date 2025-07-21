@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { findAllChatSessionsServerFn } from '@/features/agentChat/serverFns';
 import { AgentChatLayout } from '@/features/agentChat/components/AgentChatLayout';
+import { findAllChatSessionsServerFn } from '@/features/agentChat/serverFns';
 
 export const Route = createFileRoute('/_authed/agent')({
 	// TODO: FIX Chat Sessions loading on each link hover
@@ -15,6 +15,7 @@ export const Route = createFileRoute('/_authed/agent')({
 				},
 			},
 		});
+		console.log('chatSessions', chatSessions);
 
 		return { chatSessions };
 	},

@@ -21,8 +21,8 @@ export const SidebarChatSessions = () => {
 					<SidebarMenuItem key={index}>
 						<SidebarMenuButton asChild>
 							<Link
-								to="/agent/chats/$id"
-								params={{ id: chatSession.id }}
+								to="/agent/chats/$chatSessionId"
+								params={{ chatSessionId: chatSession.id }}
 							>
 								<span>{chatSession.title}</span>
 							</Link>
