@@ -1,9 +1,11 @@
+import { SidebarHeaderLogo } from '@/features/agentChat/components/sidebar/SidebarHeaderLogo';
 import {
 	SidebarUser,
 	SidebarChatSessions,
 } from '@/features/agentChat/components/sidebar';
 import {
 	Sidebar,
+	SidebarHeader,
 	SidebarFooter,
 	SidebarContent,
 } from '@/common/components/shadcn-ui/sidebar';
@@ -13,6 +15,9 @@ export function AgentChatSidebar({
 }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar variant="sidebar" collapsible="icon" {...props}>
+			<SidebarHeader>
+				<SidebarHeaderLogo />
+			</SidebarHeader>
 			<SidebarContent>
 				<SidebarChatSessions />
 			</SidebarContent>
