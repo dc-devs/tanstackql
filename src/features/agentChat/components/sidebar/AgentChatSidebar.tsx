@@ -1,4 +1,5 @@
 import { SidebarHeaderLogo } from '@/features/agentChat/components/sidebar/SidebarHeaderLogo';
+import { SidebarMenuItemNewChat } from '@/features/agentChat/components/sidebar/SidebarMenuItemNewChat';
 import {
 	SidebarUser,
 	SidebarChatSessions,
@@ -16,7 +17,11 @@ export function AgentChatSidebar({
 	return (
 		<Sidebar variant="sidebar" collapsible="icon" {...props}>
 			<SidebarHeader>
-				<SidebarHeaderLogo />
+				<div className="space-y-4">
+					<SidebarHeaderLogo />
+					{/* <div className="border-t border-sidebar-border"></div> */}
+					<SidebarMenuItemNewChat />
+				</div>
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarChatSessions />

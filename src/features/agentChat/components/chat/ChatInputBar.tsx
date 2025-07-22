@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Paperclip, ArrowUp } from 'lucide-react';
-import { Input } from '@/common/components/shadcn-ui/input';
 import { Button } from '@/common/components/shadcn-ui/button';
+import { Textarea } from '@/common/components/shadcn-ui/textarea';
 import {
 	Tooltip,
 	TooltipTrigger,
@@ -13,11 +13,10 @@ export const ChatInputBar = () => {
 
 	return (
 		<form className="flex items-center gap-2 rounded-2xl border border-input bg-background px-3 py-2 shadow-xs focus-within:ring-2 focus-within:ring-ring/50 w-full max-w-2xl mx-auto">
-			<Input
-				type="text"
-				placeholder="Ask follow-up"
+			<Textarea
+				placeholder="Ask agent anything..."
 				className="
-					flex-1 bg-transparent border-0 shadow-none text-base placeholder:text-muted-foreground
+					flex-1 bg-transparent border-0 shadow-none text-base placeholder:text-muted-foreground resize-none
 					focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-none focus-visible:outline-none focus-visible:ring-offset-0
 				"
 				autoComplete="off"

@@ -22,3 +22,6 @@ node_modules
 
 # logs
 app.config.timestamp*
+
+# scratch
+scratch

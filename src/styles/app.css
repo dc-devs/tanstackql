@@ -138,3 +138,4 @@ sidebar.tsx
 -- Removed `group-data-[collapsible=icon]:p-2!` on default variant
 -- This allows <SidebarMenuButton size="lg" /> to look clean when icon collapse is enabled
 */
+

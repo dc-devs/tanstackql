@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthedAgentRouteRouteImport } from './routes/_authed/agent/route'
 import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 import { Route as AuthedAgentChatsIndexRouteImport } from './routes/_authed/agent/chats.index'
+import { Route as AuthedAgentChatsNewRouteImport } from './routes/_authed/agent/chats.new'
 import { Route as AuthedAgentChatsChatSessionIdRouteImport } from './routes/_authed/agent/chats.$chatSessionId'
 
 const SignupRoute = SignupRouteImport.update({
@@ -52,6 +53,11 @@ const AuthedAgentChatsIndexRoute = AuthedAgentChatsIndexRouteImport.update({
   path: '/chats/',
   getParentRoute: () => AuthedAgentRouteRoute,
 } as any)
+const AuthedAgentChatsNewRoute = AuthedAgentChatsNewRouteImport.update({
+  id: '/chats/new',
+  path: '/chats/new',
+  getParentRoute: () => AuthedAgentRouteRoute,
+} as any)
 const AuthedAgentChatsChatSessionIdRoute =
   AuthedAgentChatsChatSessionIdRouteImport.update({
     id: '/chats/$chatSessionId',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/agent': typeof AuthedAgentRouteRouteWithChildren
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/agent/chats/$chatSessionId': typeof AuthedAgentChatsChatSessionIdRoute
+  '/agent/chats/new': typeof AuthedAgentChatsNewRoute
   '/agent/chats': typeof AuthedAgentChatsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/agent': typeof AuthedAgentRouteRouteWithChildren
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/agent/chats/$chatSessionId': typeof AuthedAgentChatsChatSessionIdRoute
+  '/agent/chats/new': typeof AuthedAgentChatsNewRoute
   '/agent/chats': typeof AuthedAgentChatsIndexRoute
 }
 export interface FileRoutesById {
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/_authed/agent': typeof AuthedAgentRouteRouteWithChildren
   '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
   '/_authed/agent/chats/$chatSessionId': typeof AuthedAgentChatsChatSessionIdRoute
+  '/_authed/agent/chats/new': typeof AuthedAgentChatsNewRoute
   '/_authed/agent/chats/': typeof AuthedAgentChatsIndexRoute
 }
 export interface FileRouteTypes {
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/agent'
     | '/users/$userId'
     | '/agent/chats/$chatSessionId'
+    | '/agent/chats/new'
     | '/agent/chats'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/agent'
     | '/users/$userId'
     | '/agent/chats/$chatSessionId'
+    | '/agent/chats/new'
     | '/agent/chats'
   id:
     | '__root__'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/_authed/agent'
     | '/_authed/users/$userId'
     | '/_authed/agent/chats/$chatSessionId'
+    | '/_authed/agent/chats/new'
     | '/_authed/agent/chats/'
   fileRoutesById: FileRoutesById
 }
@@ -177,6 +189,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedAgentChatsIndexRouteImport
       parentRoute: typeof AuthedAgentRouteRoute
     }
+    '/_authed/agent/chats/new': {
+      id: '/_authed/agent/chats/new'
+      path: '/chats/new'
+      fullPath: '/agent/chats/new'
+      preLoaderRoute: typeof AuthedAgentChatsNewRouteImport
+      parentRoute: typeof AuthedAgentRouteRoute
+    }
     '/_authed/agent/chats/$chatSessionId': {
       id: '/_authed/agent/chats/$chatSessionId'
       path: '/chats/$chatSessionId'
@@ -189,11 +208,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthedAgentRouteRouteChildren {
   AuthedAgentChatsChatSessionIdRoute: typeof AuthedAgentChatsChatSessionIdRoute
+  AuthedAgentChatsNewRoute: typeof AuthedAgentChatsNewRoute
   AuthedAgentChatsIndexRoute: typeof AuthedAgentChatsIndexRoute
 }
 
 const AuthedAgentRouteRouteChildren: AuthedAgentRouteRouteChildren = {
   AuthedAgentChatsChatSessionIdRoute: AuthedAgentChatsChatSessionIdRoute,
+  AuthedAgentChatsNewRoute: AuthedAgentChatsNewRoute,
   AuthedAgentChatsIndexRoute: AuthedAgentChatsIndexRoute,
 }
 
