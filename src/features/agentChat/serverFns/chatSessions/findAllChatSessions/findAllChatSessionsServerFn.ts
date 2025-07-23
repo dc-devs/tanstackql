@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
 import { createGraphQLRequest } from '@/common/utils';
-import { FindAllChatSessionsDocument } from '@/features/agentChat/serverFns/chatSessions/findAllChatSessions/FindAllChatSessionsDocument';
+import { FindAllChatSessionsDocument } from '@/features/agentChat/serverFns/chatSessions/findAllChatSessions';
 import type {
 	FindAllChatSessionsQuery,
 	FindAllChatSessionsQueryVariables,
