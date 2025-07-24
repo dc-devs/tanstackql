@@ -1,6 +1,6 @@
-import { ChatInputBar } from '@/features/agentChat/components/chat/ChatInputBar';
+import { NewChatSessionInputBar } from '@/features/agentChat/screens/chatsNewScreen/components/NewChatSessionInputBar';
 
-export const ChatsNew = () => {
+export const ChatsNewScreen = () => {
 	return (
 		<>
 			<div className="h-full flex flex-col items-center justify-center relative">
@@ -12,7 +12,7 @@ export const ChatsNew = () => {
 					</p>
 				</div>
 				<div className="mt-10 w-full">
-					<ChatInputBar />
+					<NewChatSessionInputBar />
 				</div>
 			</div>
 		</>

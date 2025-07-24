@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ChatsNew } from '@/features/agentChat/screens/ChatsNew';
+import { ChatsNewScreen } from '@/features/agentChat/screens/chatsNewScreen/c-hatsNewScreen';
 
 export const Route = createFileRoute('/_authed/agent/chats/new')({
 	component: () => {
-		return <ChatsNew />;
+		return <ChatsNewScreen />;
 	},
 });
