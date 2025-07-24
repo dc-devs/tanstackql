@@ -3,8 +3,8 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
 import { PanelLeftIcon } from 'lucide-react';
 
-import { useIsMobile } from '@/common/hooks/use-mobile';
 import { cn } from '@/common/lib/cn';
+import { useIsMobile } from '@/common/hooks';
 import { Button } from '@/common/components/shadcn-ui/button';
 import { Input } from '@/common/components/shadcn-ui/input';
 import { Separator } from '@/common/components/shadcn-ui/separator';

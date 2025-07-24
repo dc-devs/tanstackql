@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Route } from '@/routes/__root';
+import { useForm } from '@/common/hooks';
 import { Paperclip, ArrowUp } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
-import { useAuthForm } from '@/features/auth/hooks/useAuthForm';
 import { Textarea } from '@/common/components/shadcn-ui/textarea';
 import { createChatSessionServerFn } from '@/features/agentChat/serverFns';
 import { type ChatSessionCreateInput } from '@/gql/graphql';
@@ -24,7 +24,7 @@ export const ChatInputBar = () => {
 		mutationFn: useServerFn(createChatSessionServerFn),
 	});
 
-	const form = useAuthForm({
+	const form = useForm({
 		defaultValues: {
 			message: '',
 		},
@@ -33,7 +33,7 @@ export const ChatInputBar = () => {
 			setSubmissionError(null);
 
 			// Transform form data to match ChatSessionCreateInput
-			const transformedData: ChatSessionCreateInput = {
+			const chatSessionCreateInput: ChatSessionCreateInput = {
 				title: `Chat Session ${new Date().toISOString()}`,
 				user: {
 					connect: {
@@ -54,11 +54,11 @@ export const ChatInputBar = () => {
 				}),
 			};
 
-			console.log('transformedData', transformedData);
+			console.log('chatSessionCreateInput', chatSessionCreateInput);
 
 			try {
 				const chatSession = await createChatSessionMutation.mutateAsync(
-					{ data: { data: transformedData } },
+					{ data: { data: chatSessionCreateInput } },
 				);
 				const chatSessionId = chatSession?.id;
 

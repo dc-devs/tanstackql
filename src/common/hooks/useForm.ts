@@ -18,13 +18,12 @@ const { fieldContext, formContext } = createFormHookContexts();
  * Factory for creating authentication form hooks and HOCs
  * Pre-binds form components and contexts for consistent auth form instances
  * @type {Object} Authentication form utilities
- * @property {Function} useAuthForm - Custom hook for managing authentication form state
- * @property {Function} withAuthForm - HOC to wrap components with auth form context providers
+ * @property {Function} useForm - Custom hook for managing authentication form state
+ * @property {Function} withForm - HOC to wrap components with auth form context providers
  */
-export const { useAppForm: useAuthForm, withForm: withAuthForm } =
-	createFormHook({
-		fieldComponents: {},
-		formComponents: {},
-		fieldContext,
-		formContext,
-	});
+export const { useAppForm: useForm, withForm: withForm } = createFormHook({
+	fieldComponents: {},
+	formComponents: {},
+	fieldContext,
+	formContext,
+});

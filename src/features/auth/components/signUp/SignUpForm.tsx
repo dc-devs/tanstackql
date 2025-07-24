@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useForm } from '@/common/hooks';
 import { SessionResponse } from '@/gql/graphql';
 import { useMutation } from '@tanstack/react-query';
-import { useAuthForm } from '@/features/auth/hooks';
 import { useServerFn } from '@tanstack/react-start';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
@@ -22,7 +22,7 @@ export const SignUpForm = () => {
 		mutationFn: useServerFn(signUpServer),
 	});
 
-	const form = useAuthForm({
+	const form = useForm({
 		defaultValues: {
 			email: '',
 			password: '',
