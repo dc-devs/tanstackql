@@ -58,7 +58,9 @@ export const ChatInputBar = () => {
 
 			try {
 				const chatSession = await createChatSessionMutation.mutateAsync(
-					{ data: { data: chatSessionCreateInput } },
+					{
+						data: chatSessionCreateInput,
+					},
 				);
 				const chatSessionId = chatSession?.id;
 

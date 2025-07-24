@@ -3,7 +3,7 @@ import { createServerFn } from '@tanstack/react-start';
 import { CreateChatSessionDocument } from '@/features/agentChat/serverFns/chatSessions/createChatSession/CreateChatSessionDocument';
 import type {
 	CreateChatSessionMutation,
-	CreateChatSessionMutationVariables,
+	ChatSessionCreateInput,
 } from '@/gql/graphql';
 
 /**
@@ -11,12 +11,12 @@ import type {
  * @constant {ServerFn} createChatSessionServerFn
  */
 export const createChatSessionServerFn = createServerFn({ method: 'POST' })
-	.validator((data: CreateChatSessionMutationVariables) => data)
+	.validator((data: ChatSessionCreateInput) => data)
 	.handler(async ({ data }) => {
 		console.log('createChatSessionServerFn - data', data);
 		const response = await createGraphQLRequest<CreateChatSessionMutation>(
 			CreateChatSessionDocument,
-			data,
+			{ data }, // <- Wrap the data here for GraphQL
 		);
 
 		return response.createChatSession;
