@@ -15,6 +15,7 @@ export const SidebarMenuItemNewChat = () => {
 				<DropdownMenu>
 					<SidebarMenuButton size="lg" asChild>
 						<Link
+							preload={false}
 							to="/agent/chats/new"
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground sidebar-menu-button-overrides cursor-pointer"
 						>

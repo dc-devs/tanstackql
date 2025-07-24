@@ -25,6 +25,7 @@ export const SidebarChatSessions = () => {
 								<Link
 									to="/agent/chats/$chatSessionId"
 									params={{ chatSessionId: chatSession.id }}
+									preload={false}
 								>
 									<span>{chatSession.title}</span>
 								</Link>
