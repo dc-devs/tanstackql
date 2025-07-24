@@ -19,7 +19,7 @@ export function AgentChatSidebar({
 			<SidebarHeader>
 				<div className="space-y-4">
 					<SidebarHeaderLogo />
-					{/* <div className="border-t border-sidebar-border"></div> */}
+					<div className="border-t border-sidebar-border"></div>
 					<SidebarMenuItemNewChat />
 				</div>
 			</SidebarHeader>

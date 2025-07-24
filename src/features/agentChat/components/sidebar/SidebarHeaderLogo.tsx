@@ -14,7 +14,7 @@ export const SidebarHeaderLogo = () => {
 				<DropdownMenu>
 					<SidebarMenuButton
 						size="lg"
-						className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground sidebar-menu-button-overrides cursor-pointer hover:bg-transparent hover:text-current"
+						className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground sidebar-menu-button-overrides cursor-pointer hover:bg-transparent hover:text-current active:bg-transparent active:text-current active:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:shadow-none"
 					>
 						<Avatar className="h-8 w-8 rounded-lg">
 							<AvatarFallback className="rounded-lg bg-transparent">

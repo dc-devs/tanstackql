@@ -1,8 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { ChatScreen } from '@/features/agentChat/components/chat/ChatScreen';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authed/agent/chats/')({
-	component: () => {
-		return <ChatScreen />;
+	beforeLoad: async () => {
+		throw redirect({ to: '/agent/chats/new' });
 	},
 });

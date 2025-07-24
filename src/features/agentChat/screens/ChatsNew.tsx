@@ -11,9 +11,9 @@ export const ChatsNew = () => {
 						</span>
 					</p>
 				</div>
-			</div>
-			<div className="absolute left-0 bottom-7 w-full bg-white pb-2 pt-2 px-3">
-				<ChatInputBar />
+				<div className="mt-10 w-full">
+					<ChatInputBar />
+				</div>
 			</div>
 		</>
 	);
