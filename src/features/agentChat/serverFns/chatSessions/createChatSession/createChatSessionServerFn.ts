@@ -13,10 +13,9 @@ import type {
 export const createChatSessionServerFn = createServerFn({ method: 'POST' })
 	.validator((data: ChatSessionCreateInput) => data)
 	.handler(async ({ data }) => {
-		console.log('createChatSessionServerFn - data', data);
 		const response = await createGraphQLRequest<CreateChatSessionMutation>(
 			CreateChatSessionDocument,
-			{ data }, // <- Wrap the data here for GraphQL
+			{ data },
 		);
 
 		return response.createChatSession;

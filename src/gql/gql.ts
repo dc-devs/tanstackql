@@ -16,6 +16,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 type Documents = {
     "\n\tmutation CreateChatSession($data: ChatSessionCreateInput!) {\n\t\tcreateChatSession(data: $data) {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": typeof types.CreateChatSessionDocument,
     "\n\tquery FindAllChatSessions($where: ChatSessionWhereInput) {\n\t\tfindAllChatSessions(where: $where) {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": typeof types.FindAllChatSessionsDocument,
+    "\n\tmutation CreateMessage($data: MessageCreateInput!, $select: SelectInput) {\n\t\tcreateMessage(data: $data, select: $select) {\n\t\t\tid\n\t\t\tchatSessionId\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttype\n\t\t\tsender\n\t\t\ttimestamp\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": typeof types.CreateMessageDocument,
     "\n\tquery FindAllMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": typeof types.FindAllMessagesDocument,
     "\n\tquery GetAuthSession {\n\t\tgetAuthSession {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetAuthSessionDocument,
     "\n\tmutation SignIn($sessionInput: SessionInput!) {\n\t\tsignIn(sessionInput: $sessionInput) {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": typeof types.SignInDocument,
@@ -25,6 +26,7 @@ type Documents = {
 const documents: Documents = {
     "\n\tmutation CreateChatSession($data: ChatSessionCreateInput!) {\n\t\tcreateChatSession(data: $data) {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": types.CreateChatSessionDocument,
     "\n\tquery FindAllChatSessions($where: ChatSessionWhereInput) {\n\t\tfindAllChatSessions(where: $where) {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": types.FindAllChatSessionsDocument,
+    "\n\tmutation CreateMessage($data: MessageCreateInput!, $select: SelectInput) {\n\t\tcreateMessage(data: $data, select: $select) {\n\t\t\tid\n\t\t\tchatSessionId\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttype\n\t\t\tsender\n\t\t\ttimestamp\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n": types.CreateMessageDocument,
     "\n\tquery FindAllMessages($where: MessageWhereInput) {\n\t\tfindAllMessages(where: $where) {\n\t\t\tid\n\t\t\ttype\n\t\t\tsender\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttimestamp\n\t\t\tchatSessionId\n\t\t}\n\t}\n": types.FindAllMessagesDocument,
     "\n\tquery GetAuthSession {\n\t\tgetAuthSession {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": types.GetAuthSessionDocument,
     "\n\tmutation SignIn($sessionInput: SessionInput!) {\n\t\tsignIn(sessionInput: $sessionInput) {\n\t\t\tisAuthenticated\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\trole\n\t\t\t\temail\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t}\n\t\t}\n\t}\n": types.SignInDocument,
@@ -54,6 +56,10 @@ export function graphql(source: "\n\tmutation CreateChatSession($data: ChatSessi
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tquery FindAllChatSessions($where: ChatSessionWhereInput) {\n\t\tfindAllChatSessions(where: $where) {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery FindAllChatSessions($where: ChatSessionWhereInput) {\n\t\tfindAllChatSessions(where: $where) {\n\t\t\tid\n\t\t\ttitle\n\t\t\tuserId\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tmutation CreateMessage($data: MessageCreateInput!, $select: SelectInput) {\n\t\tcreateMessage(data: $data, select: $select) {\n\t\t\tid\n\t\t\tchatSessionId\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttype\n\t\t\tsender\n\t\t\ttimestamp\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation CreateMessage($data: MessageCreateInput!, $select: SelectInput) {\n\t\tcreateMessage(data: $data, select: $select) {\n\t\t\tid\n\t\t\tchatSessionId\n\t\t\tcontent\n\t\t\tpayload\n\t\t\ttype\n\t\t\tsender\n\t\t\ttimestamp\n\t\t\tcreatedAt\n\t\t\tupdatedAt\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

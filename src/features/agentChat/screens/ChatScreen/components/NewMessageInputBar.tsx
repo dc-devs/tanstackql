@@ -1,79 +1,57 @@
 import { useState } from 'react';
 import { useForm } from '@/common/hooks';
 import { Paperclip, ArrowUp } from 'lucide-react';
+import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
-import { useNavigate } from '@tanstack/react-router';
 import { getRouteApi } from '@tanstack/react-router';
+import { type MessageCreateInput } from '@/gql/graphql';
 import { Button } from '@/common/components/shadcn-ui/button';
 import { Textarea } from '@/common/components/shadcn-ui/textarea';
-import { createChatSessionServerFn } from '@/features/agentChat/serverFns';
-import { type ChatSessionCreateInput } from '@/gql/graphql';
+import { createMessageServerFn } from '@/features/agentChat/serverFns';
 import {
 	Tooltip,
 	TooltipTrigger,
 	TooltipContent,
 } from '@/common/components/shadcn-ui/tooltip';
 
-const routeApi = getRouteApi('__root__');
+const routeApi = getRouteApi('/_authed/agent/chats/$chatSessionId');
 
-export const ChatInputBar = () => {
-	const navigate = useNavigate();
-	const { authSession } = routeApi.useRouteContext();
-	const userId = Number(authSession!.user!.id);
+export const NewMessageInputBar = () => {
+	const router = useRouter();
+	const { chatSessionId } = routeApi.useParams();
 	const [, setSubmissionError] = useState<string | null>(null);
 	const createChatSessionMutation = useMutation({
-		mutationFn: useServerFn(createChatSessionServerFn),
+		mutationFn: useServerFn(createMessageServerFn),
 	});
 
 	const form = useForm({
 		defaultValues: {
-			message: '',
+			content: '',
 		},
 		onSubmit: async ({ value: data }) => {
 			// Clear any previous errors
 			setSubmissionError(null);
 
-			// Transform form data to match ChatSessionCreateInput
-			const chatSessionCreateInput: ChatSessionCreateInput = {
-				title: `Chat Session ${new Date().toISOString()}`,
-				user: {
+			// Transform form data to match MessageCreateInput
+			const messageCreateInput: MessageCreateInput = {
+				content: data.content.trim(),
+				sender: 'user',
+				type: 'text',
+				timestamp: new Date().toISOString(),
+				chatSession: {
 					connect: {
-						id: userId,
+						id: Number(chatSessionId),
 					},
 				},
-				...(data.message?.trim() && {
-					messages: {
-						create: [
-							{
-								content: data.message,
-								sender: 'user',
-								type: 'text',
-								timestamp: new Date().toISOString(),
-							},
-						],
-					},
-				}),
 			};
 
-			console.log('chatSessionCreateInput', chatSessionCreateInput);
-
 			try {
-				const chatSession = await createChatSessionMutation.mutateAsync(
-					{
-						data: chatSessionCreateInput,
-					},
-				);
-				const chatSessionId = chatSession?.id;
+				await createChatSessionMutation.mutateAsync({
+					data: messageCreateInput,
+				});
 
-				if (chatSessionId) {
-					navigate({
-						to: '/agent/chats/$chatSessionId',
-						params: { chatSessionId },
-					});
-				}
-
-				return;
+				router.invalidate();
 			} catch (error) {
 				console.error('Error creating chat session:', error);
 				setSubmissionError('Failed to create new chat session.');
@@ -91,7 +69,7 @@ export const ChatInputBar = () => {
 			}}
 		>
 			{/* Message Field */}
-			<form.Field name="message">
+			<form.Field name="content">
 				{(field) => (
 					<Textarea
 						placeholder="Ask agent anything..."

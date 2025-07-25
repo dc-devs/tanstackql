@@ -1,1 +1,2 @@
-export { ChatsNew } from '@/features/agentChat/screens/ChatsNew';
+export { ChatScreen } from '@/features/agentChat/screens/ChatScreen/ChatScreen';
+export { ChatsNewScreen } from '@/features/agentChat/screens/ChatsNewScreen/ChatsNewScreen';

@@ -1,4 +1,4 @@
-import { NewChatSessionInputBar } from '@/features/agentChat/screens/chatsNewScreen/components/NewChatSessionInputBar';
+import { NewChatSessionInputBar } from '@/features/agentChat/screens/ChatsNewScreen/components/NewChatSessionInputBar';
 
 export const ChatsNewScreen = () => {
 	return (
