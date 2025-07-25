@@ -2,11 +2,11 @@ import { gql } from 'graphql-request';
 
 /**
  * GraphQL query to find all messages
- * @constant {DocumentNode} FindAllMessagesDocument
+ * @constant {DocumentNode} FindOneMessageDocument
  */
-export const FindAllMessagesDocument = gql`
-	query FindAllMessages($where: MessageWhereInput) {
-		findAllMessages(where: $where) {
+export const FindOneMessageDocument = gql`
+	query FindOneMessage($where: MessageWhereUniqueInput!) {
+		findOneMessage(where: $where) {
 			id
 			chatSessionId
 			content
