@@ -4,7 +4,7 @@ import { ChatScreen } from '@/features/agentChat/screens/ChatScreen/ChatScreen';
 
 export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
 	loader: async ({ params, context: { queryClient } }) => {
-		const chatSessionId = Number(params.chatSessionId);
+		const chatSessionId = Number(params.chatSessionId); // Convert for API call
 
 		// Fetch with serverFn (fast SSR)
 		const messages = await findAllMessagesServerFn({
@@ -16,16 +16,10 @@ export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
 		});
 
 		// Seed TanStack Query cache for instant component access
-		queryClient.setQueryData(['messages', chatSessionId], messages);
-
-		console.log(
-			'[agent/chats/$chatSessionId]',
-			params.chatSessionId,
-			messages,
-		);
+		queryClient.setQueryData(['messages', params.chatSessionId], messages); // ✅ STANDARD: Use string for cache key
 
 		// Return data for any components that need useLoaderData()
-		return { messages, chatSessionId };
+		return { messages, chatSessionId: params.chatSessionId }; // Return string ID
 	},
 	component: () => {
 		return <ChatScreen />;

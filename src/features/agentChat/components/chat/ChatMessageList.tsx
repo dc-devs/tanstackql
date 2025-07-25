@@ -38,12 +38,12 @@ export const ChatMessageList = () => {
 
 	const { data: messages } = useQuery(
 		queryOptions({
-			queryKey: ['messages', chatSessionId],
+			queryKey: ['messages', chatSessionId], // ✅ STANDARD: Use string (from URL params)
 			queryFn: () =>
 				findAllMessagesServerFn({
 					data: {
 						where: {
-							chatSessionId: { equals: Number(chatSessionId) },
+							chatSessionId: { equals: Number(chatSessionId) }, // Convert only for API call
 						},
 					},
 				}),
@@ -61,7 +61,7 @@ export const ChatMessageList = () => {
 	// 📝 Get optimistic user messages from pending mutations
 	const pendingMessages = useMutationState({
 		filters: {
-			mutationKey: ['createMessage', chatSessionId],
+			mutationKey: ['createMessage', chatSessionId], // ✅ STANDARD: Use string
 			status: 'pending',
 		},
 		select: (mutation) => {
@@ -91,8 +91,6 @@ export const ChatMessageList = () => {
 		(a, b) =>
 			new Date(a?.timestamp).getTime() - new Date(b?.timestamp).getTime(),
 	);
-
-	console.log('[ChatMessageList]', allMessages);
 
 	return (
 		<div className="flex-1 overflow-y-auto pr-2">

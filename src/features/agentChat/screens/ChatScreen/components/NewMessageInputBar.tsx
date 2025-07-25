@@ -44,21 +44,21 @@ export const NewMessageInputBar = () => {
 		// ✅ FIXED: Use the function reference instead of calling hook inside mutationFn
 		mutationFn: (variables: MutationVariables) =>
 			createMessageServerFnCall(variables),
-		mutationKey: ['createMessage', chatSessionId],
+		mutationKey: ['createMessage', chatSessionId], // ✅ STANDARD: Use string
 
 		// 🎯 OPTIMISTIC UPDATE: Show user message instantly
 		onMutate: async (variables: MutationVariables) => {
-			const chatSessionIdNum = Number(chatSessionId);
+			const chatSessionIdNum = Number(chatSessionId); // Convert only when needed
 
 			// Cancel any ongoing refetches to prevent overwriting optimistic update
 			await queryClient.cancelQueries({
-				queryKey: ['messages', chatSessionIdNum],
+				queryKey: ['messages', chatSessionId], // ✅ STANDARD: Use string for cache key
 			});
 
 			// Snapshot previous data for rollback
 			const previousMessages = queryClient.getQueryData([
 				'messages',
-				chatSessionIdNum,
+				chatSessionId, // ✅ STANDARD: Use string for cache key
 			]);
 
 			// Create optimistic user message
@@ -68,13 +68,13 @@ export const NewMessageInputBar = () => {
 				sender: 'user',
 				type: 'text',
 				timestamp: variables.data.timestamp || new Date().toISOString(),
-				chatSessionId: chatSessionIdNum,
+				chatSessionId: chatSessionIdNum, // Use number for internal data structure
 				isOptimistic: true,
 			};
 
 			// ⚡ INSTANT UPDATE: Add optimistic message to cache
 			queryClient.setQueryData(
-				['messages', chatSessionIdNum],
+				['messages', chatSessionId], // ✅ STANDARD: Use string for cache key
 				(old: Message[]) => [...(old || []), optimisticMessage],
 			);
 
@@ -82,13 +82,11 @@ export const NewMessageInputBar = () => {
 			return { previousMessages, optimisticMessage };
 		},
 
-		// ✅ SUCCESS: Replace optimistic with real data + start polling for AI response
+		// ✅ SUCCESS: Replace optimistic with real data
 		onSuccess: (serverResponse, variables, context) => {
-			const chatSessionIdNum = Number(chatSessionId);
-
 			// Replace optimistic message with real server message
 			queryClient.setQueryData(
-				['messages', chatSessionIdNum],
+				['messages', chatSessionId], // ✅ STANDARD: Use string for cache key
 				(old: Message[]) => {
 					const withoutOptimistic = (old || []).filter(
 						(msg) => msg.id !== context?.optimisticMessage.id,
@@ -100,12 +98,7 @@ export const NewMessageInputBar = () => {
 				},
 			);
 
-			// 🤖 TRIGGER AI RESPONSE POLLING: Invalidate to start fresh polling cycle
-			queryClient.invalidateQueries({
-				queryKey: ['messages', chatSessionIdNum],
-				// Refetch immediately to catch AI response faster
-				refetchType: 'active',
-			});
+			// ✅ NO INVALIDATION: Let background polling in ChatMessageList handle AI responses
 
 			// Clear any errors
 			setSubmissionError(null);
