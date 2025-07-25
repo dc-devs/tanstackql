@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useForm } from '@/common/hooks';
 import { Paperclip, ArrowUp } from 'lucide-react';
-import { useRouter } from '@tanstack/react-router';
-import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
-import { getRouteApi } from '@tanstack/react-router';
 import { type MessageCreateInput } from '@/gql/graphql';
 import { Button } from '@/common/components/shadcn-ui/button';
+import { getRouteApi } from '@tanstack/react-router';
 import { Textarea } from '@/common/components/shadcn-ui/textarea';
 import { createMessageServerFn } from '@/features/agentChat/serverFns';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
 	Tooltip,
 	TooltipTrigger,
@@ -17,12 +16,121 @@ import {
 
 const routeApi = getRouteApi('/_authed/agent/chats/$chatSessionId');
 
+// Define the expected mutation variables type
+type MutationVariables = {
+	data: MessageCreateInput;
+};
+
+// Define message type for cache operations
+type Message = {
+	id: string;
+	content: string;
+	sender: string;
+	type: string;
+	timestamp: string;
+	chatSessionId: number;
+	isOptimistic?: boolean;
+};
+
 export const NewMessageInputBar = () => {
-	const router = useRouter();
+	const queryClient = useQueryClient();
 	const { chatSessionId } = routeApi.useParams();
 	const [, setSubmissionError] = useState<string | null>(null);
-	const createChatSessionMutation = useMutation({
-		mutationFn: useServerFn(createMessageServerFn),
+
+	// Call useServerFn at component top level (during render)
+	const createMessageServerFnCall = useServerFn(createMessageServerFn);
+
+	const createMessageMutation = useMutation({
+		// ✅ FIXED: Use the function reference instead of calling hook inside mutationFn
+		mutationFn: (variables: MutationVariables) =>
+			createMessageServerFnCall(variables),
+		mutationKey: ['createMessage', chatSessionId],
+
+		// 🎯 OPTIMISTIC UPDATE: Show user message instantly
+		onMutate: async (variables: MutationVariables) => {
+			const chatSessionIdNum = Number(chatSessionId);
+
+			// Cancel any ongoing refetches to prevent overwriting optimistic update
+			await queryClient.cancelQueries({
+				queryKey: ['messages', chatSessionIdNum],
+			});
+
+			// Snapshot previous data for rollback
+			const previousMessages = queryClient.getQueryData([
+				'messages',
+				chatSessionIdNum,
+			]);
+
+			// Create optimistic user message
+			const optimisticMessage: Message = {
+				id: `temp-user-${Date.now()}`,
+				content: variables.data.content || '',
+				sender: 'user',
+				type: 'text',
+				timestamp: variables.data.timestamp || new Date().toISOString(),
+				chatSessionId: chatSessionIdNum,
+				isOptimistic: true,
+			};
+
+			// ⚡ INSTANT UPDATE: Add optimistic message to cache
+			queryClient.setQueryData(
+				['messages', chatSessionIdNum],
+				(old: Message[]) => [...(old || []), optimisticMessage],
+			);
+
+			// Return context for error rollback
+			return { previousMessages, optimisticMessage };
+		},
+
+		// ✅ SUCCESS: Replace optimistic with real data + start polling for AI response
+		onSuccess: (serverResponse, variables, context) => {
+			const chatSessionIdNum = Number(chatSessionId);
+
+			// Replace optimistic message with real server message
+			queryClient.setQueryData(
+				['messages', chatSessionIdNum],
+				(old: Message[]) => {
+					const withoutOptimistic = (old || []).filter(
+						(msg) => msg.id !== context?.optimisticMessage.id,
+					);
+					return [
+						...withoutOptimistic,
+						serverResponse, // Real message from server
+					];
+				},
+			);
+
+			// 🤖 TRIGGER AI RESPONSE POLLING: Invalidate to start fresh polling cycle
+			queryClient.invalidateQueries({
+				queryKey: ['messages', chatSessionIdNum],
+				// Refetch immediately to catch AI response faster
+				refetchType: 'active',
+			});
+
+			// Clear any errors
+			setSubmissionError(null);
+		},
+
+		// ❌ ERROR: Rollback optimistic update
+		onError: (error, variables, context) => {
+			const chatSessionIdNum = Number(chatSessionId);
+
+			// Rollback to previous state
+			if (context?.previousMessages) {
+				queryClient.setQueryData(
+					['messages', chatSessionIdNum],
+					context.previousMessages,
+				);
+			}
+
+			// Show error to user
+			console.error('Error creating message:', error);
+			setSubmissionError('Failed to send message. Please try again.');
+		},
+
+		// 🔄 Retry failed mutations automatically
+		retry: 1,
+		retryDelay: 1000,
 	});
 
 	const form = useForm({
@@ -46,16 +154,13 @@ export const NewMessageInputBar = () => {
 				},
 			};
 
-			try {
-				await createChatSessionMutation.mutateAsync({
-					data: messageCreateInput,
-				});
+			// 🚀 FIRE MUTATION: This triggers optimistic update → server call → AI polling
+			createMessageMutation.mutate({
+				data: messageCreateInput,
+			});
 
-				router.invalidate();
-			} catch (error) {
-				console.error('Error creating chat session:', error);
-				setSubmissionError('Failed to create new chat session.');
-			}
+			// ⚡ INSTANT UX: Clear form immediately (before server response)
+			form.reset();
 		},
 	});
 
@@ -81,6 +186,7 @@ export const NewMessageInputBar = () => {
 						value={field.state.value}
 						onChange={(e) => field.handleChange(e.target.value)}
 						onBlur={field.handleBlur}
+						disabled={createMessageMutation.isPending}
 					/>
 				)}
 			</form.Field>
@@ -100,23 +206,34 @@ export const NewMessageInputBar = () => {
 			</Tooltip>
 			{/* Submit Button */}
 			<form.Subscribe
-				selector={(state) => [state.canSubmit, state.isSubmitting]}
+				selector={(state) => [
+					state.canSubmit,
+					state.isSubmitting,
+					!!state.values.content?.trim(),
+				]}
 			>
-				{([canSubmit, isSubmitting]) => (
-					<Button
-						type="submit"
-						size="icon"
-						className="shrink-0 cursor-pointer"
-						aria-label="Send"
-						disabled={
-							!canSubmit ||
-							isSubmitting ||
-							createChatSessionMutation.isPending
-						}
-					>
-						<ArrowUp className="size-5" />
-					</Button>
-				)}
+				{([canSubmit, isSubmitting, hasContent]) => {
+					return (
+						<Button
+							type="submit"
+							size="icon"
+							className="shrink-0 cursor-pointer"
+							aria-label="Send"
+							disabled={
+								!canSubmit ||
+								isSubmitting ||
+								createMessageMutation.isPending ||
+								!hasContent
+							}
+						>
+							{createMessageMutation.isPending ? (
+								<div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+							) : (
+								<ArrowUp className="size-5" />
+							)}
+						</Button>
+					);
+				}}
 			</form.Subscribe>
 		</form>
 	);

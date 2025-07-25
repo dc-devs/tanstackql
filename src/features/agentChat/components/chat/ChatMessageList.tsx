@@ -36,13 +36,7 @@ type ServerMessage = {
 export const ChatMessageList = () => {
 	const { chatSessionId } = routeApi.useParams();
 
-	const {
-		data: messages,
-		// isLoading,
-		// error,
-		// isRefetching,
-		// dataUpdatedAt,
-	} = useQuery(
+	const { data: messages } = useQuery(
 		queryOptions({
 			queryKey: ['messages', chatSessionId],
 			queryFn: () =>
@@ -89,7 +83,7 @@ export const ChatMessageList = () => {
 		},
 	}).filter((msg): msg is OptimisticMessage => msg !== null);
 
-	// 🔗 Merge server messages + optimistic messages
+	// Merge server messages + optimistic messages
 	const allMessages: (ServerMessage | OptimisticMessage)[] = [
 		...(messages || []),
 		...pendingMessages,
@@ -98,14 +92,11 @@ export const ChatMessageList = () => {
 			new Date(a?.timestamp).getTime() - new Date(b?.timestamp).getTime(),
 	);
 
-	// console.log('[ChatMessageList]', messages);
 	console.log('[ChatMessageList]', allMessages);
 
 	return (
 		<div className="flex-1 overflow-y-auto pr-2">
 			{allMessages?.map((message) => {
-				if (!message) return null;
-
 				const { content, sender } = message;
 				const isUser = sender === 'user';
 
