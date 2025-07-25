@@ -3,9 +3,9 @@ import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
 import { setResponseHeaders } from '@tanstack/react-start/server';
 import { MutationSignOutArgs, LogOutResponse } from '@/gql/graphql';
-import { SignOutDocument } from '@/features/auth/serverFns/signOutServer/SignOutDocument';
+import { SignOutDocument } from '@/features/auth/serverFns/signOutServerFn/SignOutDocument';
 
-export const signOutServer = createServerFn({ method: 'POST' })
+export const signOutServerFn = createServerFn({ method: 'POST' })
 	.validator((data: MutationSignOutArgs) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();

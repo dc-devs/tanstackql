@@ -5,7 +5,7 @@ import { useServerFn } from '@tanstack/react-start';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
-import { signInServer } from '@/features/auth/serverFns/signInServer';
+import { signInServerFn } from '@/features/auth/serverFns/signInServerFn';
 import { GoogleSignInButton } from '@/features/auth/components/buttons';
 import { SocialButtonSeparator } from '@/features/auth/components/separators';
 import { EmailField, PasswordField } from '@/features/auth/components/fields';
@@ -19,7 +19,7 @@ export const SignInForm = () => {
 	const navigate = useNavigate();
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signInMutation = useMutation({
-		mutationFn: useServerFn(signInServer),
+		mutationFn: useServerFn(signInServerFn),
 	});
 	const form = useForm({
 		defaultValues: {

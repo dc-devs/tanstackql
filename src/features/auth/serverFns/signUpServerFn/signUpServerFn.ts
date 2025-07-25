@@ -3,9 +3,9 @@ import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
 import { SessionInput, SessionResponse } from '@/gql/graphql';
 import { setResponseHeaders } from '@tanstack/react-start/server';
-import { SignUpDocument } from '@/features/auth/serverFns/signUpServer/SignUpDocument';
+import { SignUpDocument } from '@/features/auth/serverFns/signUpServerFn/SignUpDocument';
 
-export const signUpServer = createServerFn({ method: 'POST' })
+export const signUpServerFn = createServerFn({ method: 'POST' })
 	.validator((data: SessionInput) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();

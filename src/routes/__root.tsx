@@ -2,7 +2,7 @@
 import { NotFound } from '@/components/NotFound';
 import type { QueryClient } from '@tanstack/react-query';
 import { getHead } from '@/features/root/utils/getHead';
-import { getAuthSessionServer } from '@/features/auth/serverFns';
+import { getAuthSessionServerFn } from '@/features/auth/serverFns';
 import { createRootRouteWithContext } from '@tanstack/react-router';
 import { RootComponent, RootDocument } from '@/features/root/components';
 import { DefaultCatchBoundary } from '@/components/DefaultCatchBoundary';
@@ -15,7 +15,7 @@ export const Route = createRootRouteWithContext<{
 		// TODO: Fix with proper SSL
 		process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-		const authSession = await getAuthSessionServer();
+		const authSession = await getAuthSessionServerFn();
 		console.log('[/_root]: authSession', authSession);
 
 		return {

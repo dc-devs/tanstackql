@@ -9,7 +9,7 @@ import { GoogleSignInButton } from '@/features/auth/components/buttons';
 import { SocialButtonSeparator } from '@/features/auth/components/separators';
 import { EmailField, PasswordField } from '@/features/auth/components/fields';
 import { emailValidator, passwordValidator } from '@/features/auth/validators';
-import { signUpServer } from '@/features/auth/serverFns/signUpServer/signUpServer';
+import { signUpServerFn } from '@/features/auth/serverFns/signUpServerFn/signUpServerFn';
 
 /**
  * Sign-up form component for user authentication
@@ -19,7 +19,7 @@ export const SignUpForm = () => {
 	const navigate = useNavigate();
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const signUpMutation = useMutation({
-		mutationFn: useServerFn(signUpServer),
+		mutationFn: useServerFn(signUpServerFn),
 	});
 
 	const form = useForm({

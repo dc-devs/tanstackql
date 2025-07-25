@@ -1,11 +1,11 @@
 import { GraphQLClient } from 'graphql-request';
 import { getBackendEndpoint } from '@/common/utils';
 import { createServerFn } from '@tanstack/react-start';
-import { setResponseHeaders } from '@tanstack/react-start/server';
 import { SessionInput, SessionResponse } from '@/gql/graphql';
-import { SignInDocument } from '@/features/auth/serverFns/signInServer/SignInDocument';
+import { setResponseHeaders } from '@tanstack/react-start/server';
+import { SignInDocument } from '@/features/auth/serverFns/signInServerFn/SignInDocument';
 
-export const signInServer = createServerFn({ method: 'POST' })
+export const signInServerFn = createServerFn({ method: 'POST' })
 	.validator((data: SessionInput) => data)
 	.handler(async ({ data }) => {
 		const endpoint = getBackendEndpoint();

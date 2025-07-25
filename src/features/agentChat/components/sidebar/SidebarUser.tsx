@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
 import { useNavigate } from '@tanstack/react-router';
-import { signOutServer } from '@/features/auth/serverFns/signOutServer/signOutServer';
+import { signOutServerFn } from '@/features/auth/serverFns/signOutServerFn/signOutServerFn';
 import {
 	Bell,
 	LogOut,
@@ -41,7 +41,7 @@ export function SidebarUser() {
 	const user = authSession?.user;
 	const userId = user!.id;
 	const signOutMutation = useMutation({
-		mutationFn: useServerFn(signOutServer),
+		mutationFn: useServerFn(signOutServerFn),
 	});
 	const handleLogout = async () => {
 		const data = { userId };

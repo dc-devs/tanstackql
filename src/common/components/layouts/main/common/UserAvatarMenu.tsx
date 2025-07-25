@@ -4,7 +4,7 @@ import { useServerFn } from '@tanstack/react-start';
 import { getRouteApi } from '@tanstack/react-router';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Avatar, AvatarFallback } from '@/common/components/shadcn-ui/avatar';
-import { signOutServer } from '@/features/auth/serverFns/signOutServer/signOutServer';
+import { signOutServerFn } from '@/features/auth/serverFns/signOutServerFn/signOutServerFn';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -21,7 +21,7 @@ export const UserAvatarMenu = () => {
 	const isSuperAdmin = user?.role === 'SUPER_ADMIN';
 	const userId = user!.id;
 	const signOutMutation = useMutation({
-		mutationFn: useServerFn(signOutServer),
+		mutationFn: useServerFn(signOutServerFn),
 	});
 	const handleLogout = async () => {
 		const data = { userId };
