@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { Route } from '@/routes/__root';
+import { getRouteApi } from '@tanstack/react-router';
 import { MobileMenu } from '@/common/components/layouts/main/MainMobileNavigation/MobileMenu/MobileMenu';
 import {
 	LogoLink,
 	UserAvatarMenu,
 } from '@/common/components/layouts/main/common';
 
+const routeApi = getRouteApi('__root__');
+
 export const MainMobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { authSession } = Route.useRouteContext();
+	const { authSession } = routeApi.useRouteContext();
 	const isAuthenticated = authSession?.isAuthenticated;
 
 	return (

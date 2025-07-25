@@ -13,7 +13,11 @@ export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
 			},
 		});
 
-		console.log('messages', messages);
+		console.log(
+			'[agent/chats/$chatSessionId]',
+			params.chatSessionId,
+			messages,
+		);
 
 		return { messages };
 	},

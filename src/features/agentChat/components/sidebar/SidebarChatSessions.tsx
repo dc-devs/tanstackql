@@ -1,5 +1,5 @@
-import { Route } from '@/routes/_authed/agent/route';
 import { Link } from '@tanstack/react-router';
+import { getRouteApi } from '@tanstack/react-router';
 import {
 	SidebarMenu,
 	SidebarGroup,
@@ -9,8 +9,10 @@ import {
 	SidebarGroupContent,
 } from '@/common/components/shadcn-ui/sidebar';
 
+const routeApi = getRouteApi('/_authed/agent');
+
 export const SidebarChatSessions = () => {
-	const { chatSessions } = Route.useLoaderData();
+	const { chatSessions } = routeApi.useLoaderData();
 
 	return (
 		<SidebarGroup className="mt-10 group-data-[collapsible=icon]:hidden">

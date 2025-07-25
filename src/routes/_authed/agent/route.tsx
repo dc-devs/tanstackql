@@ -3,7 +3,6 @@ import { AgentChatLayout } from '@/features/agentChat/components/AgentChatLayout
 import { findAllChatSessionsServerFn } from '@/features/agentChat/serverFns';
 
 export const Route = createFileRoute('/_authed/agent')({
-	// TODO: FIX Chat Sessions loading on each link hover
 	loader: async ({ context }) => {
 		const { authSession } = context;
 		const userId = Number(authSession!.user!.id);
@@ -15,7 +14,7 @@ export const Route = createFileRoute('/_authed/agent')({
 				},
 			},
 		});
-		console.log('chatSessions', chatSessions);
+		console.log('[/_authed/agent]: chatSessions', chatSessions);
 
 		return { chatSessions };
 	},

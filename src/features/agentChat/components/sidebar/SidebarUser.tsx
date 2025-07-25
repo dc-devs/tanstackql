@@ -1,4 +1,3 @@
-import { Route } from '@/routes/__root';
 import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
 import { useNavigate } from '@tanstack/react-router';
@@ -33,9 +32,12 @@ import {
 	SidebarMenuButton,
 } from '@/common/components/shadcn-ui/sidebar';
 
+import { getRouteApi } from '@tanstack/react-router';
+const routeApi = getRouteApi('__root__');
+
 export function SidebarUser() {
 	const navigate = useNavigate();
-	const { authSession } = Route.useRouteContext();
+	const { authSession } = routeApi.useRouteContext();
 	const user = authSession?.user;
 	const userId = user!.id;
 	const signOutMutation = useMutation({

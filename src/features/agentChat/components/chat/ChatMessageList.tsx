@@ -1,20 +1,21 @@
-import { Route } from '@/routes/_authed/agent/chats.$chatSessionId';
+import { getRouteApi } from '@tanstack/react-router';
 import { ChatMessage } from '@/features/agentChat/components/chat/ChatMessage';
 
-export const ChatMessageList = () => {
-	const { messages } = Route.useLoaderData();
+const routeApi = getRouteApi('/_authed/agent/chats/$chatSessionId');
 
-	console.log('messages', messages);
+export const ChatMessageList = () => {
+	const { messages } = routeApi.useLoaderData();
+	console.log('[ChatMessageList]', messages);
 
 	return (
 		<div className="flex-1 overflow-y-auto pr-2">
-			{messages?.map((message, i) => {
+			{messages?.map((message) => {
 				const { content, sender } = message;
 				const isUser = sender === 'user';
 
 				return (
 					<ChatMessage
-						key={i}
+						key={message.id}
 						content={content ?? ''}
 						isUser={isUser}
 					/>

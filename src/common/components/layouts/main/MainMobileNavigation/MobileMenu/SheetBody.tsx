@@ -1,13 +1,15 @@
-import { Route } from '@/routes/__root';
 import { Link } from '@tanstack/react-router';
+import { getRouteApi } from '@tanstack/react-router';
 import { Button } from '@/common/components/shadcn-ui/button';
 
 interface Props {
 	setIsOpen: (isOpen: boolean) => void;
 }
 
+const routeApi = getRouteApi('__root__');
+
 export const SheetBody = ({ setIsOpen }: Props) => {
-	const { authSession } = Route.useRouteContext();
+	const { authSession } = routeApi.useRouteContext();
 	const isAuthenticated = authSession?.isAuthenticated;
 
 	return (

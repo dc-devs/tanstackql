@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { Route } from '@/routes/__root';
 import { useForm } from '@/common/hooks';
 import { Paperclip, ArrowUp } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
-import { useNavigate } from '@tanstack/react-router';
 import { type ChatSessionCreateInput } from '@/gql/graphql';
 import { Button } from '@/common/components/shadcn-ui/button';
+import { useNavigate, getRouteApi } from '@tanstack/react-router';
 import { Textarea } from '@/common/components/shadcn-ui/textarea';
 import { createChatSessionServerFn } from '@/features/agentChat/serverFns';
 import {
@@ -15,9 +14,11 @@ import {
 	TooltipContent,
 } from '@/common/components/shadcn-ui/tooltip';
 
+const routeApi = getRouteApi('__root__');
+
 export const NewChatSessionInputBar = () => {
 	const navigate = useNavigate();
-	const { authSession } = Route.useRouteContext();
+	const { authSession } = routeApi.useRouteContext();
 	const userId = Number(authSession!.user!.id);
 	const [, setSubmissionError] = useState<string | null>(null);
 	const createChatSessionMutation = useMutation({
