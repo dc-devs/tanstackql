@@ -9,8 +9,10 @@ const routeApi = getRouteApi('/_authed/agent/chats/$chatSessionId');
 export const ChatMessageList = () => {
 	const { chatSessionId } = routeApi.useParams();
 
-	const { data: messages } = useQuery(
-		queryOptions({
+	type ChatMessage = NonNullable<FindOneMessageQuery['findOneMessage']>;
+
+	const { data: messages } = useQuery<ChatMessage[]>(
+		queryOptions<ChatMessage[]>({
 			queryKey: ['messages', chatSessionId],
 			queryFn: () =>
 				findAllMessagesServerFn({
@@ -19,17 +21,26 @@ export const ChatMessageList = () => {
 							chatSessionId: { equals: Number(chatSessionId) }, // Convert only for API call
 						},
 					},
-				}),
+				}) as Promise<ChatMessage[]>,
 			// Keep in cache for 5 minutes after component unmounts
 			gcTime: 5 * 60 * 1000,
+			staleTime: 0,
+			refetchOnWindowFocus: true,
+			refetchOnReconnect: true,
+			refetchIntervalInBackground: true,
+			refetchInterval: (query): number | false => {
+				const messages =
+					(query.state.data as ChatMessage[] | undefined) ?? [];
+				const last = messages[messages.length - 1];
+				const pending = !!last && last.sender === 'user';
+				return pending ? 1000 : false; // poll every 1s only while pending
+			},
 		}),
 	);
 
-	const allMessages: FindOneMessageQuery['findOneMessage'][] = (
-		messages || []
-	).sort(
-		(a, b) =>
-			new Date(a?.timestamp).getTime() - new Date(b?.timestamp).getTime(),
+	const allMessages: ChatMessage[] = [...(messages ?? [])].sort(
+		(a: ChatMessage, b: ChatMessage) =>
+			new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
 	);
 
 	return (

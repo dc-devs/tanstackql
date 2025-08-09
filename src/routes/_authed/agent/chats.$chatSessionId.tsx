@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { findAllMessagesServerFn } from '@/features/agentChat/serverFns';
 import { ChatScreen } from '@/features/agentChat/screens/ChatScreen/ChatScreen';
+import { chatAssistantGenerationStatusByMessageServerFunction } from '@/features/agentChat/serverFns';
 
 export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
 	loader: async ({ params, context: { queryClient } }) => {
@@ -17,19 +18,23 @@ export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
 		const lastMessage = messages[messages.length - 1];
 		const lastMessageIsUserMessage = lastMessage?.sender === 'user';
 
-		
 		if (lastMessageIsUserMessage) {
-			console.log(
-				'[chats.$chatSessionId]: lastMessage',
-				lastMessageIsUserMessage,
-			);
+			const lastUserMessageId = Number(lastMessage!.id);
+
+			void chatAssistantGenerationStatusByMessageServerFunction({
+				data: { chatSessionId, lastUserMessageId },
+			});
 		}
 
 		// Seed TanStack Query cache for instant component access
 		queryClient.setQueryData(['messages', params.chatSessionId], messages); // ✅ STANDARD: Use string for cache key
 
 		// Return data for any components that need useLoaderData()
-		return { messages, chatSessionId: params.chatSessionId }; // Return string ID
+		return {
+			messages,
+			chatSessionId: params.chatSessionId,
+			lastMessageIsUserMessage,
+		}; // Return string ID
 	},
 	component: () => {
 		return <ChatScreen />;
