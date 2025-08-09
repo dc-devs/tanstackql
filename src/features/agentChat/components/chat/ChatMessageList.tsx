@@ -8,6 +8,7 @@ const routeApi = getRouteApi('/_authed/agent/chats/$chatSessionId');
 
 export const ChatMessageList = () => {
 	const { chatSessionId } = routeApi.useParams();
+	const loaderData = routeApi.useLoaderData();
 
 	type ChatMessage = NonNullable<FindOneMessageQuery['findOneMessage']>;
 
@@ -42,9 +43,14 @@ export const ChatMessageList = () => {
 		(a: ChatMessage, b: ChatMessage) =>
 			new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
 	);
+	const last = allMessages[allMessages.length - 1];
+	const pendingFromQuery = !!last && last.sender === 'user';
+	const pending = messages
+		? pendingFromQuery
+		: !!loaderData?.lastMessageIsUserMessage;
 
 	return (
-		<div className="flex-1 overflow-y-auto pr-2">
+		<div className="flex-1 overflow-y-auto pr-2 bg-white">
 			{allMessages?.map((message) => {
 				const id = message!.id;
 				const content = message!.content;
@@ -58,6 +64,25 @@ export const ChatMessageList = () => {
 					/>
 				);
 			})}
+			{pending ? (
+				<div className="bg-white">
+					<div className="mx-auto max-w-3xl px-4">
+						<div className="py-6">
+							<div
+								className="inline-flex items-center gap-2"
+								aria-live="polite"
+								aria-busy="true"
+							>
+								<span className="relative flex h-2 w-8 items-center">
+									<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
+									<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
+									<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce" />
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			) : null}
 		</div>
 	);
 };
