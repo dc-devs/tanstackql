@@ -6,3 +6,5 @@ export { FindAllChatSessionsDocument } from '@/features/agentChat/serverFns/chat
 export { findAllChatSessionsServerFn } from '@/features/agentChat/serverFns/chatSessions/findAllChatSessions/findAllChatSessionsServerFn';
 export { CreateMessageDocument } from '@/features/agentChat/serverFns/messages/createMessage/CreateMessageDocument';
 export { createMessageServerFn } from '@/features/agentChat/serverFns/messages/createMessage/createMessageServerFn';
+export { ChatAssistantGenerationStatusByMessageDocument } from '@/features/agentChat/serverFns/chats/chatAssistantGenerationStatusByMessage/ChatAssistantGenerationStatusByMessageDocument';
+export { chatAssistantGenerationStatusByMessageServerFunction } from '@/features/agentChat/serverFns/chats/chatAssistantGenerationStatusByMessage/chatAssistantGenerationStatusByMessageServerFunction';

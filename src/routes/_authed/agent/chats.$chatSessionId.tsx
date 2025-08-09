@@ -14,6 +14,16 @@ export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
 				},
 			},
 		});
+		const lastMessage = messages[messages.length - 1];
+		const lastMessageIsUserMessage = lastMessage?.sender === 'user';
+
+		
+		if (lastMessageIsUserMessage) {
+			console.log(
+				'[chats.$chatSessionId]: lastMessage',
+				lastMessageIsUserMessage,
+			);
+		}
 
 		// Seed TanStack Query cache for instant component access
 		queryClient.setQueryData(['messages', params.chatSessionId], messages); // ✅ STANDARD: Use string for cache key

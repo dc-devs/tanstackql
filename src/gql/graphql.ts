@@ -20,6 +20,12 @@ export type Scalars = {
   JSON: { input: any; output: any; }
 };
 
+export type ChatAssistantGenerationStatus = {
+  __typename?: 'ChatAssistantGenerationStatus';
+  lastUserMessageId?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+};
+
 export type ChatSession = {
   __typename?: 'ChatSession';
   _count: ChatSessionCount;
@@ -254,6 +260,11 @@ export type Count = {
   count: Scalars['Int']['output'];
 };
 
+export type CreateChatInput = {
+  /** The message content from the user */
+  message: Scalars['String']['input'];
+};
+
 export type DateTimeFilter = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -292,6 +303,7 @@ export type JsonNullableFilter = {
   gte?: InputMaybe<Scalars['JSON']['input']>;
   lt?: InputMaybe<Scalars['JSON']['input']>;
   lte?: InputMaybe<Scalars['JSON']['input']>;
+  mode?: InputMaybe<QueryMode>;
   not?: InputMaybe<Scalars['JSON']['input']>;
   path?: InputMaybe<Array<Scalars['String']['input']>>;
   string_contains?: InputMaybe<Scalars['String']['input']>;
@@ -525,6 +537,7 @@ export type MessageWhereUniqueInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createChat: ChatSession;
   createChatSession: ChatSession;
   createManyChatSession: Count;
   createManyMessage: Count;
@@ -543,6 +556,11 @@ export type Mutation = {
   updateManyUser: Count;
   updateMessage: Message;
   updateUser: User;
+};
+
+
+export type MutationCreateChatArgs = {
+  input: CreateChatInput;
 };
 
 
@@ -624,18 +642,21 @@ export type MutationUpdateChatSessionArgs = {
 
 export type MutationUpdateManyChatSessionArgs = {
   data: ChatSessionUpdateManyMutationInput;
+  limit?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<ChatSessionWhereInput>;
 };
 
 
 export type MutationUpdateManyMessageArgs = {
   data: MessageUpdateManyMutationInput;
+  limit?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MessageWhereInput>;
 };
 
 
 export type MutationUpdateManyUserArgs = {
   data: UserUpdateManyMutationInput;
+  limit?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserWhereInput>;
 };
 
@@ -717,6 +738,8 @@ export enum NullsOrder {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get assistant generation job status for a specific user message */
+  chatAssistantGenerationStatusByMessage?: Maybe<ChatAssistantGenerationStatus>;
   findAllChatSessions: Array<ChatSession>;
   findAllMessages: Array<Message>;
   findAllUsers: Array<User>;
@@ -727,6 +750,12 @@ export type Query = {
   findOneMessage?: Maybe<Message>;
   findOneUser?: Maybe<User>;
   getAuthSession: SessionResponse;
+};
+
+
+export type QueryChatAssistantGenerationStatusByMessageArgs = {
+  chatSessionId: Scalars['Int']['input'];
+  lastUserMessageId: Scalars['Int']['input'];
 };
 
 
@@ -1041,6 +1070,21 @@ export type FindAllChatSessionsQueryVariables = Exact<{
 
 export type FindAllChatSessionsQuery = { __typename?: 'Query', findAllChatSessions: Array<{ __typename?: 'ChatSession', id: string, title: string, userId: number, createdAt: string, updatedAt: string }> };
 
+export type ChatAssistantGenerationStatusByMessageQueryVariables = Exact<{
+  chatSessionId: Scalars['Int']['input'];
+  lastUserMessageId: Scalars['Int']['input'];
+}>;
+
+
+export type ChatAssistantGenerationStatusByMessageQuery = { __typename?: 'Query', chatAssistantGenerationStatusByMessage?: { __typename?: 'ChatAssistantGenerationStatus', lastUserMessageId?: number | null, status?: string | null } | null };
+
+export type CreateChatMutationVariables = Exact<{
+  input: CreateChatInput;
+}>;
+
+
+export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'ChatSession', id: string, title: string, userId: number, createdAt: string, updatedAt: string, messages?: Array<{ __typename?: 'Message', id: string, type: string, sender: string, content?: string | null, timestamp: string, updatedAt: string, createdAt: string }> | null } };
+
 export type CreateMessageMutationVariables = Exact<{
   data: MessageCreateInput;
   select?: InputMaybe<SelectInput>;
@@ -1092,6 +1136,8 @@ export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: '
 
 export const CreateChatSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChatSession"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createChatSession"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CreateChatSessionMutation, CreateChatSessionMutationVariables>;
 export const FindAllChatSessionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAllChatSessions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAllChatSessions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<FindAllChatSessionsQuery, FindAllChatSessionsQueryVariables>;
+export const ChatAssistantGenerationStatusByMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatAssistantGenerationStatusByMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chatSessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lastUserMessageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chatAssistantGenerationStatusByMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chatSessionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chatSessionId"}}},{"kind":"Argument","name":{"kind":"Name","value":"lastUserMessageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lastUserMessageId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lastUserMessageId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<ChatAssistantGenerationStatusByMessageQuery, ChatAssistantGenerationStatusByMessageQueryVariables>;
+export const CreateChatDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChat"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateChatInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createChat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"sender"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<CreateChatMutation, CreateChatMutationVariables>;
 export const CreateMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MessageCreateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"select"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"SelectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"select"},"value":{"kind":"Variable","name":{"kind":"Name","value":"select"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"chatSessionId"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"sender"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CreateMessageMutation, CreateMessageMutationVariables>;
 export const FindAllMessagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAllMessages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MessageWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAllMessages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"chatSessionId"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"sender"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<FindAllMessagesQuery, FindAllMessagesQueryVariables>;
 export const FindOneMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindOneMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MessageWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findOneMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"chatSessionId"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"sender"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<FindOneMessageQuery, FindOneMessageQueryVariables>;
