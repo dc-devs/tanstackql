@@ -60,13 +60,23 @@ export const MessageSubmitBar = ({
 					<Textarea
 						id="text-submit-bar-input"
 						placeholder={placeholder}
-						className="flex-1 bg-transparent border-0 shadow-none text-base placeholder:text-muted-foreground resize-none
-            focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-none focus-visible:outline-none focus-visible:ring-offset-0 min-h-0"
+						className="flex-1 bg-transparent border-0 shadow-none text-base placeholder:text-muted-foreground resize-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-none focus-visible:outline-none focus-visible:ring-offset-0 min-h-0"
 						autoComplete="off"
 						autoFocus={autoFocus}
 						value={field.state.value}
 						onChange={(e) => field.handleChange(e.target.value)}
 						onBlur={field.handleBlur}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter' && !e.shiftKey) {
+								e.preventDefault();
+								const hasContent =
+									String(field.state.value ?? '').trim()
+										.length > 0;
+								if (!pending && hasContent) {
+									form.handleSubmit();
+								}
+							}
+						}}
 						disabled={pending}
 					/>
 				)}

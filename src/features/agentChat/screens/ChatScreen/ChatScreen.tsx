@@ -3,11 +3,11 @@ import { NewMessageInputBar } from '@/features/agentChat/screens/ChatScreen/comp
 
 export const ChatScreen = () => {
 	return (
-		<div className="flex flex-col h-full border-2 border-red-500">
-			<div className="mx-auto w-[780px] flex-1 overflow-y-auto border-2 border-green-400">
+		<div className="flex flex-col h-full">
+			<div className="mx-auto w-[780px] flex-1 overflow-y-auto">
 				<ChatMessageList />
 			</div>
-			<div className="sticky bottom-0 border-2 border-red-500">
+			<div className="sticky bottom-0">
 				<div className="mx-auto w-[780px]">
 					<NewMessageInputBar />
 				</div>

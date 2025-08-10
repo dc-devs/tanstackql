@@ -35,7 +35,7 @@ export const NewChatSessionInputBar = () => {
 					if (chatSessionId) {
 						navigate({
 							to: '/agent/chats/$chatSessionId',
-							params: { chatSessionId },
+							params: { chatSessionId: String(chatSessionId) },
 						});
 					}
 

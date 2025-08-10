@@ -14,7 +14,6 @@ export const Route = createFileRoute('/_authed/agent')({
 				},
 			},
 		});
-		console.log('[/_authed/agent]: chatSessions', chatSessions);
 
 		return { chatSessions };
 	},

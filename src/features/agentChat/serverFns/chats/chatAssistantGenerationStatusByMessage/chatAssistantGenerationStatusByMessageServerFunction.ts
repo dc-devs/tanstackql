@@ -26,7 +26,10 @@ export const chatAssistantGenerationStatusByMessageServerFunction =
 			const response =
 				await createGraphQLRequest<ChatAssistantGenerationStatusByMessageQuery>(
 					ChatAssistantGenerationStatusByMessageDocument,
-					{ input: data },
+					{
+						chatSessionId: data.chatSessionId,
+						lastUserMessageId: data.lastUserMessageId,
+					},
 					{ cookie },
 				);
 

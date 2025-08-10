@@ -16,7 +16,6 @@ export const Route = createRootRouteWithContext<{
 		process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 		const authSession = await getAuthSessionServerFn();
-		console.log('[/_root]: authSession', authSession);
 
 		return {
 			authSession,
