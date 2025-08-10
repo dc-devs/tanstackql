@@ -3,8 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useServerFn } from '@tanstack/react-start';
 import { useNavigate } from '@tanstack/react-router';
 import { type CreateChatInput } from '@/gql/graphql';
-import { createChatServerFn } from '@/features/agentChat/serverFns/chats/createChat';
 import { MessageSubmitBar } from '@/features/agentChat/components/forms';
+import { createChatServerFn } from '@/features/agentChat/serverFns/chats/createChat';
 
 export const NewChatSessionInputBar = () => {
 	const navigate = useNavigate();
@@ -24,6 +24,7 @@ export const NewChatSessionInputBar = () => {
 				if (!message) return;
 
 				const createChatInput: CreateChatInput = { message };
+
 				try {
 					const chatSession =
 						await createChatSessionMutation.mutateAsync({
