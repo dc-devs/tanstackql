@@ -50,7 +50,7 @@ export const ChatMessageList = () => {
 		: !!loaderData?.lastMessageIsUserMessage;
 
 	return (
-		<div className="flex-1 overflow-y-auto pr-2 bg-white">
+		<>
 			{allMessages?.map((message) => {
 				const id = message!.id;
 				const content = message!.content;
@@ -66,23 +66,21 @@ export const ChatMessageList = () => {
 			})}
 			{pending ? (
 				<div className="bg-white">
-					<div className="mx-auto max-w-3xl px-4">
-						<div className="py-6">
-							<div
-								className="inline-flex items-center gap-2"
-								aria-live="polite"
-								aria-busy="true"
-							>
-								<span className="relative flex h-2 w-8 items-center">
-									<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
-									<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
-									<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce" />
-								</span>
-							</div>
+					<div className="py-6">
+						<div
+							className="inline-flex items-center gap-2"
+							aria-live="polite"
+							aria-busy="true"
+						>
+							<span className="relative flex h-2 w-8 items-center">
+								<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
+								<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
+								<span className="mx-0.5 h-2 w-2 rounded-full bg-gray-400 animate-bounce" />
+							</span>
 						</div>
 					</div>
 				</div>
 			) : null}
-		</div>
+		</>
 	);
 };

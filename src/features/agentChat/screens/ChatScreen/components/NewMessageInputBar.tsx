@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from '@/common/hooks';
-import { Paperclip, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { useServerFn } from '@tanstack/react-start';
 import { type MessageCreateInput } from '@/gql/graphql';
 import { Button } from '@/common/components/shadcn-ui/button';
@@ -8,11 +8,6 @@ import { getRouteApi } from '@tanstack/react-router';
 import { Textarea } from '@/common/components/shadcn-ui/textarea';
 import { createMessageServerFn } from '@/features/agentChat/serverFns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-	Tooltip,
-	TooltipTrigger,
-	TooltipContent,
-} from '@/common/components/shadcn-ui/tooltip';
 
 const routeApi = getRouteApi('/_authed/agent/chats/$chatSessionId');
 
@@ -159,7 +154,7 @@ export const NewMessageInputBar = () => {
 
 	return (
 		<form
-			className="flex items-center gap-2 rounded-2xl border border-input bg-background px-3 py-2 shadow-xs focus-within:ring-2 focus-within:ring-ring/50 w-full max-w-2xl mx-auto"
+			className="flex items-center gap-2 rounded-[28px] border border-input bg-background px-3 py-2 shadow-xs focus-within:ring-2 focus-within:ring-ring/50 w-full"
 			onSubmit={(e) => {
 				e.preventDefault();
 				e.stopPropagation();
@@ -170,11 +165,10 @@ export const NewMessageInputBar = () => {
 			<form.Field name="content">
 				{(field) => (
 					<Textarea
-						placeholder="Ask agent anything..."
-						className="
-					flex-1 bg-transparent border-0 shadow-none text-base placeholder:text-muted-foreground resize-none
-					focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-none focus-visible:outline-none focus-visible:ring-offset-0
-				"
+						id="message-input"
+						placeholder="Ask anything"
+						className="flex-1 bg-transparent border-0 shadow-none text-base placeholder:text-muted-foreground resize-none
+					focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-none focus-visible:outline-none focus-visible:ring-offset-0 min-h-0"
 						autoComplete="off"
 						value={field.state.value}
 						onChange={(e) => field.handleChange(e.target.value)}
@@ -183,20 +177,6 @@ export const NewMessageInputBar = () => {
 					/>
 				)}
 			</form.Field>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<Button
-						type="button"
-						variant="ghost"
-						size="icon"
-						className="shrink-0 cursor-pointer"
-						aria-label="Add Attachment"
-					>
-						<Paperclip className="size-5" />
-					</Button>
-				</TooltipTrigger>
-				<TooltipContent sideOffset={8}>Add Attachment</TooltipContent>
-			</Tooltip>
 			{/* Submit Button */}
 			<form.Subscribe
 				selector={(state) => [
@@ -210,7 +190,7 @@ export const NewMessageInputBar = () => {
 						<Button
 							type="submit"
 							size="icon"
-							className="shrink-0 cursor-pointer"
+							className="cursor-pointer rounded-[50%]"
 							aria-label="Send"
 							disabled={
 								!canSubmit ||
