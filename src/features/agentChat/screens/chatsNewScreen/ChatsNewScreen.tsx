@@ -11,8 +11,10 @@ export const ChatsNewScreen = () => {
 						</span>
 					</p>
 				</div>
-				<div className="mt-10 w-full">
-					<NewChatSessionInputBar />
+				<div className="mt-10 mx-auto">
+					<div className="mx-auto w-[780px]">
+						<NewChatSessionInputBar />
+					</div>
 				</div>
 			</div>
 		</>
