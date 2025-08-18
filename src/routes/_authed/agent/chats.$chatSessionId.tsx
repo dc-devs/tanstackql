@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { findAllMessagesServerFn } from '@/features/agentChat/serverFns';
-import { ChatScreen } from '@/features/agentChat/screens/ChatScreen/ChatScreen';
+import { ChatScreen } from '@/features/agentChat/screens/ChatScreen';
 import { chatAssistantGenerationStatusByMessageServerFunction } from '@/features/agentChat/serverFns';
 
 export const Route = createFileRoute('/_authed/agent/chats/$chatSessionId')({
