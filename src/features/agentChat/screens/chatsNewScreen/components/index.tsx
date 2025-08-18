@@ -1,1 +1,1 @@
-export { NewChatSessionInputBar } from '@/features/agentChat/screens/components/NewChatSessionInputBar';
+export { NewChatSessionInputBar } from '@/features/agentChat/screens/ChatsNewScreen/components/NewChatSessionInputBar';

@@ -5,8 +5,9 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
+		"build:prod": "vite build",
 		"start:dev": "vite dev",
-		"build": "vite build",
+		"start:prod": "vite start",
 		"gen:gql": "NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm graphql-codegen",
 		"gen:gql:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm graphql-codegen --watch"
 	},

@@ -20,6 +20,10 @@ node_modules
 /playwright/.cache/
 /certs/
 
+# build outputs
+.nitro
+.tanstack
+
 # logs
 app.config.timestamp*
 
